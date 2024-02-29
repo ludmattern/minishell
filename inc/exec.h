@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/28 16:36:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/02/29 09:46:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ t_node* create_ast();
 void	print_ast(t_node* node, int depth);
 
 /*
-* execution
+* run_execution
 */
-void	execute_ast(t_data* data);
+void	run_execution(t_data* data);
 
 #endif

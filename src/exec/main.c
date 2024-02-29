@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/28 15:18:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/02/29 09:46:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	data->ast = create_ast();
 	//ex cmd is : cat < input.txt | grep "pattern" | sort > output.txt && echo "Success" || echo -n "Failure";
 	//print_ast(data->ast, 0);
-	execute_ast(data);
+	run_execution(data);
 	
 	return (0);
 }
