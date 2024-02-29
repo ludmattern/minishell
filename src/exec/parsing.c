@@ -6,14 +6,15 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/28 17:46:28 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:41:50 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
 // Helper functions to create different nodes
-t_io_node* create_io_node(t_io_type type, const char* value) {
+t_io_node* create_io_node(t_io_type type, const char* value)
+{
     t_io_node* io_node = malloc(sizeof(t_io_node));
     io_node->type = type;
     io_node->value = strdup(value);
@@ -24,7 +25,8 @@ t_io_node* create_io_node(t_io_type type, const char* value) {
     return io_node;
 }
 
-t_node* create_cmd_node(const char* command, t_io_node* io_list) {
+t_node* create_cmd_node(const char* command, t_io_node* io_list)
+{
     t_node* cmd_node = malloc(sizeof(t_node));
     cmd_node->type = N_CMD;
     cmd_node->args = strdup(command); // For simplicity, args are duplicated here
@@ -38,7 +40,8 @@ t_node* create_cmd_node(const char* command, t_io_node* io_list) {
     return cmd_node;
 }
 
-t_node* create_operator_node(t_node_type type, t_node* left, t_node* right) {
+t_node* create_operator_node(t_node_type type, t_node* left, t_node* right)
+{
     t_node* op_node = malloc(sizeof(t_node));
     op_node->type = type;
     op_node->left = left;
@@ -49,17 +52,21 @@ t_node* create_operator_node(t_node_type type, t_node* left, t_node* right) {
     return op_node;
 }
 
-t_node* create_ast() {
+t_node* create_ast()
+{
     // Building the AST for "cat < input.txt | grep "pattern" | sort > output.txt && echo "Success" || echo -n "Failure"
 
     // Construct the "cat < input.txt" command
     t_io_node* cat_io = create_io_node(IO_IN, "input.txt");
-    t_node* cat_cmd = create_cmd_node("cat", cat_io);
+    t_node* cat_cmd = create_cmd_node("ls", cat_io);
+    cat_cmd->expanded_args = realloc(cat_cmd->expanded_args, 2 * sizeof(char*));
+    cat_cmd->expanded_args[1] = strdup("-l");
+    cat_cmd->expanded_args[2] = NULL;
 
     // Construct the "grep "pattern"" command
     t_node* grep_cmd = create_cmd_node("grep", NULL);
     grep_cmd->expanded_args = realloc(grep_cmd->expanded_args, 3 * sizeof(char*));
-    grep_cmd->expanded_args[1] = strdup("pattern");
+    grep_cmd->expanded_args[1] = strdup("Makefile");
     grep_cmd->expanded_args[2] = NULL;
 
     // Pipe "cat" and "grep"
@@ -67,7 +74,9 @@ t_node* create_ast() {
 
     // Construct the "sort > output.txt" command
     t_io_node* sort_io = create_io_node(IO_OUT, "output.txt");
-    t_node* sort_cmd = create_cmd_node("sort", sort_io);
+    t_node* sort_cmd = create_cmd_node("wc", sort_io);
+    sort_cmd->expanded_args[1] = strdup("-l");
+    sort_cmd->expanded_args[2] = NULL;
 
     // Pipe "grep" and "sort"
     t_node* grep_sort_pipe = create_operator_node(N_PIPE, cat_grep_pipe, sort_cmd);

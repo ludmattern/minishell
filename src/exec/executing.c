@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/29 10:48:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:05:02 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	handling_command(t_node *node)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("Child executing command: %s\n", node->args);
-		exit(0); // Simulate success of execution
+		//printf("Child executing command: %s\n", node->args);
+		execvp(node->expanded_args[0], node->expanded_args);
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{
-		printf("Parent waiting for child executing command: %s\n", node->args);
+		//printf("Parent waiting for child executing command: %s\n", node->args);
 		wait(&status);
-		return (0); // Simulate command run_execution success
+		return (0);
 	}
 	else
 	{
@@ -40,61 +40,79 @@ int	handling_command(t_node *node)
 	}
 }
 
-int	handling_pipeline_child(t_node *node)
-{
-	if (node == NULL)
-		return (0);
-	return (execute_node(node));
-}
-
 int	handling_pipeline(t_node *node)
 {
-	int	status_left;
-	int	status_right;
+    int pipefd[2];
+    pid_t pid_left, pid_right;
 
-	printf("Setting up a pipe\n");
-	status_left = handling_pipeline_child(node->left);
-	if (status_left != 0)
-		printf("left branch of pipe failed");
-	status_right = handling_pipeline_child(node->right);
-	if (status_right != 0)
-		printf("right branch of pipe failed");
-	printf("Finished handling pipe\n");
-	return (status_right);
+    //printf("Setting up a pipe\n");
+    if (pipe(pipefd) < 0) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    if ((pid_left = fork()) == 0) {
+        dup2(pipefd[1], STDOUT_FILENO);
+        close(pipefd[0]);
+        close(pipefd[1]);
+
+        execute_node(node->left);
+        exit(EXIT_SUCCESS);
+    }
+    if ((pid_right = fork()) == 0) {
+        dup2(pipefd[0], STDIN_FILENO);
+        close(pipefd[1]);
+        close(pipefd[0]);
+
+        execute_node(node->right);
+        exit(EXIT_SUCCESS);
+    }
+
+    close(pipefd[0]);
+    close(pipefd[1]);
+
+    waitpid(pid_left, NULL, 0);
+    waitpid(pid_right, NULL, 0);
+    //printf("Finished handling pipe\n");
+
+    return 0;
 }
 
 
-/* reminder of the && operator
+
+/*
+* reminder of the && operator
 * if the left command succeeds, execute the right command
 */
 int	handling_and(t_node *node)
 {
-	printf("Executing AND node\n");
+	//printf("Executing AND node\n");
 	if (execute_node(node->left) == 0)
 	{
-		printf("success of AND left branch, executing right branch \n");
+		//printf("success of AND left branch, executing right branch \n");
 		return (execute_node(node->right));
 	}
-	printf("failure of AND left branch, skipping right branch\n");
-	return (1); // Simulate failure if left command fails
+	//printf("failure of AND left branch, skipping right branch\n");
+	return (1);
 }
 
-/* reminder of the OR operator
+/* 
+* reminder of the OR operator
 * if the left command fails, execute the right command
 */
 int	handling_or(t_node *node)
 {
-	printf("Executing OR node\n");
+	//printf("Executing OR node\n");
 	if (execute_node(node->left) != 0)
 	{
-		printf("failure of OR left branch, executing right branch\n");
+		//printf("failure of OR left branch, executing right branch\n");
 		return (execute_node(node->right));
 	}
-	printf("success of OR left branch\n");
+	//printf("success of OR left branch\n");
 	return (0);
 }
 
-int execute_node(t_node *node)
+int	execute_node(t_node *node)
 {
 	if (node == NULL)
 		return 0;
@@ -107,14 +125,11 @@ int execute_node(t_node *node)
 	else if (node->type == N_OR)
 		return handling_or(node);
 	else
-		printf("Unknown node type encountered\n");
+		//printf("Unknown node type encountered\n");
 	return 1;
 }
 
-// Main execution entry point
-void run_execution(t_data* data)
+void	run_execution(t_data* data)
 {
 	execute_node(data->ast);
 }
-
-
