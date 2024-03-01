@@ -6,13 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/29 16:05:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:55:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-
+#ifndef EXEC_H
+# define EXEC_H
 
 # include "../libft/inc/libft.h"
 # include <fcntl.h>
@@ -24,10 +23,6 @@
 # include <errno.h>
 # include <termios.h>
 # include <stdbool.h>
-
-# define SUCCESS 0
-# define EXIT_SIGNAL_OFFSET 128
-# define GENERAL_ERROR_CODE 1
 
 typedef enum	e_ast_direction
 {
@@ -84,13 +79,13 @@ typedef struct	s_data
 }	t_data;
 
 /*
-* debug only
+debug only
 */
 t_node* create_ast();
 void	print_ast(t_node* node, int depth);
 
 /*
-* run_execution
+run_execution
 */
 void	run_execution(t_data* data);
 
