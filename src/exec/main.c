@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/29 09:46:14 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:27:08 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,18 @@
 */
 int	main(int argc, char **argv, char **envp)
 {
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (data == NULL)
+		return (1);
 	(void)argc;
 	(void)argv;
 	(void)envp;
-
-  t_data *data = malloc(sizeof(t_data));
-    if (data == NULL) {
-        // Gestion d'erreur en cas d'échec d'allocation
-        return 1;
-    }
-	ft_bzero(data, sizeof(t_data)); 
+	ft_bzero(data, sizeof(t_data));
+	data->env = envp;
 	data->ast = create_ast();
-	//ex cmd is : cat < input.txt | grep "pattern" | sort > output.txt && echo "Success" || echo -n "Failure";
-	//print_ast(data->ast, 0);
+	data->last_exit_status = EXIT_SUCCESS;
 	run_execution(data);
-	
-	return (0);
+	return (data->last_exit_status);
 }

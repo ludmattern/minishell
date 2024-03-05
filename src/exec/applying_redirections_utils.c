@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executing.c                                        :+:      :+:    :+:   */
+/*   applying_redirections_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:35:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:43:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
 /*
-Handles the node by calling the appropriate function based on its type.
+Handles the child process of a pipeline.
 */
-int	handling_node(t_data *data, t_node *node)
+void	heredoc_child_process(int pipefd[2], const char *delimiter)
 {
-	if (node == NULL)
-		return (EXIT_SUCCESS);
-	if (node->type == N_CMD)
-		return (handling_command(data, node));
-	else if (node->type == N_PIPE)
-		return (handling_pipeline(data, node));
-	else if (node->type == N_AND)
-		return (handling_and(data, node));
-	else
-		return (handling_or(data, node));
+	close(pipefd[0]);
+	read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
+	close(pipefd[1]);
+	exit(EXIT_SUCCESS);
 }
 
 /*
-Executes the AST by handling each node.
+Close the pipe file descriptors and wait for the child process to finish.
 */
-void	run_execution(t_data *data)
+void	heredoc_parent_process(int pipefd[2])
 {
-	handling_node(data, data->ast);
+	close(pipefd[1]);
+	dup2(pipefd[0], STDIN_FILENO);
+	close(pipefd[0]);
+	wait(NULL);
 }

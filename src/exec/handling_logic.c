@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executing.c                                        :+:      :+:    :+:   */
+/*   handling_logic.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:35:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:37:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-/*
-Handles the node by calling the appropriate function based on its type.
+/* 
+reminder of the && operator :
+if the left command succeeds, execute the right command
 */
-int	handling_node(t_data *data, t_node *node)
+int	handling_and(t_data *data, t_node *node)
 {
-	if (node == NULL)
-		return (EXIT_SUCCESS);
-	if (node->type == N_CMD)
-		return (handling_command(data, node));
-	else if (node->type == N_PIPE)
-		return (handling_pipeline(data, node));
-	else if (node->type == N_AND)
-		return (handling_and(data, node));
-	else
-		return (handling_or(data, node));
+	if (handling_node(data, node->left) == 0)
+		return (handling_node(data, node->right));
+	return (1);
 }
 
-/*
-Executes the AST by handling each node.
+/* 
+reminder of the OR operator :
+if the left command fails, execute the right command
 */
-void	run_execution(t_data *data)
+int	handling_or(t_data *data, t_node *node)
 {
-	handling_node(data, data->ast);
+	if (handling_node(data, node->left) != 0)
+		return (handling_node(data, node->right));
+	return (0);
 }
