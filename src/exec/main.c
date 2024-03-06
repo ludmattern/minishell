@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:27:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:57:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		return (1);
 	(void)argc;
 	(void)argv;
 	(void)envp;
+	data = malloc(sizeof(t_data));
+	if (data == NULL)
+		return (EXIT_GENERAL_ERROR);
 	ft_bzero(data, sizeof(t_data));
 	data->env = envp;
 	data->ast = create_ast();

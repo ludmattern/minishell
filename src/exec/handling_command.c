@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 17:25:50 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:58:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	execute_command(t_data *data, t_node *node)
 {
 	execve(node->expanded_args[0], node->expanded_args, data->env);
 	if (errno == ENOENT)
-		command_execution_failure("command not found", EXIT_COMMAND_NOT_FOUND);
+		command_execution_failure("execve", EXIT_COMMAND_NOT_FOUND);
 	else if (errno == EACCES)
-		command_execution_failure("permission denied", EXIT_PERMISSION_DENIED);
+		command_execution_failure("execve", EXIT_PERMISSION_DENIED);
 	else
-		command_execution_failure("execve error", EXIT_EXEC_FAILURE);
+		command_execution_failure("execve", EXIT_EXEC_FAILURE);
 }
 
 /*

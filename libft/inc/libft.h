@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:41:15 by lmattern          #+#    #+#             */
-/*   Updated: 2024/02/14 14:09:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:24:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 long	ft_atoi(const char *nptr);
 int		ft_putchar_fd(char c, int fd);
-int		ft_putstr_fd(char *s, int fd);
+int		ft_putstr_fd(const char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 t_list	*ft_lstnew(void *content);
