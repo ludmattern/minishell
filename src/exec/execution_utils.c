@@ -6,21 +6,21 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:47:05 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:23:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	command_execution_failure(const char *error) __attribute__((noreturn));
+void	command_exec_failure(const char *error) __attribute__((noreturn));
 void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
 
 /*
 Waits for the child process to finish and return its exit status.
 */
-int wait_for_child(pid_t pid, t_data *data)
+int	wait_for_child(pid_t pid, t_data *data)
 {
-	int status;
+	int	status;
 
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
@@ -31,6 +31,7 @@ int wait_for_child(pid_t pid, t_data *data)
 		data->last_exit_status = EXIT_FAILURE;
 	return (data->last_exit_status);
 }
+
 /*
 Returns true if the line matches the delimiter, false otherwise.
 */

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:09:08 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:39:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:23:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "./libft.h"
-
 
 /*
 ft_printf

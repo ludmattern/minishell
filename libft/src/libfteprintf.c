@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flibftprintf.c                                     :+:      :+:    :+:   */
+/*   libfteprintf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:12:36 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:37:28 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:25:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	process_format(const char **format, va_list *args)
 	else if (**format == 'i' || **format == 'd')
 		result = print_int_eprintf((int)va_arg(*args, int));
 	else if (**format == 'u' || **format == 'x' || **format == 'X')
-		result = print_num_eprintf((unsigned int)va_arg(*args, unsigned int), **format);
+		result = print_num_eprintf((unsigned int)va_arg(*args, unsigned int), \
+		**format);
 	else if (**format == '%')
 		result = ft_putchar_fd('%', 2);
 	else

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 18:01:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:18:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ int		wait_for_child(pid_t pid, t_data *data);
 /*
 handling errors
 */
-void	fork_creation_failure(const char *message, int error_code) __attribute__((noreturn));
+void	fork_creation_failure(const char *message, int error_code) \
+__attribute__((noreturn));
 #endif
