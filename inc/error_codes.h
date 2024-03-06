@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:29:36 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 14:33:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:40:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ Specific error codes
 # define EXIT_EXEC_FAILURE 4
 # define EXIT_FORK_FAILURE 5
 # define EXIT_PIPE_FAILURE 6
+# define EXIT_IS_A_DIRECTORY 7
 
 #endif

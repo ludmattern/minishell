@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 17:25:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:53:56 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ t_node* create_ast(void)
 	// Construct the "cat < input.txt" command
 	//t_io_node* cat_io = create_io_node(IO_IN, "input.txt");
 	t_io_node* cat_io = create_io_node(IO_HEREDOC, "EOF");
-	t_node* cat_cmd = create_cmd_node("/usr/bin/cat", cat_io);
+	t_node* cat_cmd = create_cmd_node("/usr/bin/cot", cat_io);
+	cat_cmd->command_path = strdup("/usr/bin/cot");
 	cat_cmd->expanded_args = realloc(cat_cmd->expanded_args, 2 * sizeof(char*));
 	cat_cmd->expanded_args[1] = NULL;
 
 	// Construct the "grep "pattern"" command
-	t_node* grep_cmd = create_cmd_node("/usr/bin/grep", NULL);
+	t_node* grep_cmd = create_cmd_node("grep", NULL);
+	grep_cmd->command_path = strdup("/usr/bin/grep");
 	grep_cmd->expanded_args = realloc(grep_cmd->expanded_args, 3 * sizeof(char*));
 	grep_cmd->expanded_args[1] = strdup("pattern");
 	grep_cmd->expanded_args[2] = NULL;
@@ -73,7 +75,9 @@ t_node* create_ast(void)
 
 	// Construct the "sort > output.txt" command
 	t_io_node* sort_io = create_io_node(IO_OUT, "output.txt");
-	t_node* sort_cmd = create_cmd_node("/usr/bin/wc", sort_io);
+	t_node* sort_cmd = create_cmd_node("wc", sort_io);
+	sort_cmd->command_path = strdup("/usr/bin/wc");
+	sort_cmd->expanded_args = realloc(sort_cmd->expanded_args, 3 * sizeof(char*));
 	sort_cmd->expanded_args[1] = strdup("-l");
 	sort_cmd->expanded_args[2] = NULL;
 
@@ -81,13 +85,15 @@ t_node* create_ast(void)
 	t_node* grep_sort_pipe = create_operator_node(N_PIPE, cat_grep_pipe, sort_cmd);
 
 	// Construct the "echo "Success"" command
-	t_node* echo_success_cmd = create_cmd_node("/usr/bin/ecsdfdsfho", NULL);
+	t_node* echo_success_cmd = create_cmd_node("cot", NULL);
+	echo_success_cmd->command_path = strdup("/usr/bin/cot");
 	echo_success_cmd->expanded_args = realloc(echo_success_cmd->expanded_args, 3 * sizeof(char*));
 	echo_success_cmd->expanded_args[1] = strdup("Success");
 	echo_success_cmd->expanded_args[2] = NULL;
 
 	// Construct the "echo -n "Failure"" command
-	t_node* echo_failure_cmd = create_cmd_node("/usr/bin/ecgfhfghgfho", NULL);
+	t_node* echo_failure_cmd = create_cmd_node("/usr/bin/", NULL);
+	echo_failure_cmd->command_path = strdup("/usr/bin/");
 	echo_failure_cmd->expanded_args = realloc(echo_failure_cmd->expanded_args, 4 * sizeof(char*));
 	echo_failure_cmd->expanded_args[1] = strdup("-n");
 	echo_failure_cmd->expanded_args[2] = strdup("Failure");

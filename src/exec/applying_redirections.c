@@ -6,15 +6,15 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:22:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:02:31 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	command_redirection_failure(const char *error, int exit_code)
+void	command_redirection_failure(const char *message, int exit_code)
 {
-	perror(error);
+	ft_eprintf("minishell: %s: %s\n", message, strerror(errno));
 	exit(exit_code);
 }
 

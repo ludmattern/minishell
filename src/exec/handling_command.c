@@ -6,36 +6,53 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:58:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:02:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	command_execution_failure(const char *error, int exit_code) __attribute__((noreturn));
+void	command_execution_failure(const char *context, int exit_code) __attribute__((noreturn));
 void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
 
 /*
 Prints an error message and exit the child process.
 */
-void	command_execution_failure(const char *error, int exit_code)
+void	command_execution_failure(const char *context, int error_code)
 {
-	perror(error);
-	exit(exit_code);
+	if (error_code == EXIT_COMMAND_NOT_FOUND)
+	{
+		if (ft_strchr(context, '/'))
+			ft_eprintf("minishell: %s: no such file or directory\n", context);
+		else
+			ft_eprintf("minishell: %s: command not found\n", context);
+	}
+	else if (error_code == EXIT_PERMISSION_DENIED)
+		ft_eprintf("minishell: %s: Permission denied\n", context);
+	else if (error_code == EXIT_IS_A_DIRECTORY)
+		ft_eprintf("minishell: %s: Is a directory\n", context);
+	else
+		ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
+	exit(EXIT_COMMAND_NOT_FOUND);
 }
 
-/*
-Executes the command in the child process.
-*/
 void	execute_command(t_data *data, t_node *node)
 {
-	execve(node->expanded_args[0], node->expanded_args, data->env);
-	if (errno == ENOENT)
-		command_execution_failure("execve", EXIT_COMMAND_NOT_FOUND);
-	else if (errno == EACCES)
-		command_execution_failure("execve", EXIT_PERMISSION_DENIED);
-	else
-		command_execution_failure("execve", EXIT_EXEC_FAILURE);
+	struct stat statbuf;
+	if (stat(node->command_path, &statbuf) == -1)
+		command_execution_failure(node->expanded_args[0], EXIT_COMMAND_NOT_FOUND);
+	if (S_ISDIR(statbuf.st_mode))
+		command_execution_failure(node->expanded_args[0], EXIT_IS_A_DIRECTORY);
+	if (access(node->command_path, X_OK) == -1)
+		command_execution_failure(node->expanded_args[0], EXIT_PERMISSION_DENIED);
+	execve(node->command_path, node->expanded_args, data->env);
+	command_execution_failure(node->expanded_args[0], EXIT_GENERAL_ERROR);
+}
+
+void	fork_creation_failure(const char *message, int error_code)
+{
+	ft_eprintf("minishell: %s: %s\n", message, strerror(errno));
+	exit(error_code);
 }
 
 /*
@@ -54,5 +71,5 @@ int	handling_command(t_data *data, t_node *node)
 	else if (pid > 0)
 		return (wait_for_child(pid, data));
 	else
-		command_execution_failure("fork error", EXIT_FORK_FAILURE);
+		fork_creation_failure("fork", EXIT_FORK_FAILURE);
 }

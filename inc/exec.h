@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:25:49 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:01:08 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <errno.h>
 # include <termios.h>
 # include <stdbool.h>
+# include <sys/stat.h>
 
 typedef enum e_ast_direction
 {
@@ -64,6 +65,7 @@ typedef struct s_node
 	t_node_type			type;
 	t_io_node			*io_list;
 	char				*args;
+	char				*command_path;
 	char				**expanded_args;
 	struct s_node		*left;
 	struct s_node		*right;
@@ -119,4 +121,8 @@ handling commands utils
 */
 int		wait_for_child(pid_t pid, t_data *data);
 
+/*
+handling errors
+*/
+void	fork_creation_failure(const char *message, int error_code) __attribute__((noreturn));
 #endif
