@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 13:15:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:16:58 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,16 @@ int	handling_pipeline(t_data *data, t_node *node)
 		exit(EXIT_FAILURE);
 	}
 	pid_left = fork();
+	if (pid_left < 0)
+		fork_creation_failure("fork", EXIT_FORK_FAILURE);
 	if (pid_left == 0)
 		handling_pipeline_child(data, node->left, pipefd, AST_LEFT);
 	pid_right = fork();
+	if (pid_right < 0)
+	{
+		close_pipe_fds(pipefd);
+		fork_creation_failure("fork", EXIT_FORK_FAILURE);
+	}
 	if (pid_right == 0)
 		handling_pipeline_child(data, node->right, pipefd, AST_RIGHT);
 	close_pipe_fds(pipefd);

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 16:03:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:05:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,3 @@ int	main(int argc, char **argv, char **envp)
 	run_execution(data);
 	return (data->last_exit_status);
 }
-
-/*
-
-/
-bash: /: Is a directory
-
-/usr/cat
-bash: /badpath/cat: No such file or directory
-
-/usr/bin/badcmd
-bash: /usr/bin/badcmd: No such file or directory
-
-badcmd
-bash: badcmd: command not found
-
-*/
