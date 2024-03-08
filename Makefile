@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/05 14:43:58 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/08 17:33:57 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS			:=	$(SRCDIR)/main.c \
 					$(SRCDIR)/applying_redirections_utils.c \
 					$(SRCDIR)/handling_command.c \
 					$(SRCDIR)/handling_logic.c \
-					$(SRCDIR)/handling_pipeline.c
+					$(SRCDIR)/handling_pipeline.c \
+					$(SRCDIR)/handling_pipeline_utils.c
 OBJDIR			:=	./.obj
 OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
@@ -53,7 +54,7 @@ fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT)
 
-re: clean all
+re: fclean all
 
 FORCE:
 

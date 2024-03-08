@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 18:18:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:39:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,20 @@ void	print_ast(t_node *node, int depth);
 /*
 run execution
 */
-void	run_execution(t_data *data);
+int		run_execution(t_data *data);
 
 /*
 applying redirections
 */
-void	apply_command_redirections(t_io_node *io_list);
+int		apply_command_redirections(t_data *data, t_io_node *io_list);
 
 /*
 handling heredoc
 */
-void	heredoc_parent_process(int pipefd[2]);
-void	heredoc_child_process(int pipefd[2], const char *delimiter);
-void	read_heredoc_and_write_to_pipe(const char *delimiter, int write_fd);
-bool	match_delimiter(const char *line, const char *delimiter);
+int		heredoc_child_process(t_data *data, int pipefd[2], const char *stop);
+int		heredoc_parent_process(pid_t pid, int pipefd[2]);
+int		read_heredoc_and_write_to_pipe(const char *stop, int write_fd);
+bool	match_delimiter(const char *line, const char *stop);
 
 /*
 handling nodes
@@ -120,10 +120,22 @@ int		handling_command(t_data *data, t_node *node);
 handling commands utils
 */
 int		wait_for_child(pid_t pid, t_data *data);
+int		create_pipe(int pipefd[2]);
+void	wait_for_pipeline_children(pid_t pid1, pid_t pid2);
 
 /*
 handling errors
 */
-void	fork_creation_failure(const char *message, int error_code) \
-__attribute__((noreturn));
+int		fork_creation_failure(const char *message);
+int		command_redirection_failure(const char *context, int exit_code);
+void	dup2_creation_failure(t_data *data, int pipefd[2]);
+
+/*
+freeing data
+*/
+void	free_data(t_data *data);
+void	free_data_structure(t_data **data);
+void	close_pipe_fds(int pipefd[2]);
+void	close_standard_fds(void);
+
 #endif

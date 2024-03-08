@@ -6,14 +6,22 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 18:23:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:32:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	command_exec_failure(const char *error) __attribute__((noreturn));
 void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
+
+/*
+Frees the data structure.
+*/
+void	free_data_structure(t_data **data)
+{
+	free_data(*data);
+	free(*data);
+}
 
 /*
 Waits for the child process to finish and return its exit status.
@@ -53,7 +61,7 @@ bool	match_delimiter(const char *line, const char *delimiter)
 /*
 Reads the heredoc and writes it to the pipe.
 */
-void	read_heredoc_and_write_to_pipe(const char *delimiter, int write_fd)
+int	read_heredoc_and_write_to_pipe(const char *delimiter, int write_fd)
 {
 	char	*line;
 
@@ -65,8 +73,15 @@ void	read_heredoc_and_write_to_pipe(const char *delimiter, int write_fd)
 			free(line);
 			break ;
 		}
-		write(write_fd, line, strlen(line));
+		if (write(write_fd, line, ft_strlen(line)) == -1)
+		{
+			perror("write failed");
+			free(line);
+			get_next_line(-1);
+			return (EXIT_GENERAL_ERROR);
+		}
 		free(line);
 	}
 	get_next_line(-1);
+	return (EXIT_SUCCESS);
 }

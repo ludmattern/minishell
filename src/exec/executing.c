@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:35:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:15:37 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	handling_node(t_data *data, t_node *node)
 /*
 Executes the AST by handling each node.
 */
-void	run_execution(t_data *data)
+int	run_execution(t_data *data)
 {
-	handling_node(data, data->ast);
+	return (handling_node(data, data->ast));
 }

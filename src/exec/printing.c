@@ -6,17 +6,18 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/01 17:47:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:49:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
-
+/*
 void	print_io_list(t_io_node* node)
 {
 	while (node != NULL)
 	{
-		printf("IO Node: type=%d, value=%s, here_doc=%d\n", node->type, node->value, node->here_doc);
+		printf("IO Node: type=%d, value=%s, here_doc=%d\n", node->type, \
+		node->value, node->here_doc);
 		node = node->next;
 	}
 }
@@ -43,7 +44,8 @@ void print_ast(t_node* node, int depth)
 			printf("OR\n");
 			break;
 		case N_CMD:
-			printf("CMD: %s\n", node->args); // Consider including args details if applicable
+			printf("CMD: %s\n", node->args); // Consider including args 
+			details if applicable
 			break;
 		default:
 			printf("UNKNOWN\n");
@@ -65,3 +67,4 @@ void print_ast(t_node* node, int depth)
 		print_ast(node->right, depth + 1);
 	}
 }
+*/
