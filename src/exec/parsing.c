@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:56:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:32:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_node	*create_operator_node(t_node_type type, t_node *left, t_node *right)
 	op_node->io_list = NULL;
 	return (op_node);
 }
-
+/*
 t_node	*create_ast(void)
 {
 	t_io_node	*cat_io = create_io_node(IO_IN, "infile.txt");
@@ -101,6 +101,7 @@ t_node	*create_ast(void)
 
 	return (root);
 }
+*/
 
 /*
 t_node* create_ast(void)
@@ -118,3 +119,84 @@ t_node* create_ast(void)
 	return echo_cmd;
 }
 */
+
+
+// t_node *create_ast(void) {
+//     // Créer la commande "echo bonjour"
+//     t_node *echo_bonjour_cmd = create_cmd_node("echo", NULL); // Pas de redirection d'IO ici
+//     echo_bonjour_cmd->command_path = ft_strdup("/usr/bin/echo"); // Assurez-vous que le chemin est correct pour votre système
+//     echo_bonjour_cmd->expanded_args = realloc(echo_bonjour_cmd->expanded_args, 3 * sizeof(char *));
+//     echo_bonjour_cmd->expanded_args[1] = ft_strdup("-n");
+//     echo_bonjour_cmd->expanded_args[2] = NULL;
+
+//     // Créer la commande "echo au-revoir"
+//     t_node *echo_au_revoir_cmd = create_cmd_node("echo", NULL); // Pas de redirection d'IO ici
+//     echo_au_revoir_cmd->command_path = ft_strdup("echo"); // Assurez-vous que le chemin est correct pour votre système
+//     echo_au_revoir_cmd->expanded_args = realloc(echo_au_revoir_cmd->expanded_args, 4 * sizeof(char *));
+//     echo_au_revoir_cmd->expanded_args[1] = ft_strdup("-n");
+//     echo_au_revoir_cmd->expanded_args[2] = ft_strdup("au-revoir");
+//     echo_au_revoir_cmd->expanded_args[3] = NULL;
+
+//     // Utiliser l'opérateur AND pour connecter les deux commandes "echo"
+//     t_node *root = create_operator_node(N_AND, echo_bonjour_cmd, echo_au_revoir_cmd);
+
+//     return root;
+// }
+
+t_node *create_ast(void)
+{
+	t_node *cd = create_cmd_node("pwd", NULL);
+	cd->command_path = ft_strdup("pwd");
+	cd->expanded_args = realloc(cd->expanded_args, 2 * sizeof(char *));
+	cd->expanded_args[1] = NULL;
+	return (cd);
+}
+
+char	**duplicate_envp(char **envp)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**minishell_env;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (envp && envp[i] != NULL)
+		i++;
+	minishell_env = malloc((i + 1) * sizeof(char *));
+	if (minishell_env == NULL) {
+		perror("Failed to allocate memory for minishell_env");
+		exit(EXIT_FAILURE);
+	}
+	while (j < i)
+	{
+		minishell_env[j] = malloc(strlen(envp[j]) + 1);
+		if (minishell_env[j] == NULL)
+		{
+			perror("Failed to allocate memory for minishell_env[j]");
+			while (k < j)
+				free(minishell_env[k++]);
+			free(minishell_env);
+			exit(EXIT_FAILURE);
+		}
+		ft_strlcpy(minishell_env[j], envp[j], ft_strlen(envp[j]) + 1);
+		j++;
+	}
+	minishell_env[i] = NULL;
+
+	return (minishell_env);
+}
+
+void	parsing(t_data **data, int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	*data = malloc(sizeof(t_data));
+	if (*data == NULL)
+		exit (EXIT_GENERAL_ERROR);
+	ft_bzero(*data, sizeof(t_data));
+	(*data)->env = duplicate_envp(envp);
+	(*data)->ast = create_ast();
+	(*data)->last_exit_status = EXIT_SUCCESS;
+}

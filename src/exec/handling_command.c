@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:16:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:47:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ void	command_exec_failure(t_data *data, const char *context, int error_code)
 	else if (error_code == EXIT_IS_A_DIRECTORY)
 	{
 		ft_eprintf("minishell: %s: Is a directory\n", context);
-		free_data(data);
-		free(data);
+		free_data_structure(&data);
 		exit(EXIT_INVALID_COMMAND);
 	}
 	else
 		ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
-	free_data(data);
-	free(data);
+	free_data_structure(&data);
 	exit(EXIT_COMMAND_NOT_FOUND);
 }
 
@@ -48,6 +46,7 @@ void	execute_command(t_data *data, t_node *node)
 {
 	struct stat	statbuf;
 
+	checking_builtins(data, node);
 	if (stat(node->command_path, &statbuf) == -1)
 		command_exec_failure(data, node->expanded_args[0],
 			EXIT_COMMAND_NOT_FOUND);

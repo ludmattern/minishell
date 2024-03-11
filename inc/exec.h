@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:39:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:25:21 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <stdlib.h>
+#include <linux/limits.h>
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
@@ -88,6 +89,7 @@ debug only
 */
 t_node	*create_ast(void);
 void	print_ast(t_node *node, int depth);
+void	parsing(t_data **data, int argc, char **argv, char **envp);
 
 /*
 run execution
@@ -122,6 +124,14 @@ handling commands utils
 int		wait_for_child(pid_t pid, t_data *data);
 int		create_pipe(int pipefd[2]);
 void	wait_for_pipeline_children(pid_t pid1, pid_t pid2);
+
+/*
+builtins
+*/
+int		checking_builtins(t_data *data, t_node *node);
+int		ft_cd(char **args, char **env);
+int		ft_pwd(char **args);
+char	*ft_getenv(const char *name, char **env);
 
 /*
 handling errors

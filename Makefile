@@ -6,11 +6,11 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/08 17:33:57 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/11 15:24:50 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				:=	cc
+CC				:=	gcc
 NAME			:=	exec
 CFLAGS			:=	-Wextra -Wall -Werror
 LIBFT			:=	./libft
@@ -29,7 +29,10 @@ SRCS			:=	$(SRCDIR)/main.c \
 					$(SRCDIR)/handling_command.c \
 					$(SRCDIR)/handling_logic.c \
 					$(SRCDIR)/handling_pipeline.c \
-					$(SRCDIR)/handling_pipeline_utils.c
+					$(SRCDIR)/handling_pipeline_utils.c \
+					$(SRCDIR)/ft_echo.c \
+					$(SRCDIR)/ft_cd.c \
+					$(SRCDIR)/ft_pwd.c
 OBJDIR			:=	./.obj
 OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
@@ -39,13 +42,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS) | $(OBJDIR)
 	$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
 
 $(LIBFT)/libft.a: FORCE
-	make -C $(LIBFT)
+	@make -C $(LIBFT)
 
 $(NAME): $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
-	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -o $(NAME)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+valgrind: $(NAME)
+	clear
+	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes ./$(NAME)
 
 clean:
 	rm -f $(OBJS)
@@ -58,4 +65,4 @@ re: fclean all
 
 FORCE:
 
-.PHONY: all, clean, FORCE, fclean, re
+.PHONY: all, clean, run, valgrind, FORCE, fclean, re

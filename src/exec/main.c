@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:45:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:46:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,11 @@ void	free_data(t_data *data)
 */
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*data;
+	t_data	*data = NULL;
 	int		last_exit_status;
 
-	(void)argc;
-	(void)argv;
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		return (EXIT_GENERAL_ERROR);
-	ft_bzero(data, sizeof(t_data));
-	data->env = envp;
-	data->ast = create_ast();
-	data->last_exit_status = EXIT_SUCCESS;
+	parsing(&data, argc, argv, envp);
 	last_exit_status = run_execution(data);
-	free_data(data);
-	free(data);
+	free_data_structure(&data);
 	return (last_exit_status);
 }
