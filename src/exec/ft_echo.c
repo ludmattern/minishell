@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 18:25:09 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:12:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	checking_builtins(t_data *data, t_node *node)
 		status = ft_cd(node->expanded_args, data->env);
 	else if (ft_strncmp(str, "pwd", 3) == 0)
 		status = ft_pwd(node->expanded_args);
+	else if (ft_strncmp(str, "export", 6) == 0)
+		status = ft_export(node->expanded_args, &data->env);
+	else if (ft_strncmp(str, "unset", 5) == 0)
+		status = ft_unset_vars(node->expanded_args, &data->env);
+	else if (ft_strncmp(str, "env", 3) == 0)
+		status = ft_env(node->expanded_args, &data->env);
 	else
 		return (0);
 	free_data_structure(&data);

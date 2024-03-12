@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 18:25:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:07:40 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,16 @@ int		checking_builtins(t_data *data, t_node *node);
 int		ft_cd(char **args, char **env);
 int		ft_pwd(char **args);
 char	*ft_getenv(const char *name, char **env);
+int		ft_export(char **args, char ***env);
+void	ft_print_env_sorted(char **env);
+int		ft_env(char **args, char ***env);
+int		ft_unset_vars(char **names, char ***env);
+
+/*
+handling environnment
+*/
+char	**ft_addenv(char *name, char *value, char ***env);
+char	**duplicate_envp(char **envp);
 
 /*
 handling errors

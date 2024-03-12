@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/11 15:24:50 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/12 16:59:24 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,11 @@ SRCS			:=	$(SRCDIR)/main.c \
 					$(SRCDIR)/handling_pipeline_utils.c \
 					$(SRCDIR)/ft_echo.c \
 					$(SRCDIR)/ft_cd.c \
-					$(SRCDIR)/ft_pwd.c
+					$(SRCDIR)/ft_pwd.c \
+					$(SRCDIR)/ft_export.c \
+					$(SRCDIR)/handling_env.c \
+					$(SRCDIR)/ft_unset.c \
+					$(SRCDIR)/ft_env.c
 OBJDIR			:=	./.obj
 OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

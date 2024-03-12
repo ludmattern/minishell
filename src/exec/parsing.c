@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 18:32:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:56:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,47 +145,12 @@ t_node* create_ast(void)
 
 t_node *create_ast(void)
 {
-	t_node *cd = create_cmd_node("pwd", NULL);
-	cd->command_path = ft_strdup("pwd");
-	cd->expanded_args = realloc(cd->expanded_args, 2 * sizeof(char *));
-	cd->expanded_args[1] = NULL;
+	t_node *cd = create_cmd_node("env", NULL);
+	cd->command_path = ft_strdup("env");
+	cd->expanded_args = realloc(cd->expanded_args, 3 * sizeof(char *));
+	cd->expanded_args[1] = ft_strdup("env");
+	cd->expanded_args[2] = NULL;
 	return (cd);
-}
-
-char	**duplicate_envp(char **envp)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**minishell_env;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (envp && envp[i] != NULL)
-		i++;
-	minishell_env = malloc((i + 1) * sizeof(char *));
-	if (minishell_env == NULL) {
-		perror("Failed to allocate memory for minishell_env");
-		exit(EXIT_FAILURE);
-	}
-	while (j < i)
-	{
-		minishell_env[j] = malloc(strlen(envp[j]) + 1);
-		if (minishell_env[j] == NULL)
-		{
-			perror("Failed to allocate memory for minishell_env[j]");
-			while (k < j)
-				free(minishell_env[k++]);
-			free(minishell_env);
-			exit(EXIT_FAILURE);
-		}
-		ft_strlcpy(minishell_env[j], envp[j], ft_strlen(envp[j]) + 1);
-		j++;
-	}
-	minishell_env[i] = NULL;
-
-	return (minishell_env);
 }
 
 void	parsing(t_data **data, int argc, char **argv, char **envp)
