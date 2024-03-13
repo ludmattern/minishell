@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/12 17:07:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:23:56 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <stdlib.h>
-#include <linux/limits.h>
+# include <linux/limits.h>
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
@@ -136,12 +136,17 @@ int		ft_export(char **args, char ***env);
 void	ft_print_env_sorted(char **env);
 int		ft_env(char **args, char ***env);
 int		ft_unset_vars(char **names, char ***env);
+void	print_env_var(const char *var);
 
 /*
 handling environnment
 */
 char	**ft_addenv(char *name, char *value, char ***env);
 char	**duplicate_envp(char **envp);
+char	**copy_env(char **env, int size);
+void	sort_env(char **env, int size);
+void	print_and_free_env(char **env);
+size_t	count_env_entries(char **envp);
 
 /*
 handling errors

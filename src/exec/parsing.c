@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:19:00 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/12 16:56:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:18:22 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,10 @@ t_node* create_ast(void)
 
 t_node *create_ast(void)
 {
-	t_node *cd = create_cmd_node("env", NULL);
-	cd->command_path = ft_strdup("env");
+	t_node *cd = create_cmd_node("export", NULL);
+	cd->command_path = ft_strdup("export");
 	cd->expanded_args = realloc(cd->expanded_args, 3 * sizeof(char *));
-	cd->expanded_args[1] = ft_strdup("env");
+	cd->expanded_args[1] = ft_strdup("MYVAR=poulet");
 	cd->expanded_args[2] = NULL;
 	return (cd);
 }

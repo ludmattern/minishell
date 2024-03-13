@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/12 16:59:24 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/13 13:51:21 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRCS			:=	$(SRCDIR)/main.c \
 					$(SRCDIR)/ft_export.c \
 					$(SRCDIR)/handling_env.c \
 					$(SRCDIR)/ft_unset.c \
-					$(SRCDIR)/ft_env.c
+					$(SRCDIR)/ft_env.c \
+					$(SRCDIR)/ft_export_utils.c \
+					$(SRCDIR)/duplicate_env.c
 OBJDIR			:=	./.obj
 OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

@@ -6,12 +6,15 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/12 16:50:00 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:21:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Frees the environment array.
+*/
 void	free_env(char ***env)
 {
 	int	i;
@@ -22,80 +25,89 @@ void	free_env(char ***env)
 	free(*env);
 }
 
-char	**duplicate_envp(char **envp)
+/*
+Finds the index of the environment variable with the specified name.
+*/
+int	find_env_index(char **env, const char *name)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	**minishell_env;
+	int	i;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	while (envp && envp[i] != NULL)
-		i++;
-	minishell_env = malloc((i + 1) * sizeof(char *));
-	if (minishell_env == NULL) {
-		perror("Failed to allocate memory for minishell_env");
-		exit(EXIT_FAILURE);
-	}
-	while (j < i)
+	while (env[i] != NULL)
 	{
-		minishell_env[j] = malloc(strlen(envp[j]) + 1);
-		if (minishell_env[j] == NULL)
+		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0
+			&& env[i][ft_strlen(name)] == '=')
 		{
-			perror("Failed to allocate memory for minishell_env[j]");
-			while (k < j)
-				free(minishell_env[k++]);
-			free(minishell_env);
-			exit(EXIT_FAILURE);
+			return (i);
 		}
-		ft_strlcpy(minishell_env[j], envp[j], ft_strlen(envp[j]) + 1);
-		j++;
+		i++;
 	}
-	minishell_env[i] = NULL;
-
-	return (minishell_env);
+	return (-1);
 }
 
-char **ft_addenv(char *name, char *value, char ***env)
+/*
+Creates a new environment entry.
+*/
+char	*create_env_entry(const char *name, const char *value)
 {
-	int		i;
-	int		j;
-	char	**new_env;
-	char	*new_entry;
 	char	*temp;
+	char	*new_entry;
 
-	new_entry = (NULL);
 	temp = ft_strjoin(name, "=");
 	if (!temp)
+	{
 		return (NULL);
+	}
 	new_entry = ft_strjoin(temp, value);
 	free(temp);
+	return (new_entry);
+}
+
+/*
+Updates the environment array.
+*/
+char	**update_env(char **env, char *new_entry, int index)
+{
+	char	**new_env;
+	int		size;
+	int		i;
+
+	if (index >= 0)
+	{
+		free(env[index]);
+		env[index] = new_entry;
+	}
+	else
+	{
+		size = count_env_entries(env);
+		new_env = malloc((size + 2) * sizeof(char *));
+		if (!new_env)
+			return (free(new_entry), NULL);
+		i = -1;
+		while (++i < size)
+			new_env[i] = env[i];
+		new_env[size] = new_entry;
+		new_env[size + 1] = NULL;
+		free(env);
+		env = new_env;
+	}
+	return (env);
+}
+
+/*
+Adds a new environment variable.
+*/
+char	**ft_addenv(char *name, char *value, char ***env)
+{
+	char	*new_entry;
+	int		index;
+
+	new_entry = create_env_entry(name, value);
 	if (!new_entry)
-		return (NULL);
-	i = -1;
-	while ((*env)[++i])
 	{
-		if (ft_strncmp((*env)[i], name, ft_strlen(name)) == 0 && (*env)[i][ft_strlen(name)] == '=')
-		{
-			free((*env)[i]);
-			(*env)[i] = new_entry;
-			return (*env);
-		}
-	}
-	new_env = malloc((i + 2) * sizeof(char *));
-	if (!new_env)
-	{
-		free(new_entry);
 		return (NULL);
 	}
-	j = -1;
-	while (++j < i)
-		new_env[j] = (*env)[j];
-	new_env[i] = new_entry;
-	new_env[i + 1] = NULL;
-	free(*env);
-	*env = new_env;
+	index = find_env_index(*env, name);
+	*env = update_env(*env, new_entry, index);
 	return (*env);
 }

@@ -6,12 +6,15 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/12 17:09:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:30:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Removes the environment variable with the specified name.
+*/
 void	ft_unset(char *name, char ***env)
 {
 	size_t	i;
@@ -39,6 +42,9 @@ void	ft_unset(char *name, char ***env)
 	}
 }
 
+/*
+Removes the environment variables with the specified names.
+*/
 int	ft_unset_vars(char **names, char ***env)
 {
 	int	i;

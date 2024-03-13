@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 13:46:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:25:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,20 @@ void	free_tree(t_node *node)
 */
 void	free_data(t_data *data)
 {
+	char	**temp;
+
 	if (data == NULL)
 		return ;
+	if (data->env != NULL)
+	{
+		temp = data->env;
+		while (*temp != NULL)
+		{
+			free(*temp);
+			temp++;
+		}
+		free(data->env);
+	}
 	free_tree(data->ast);
 }
 
@@ -73,9 +85,10 @@ void	free_data(t_data *data)
 */
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*data = NULL;
+	t_data	*data;
 	int		last_exit_status;
 
+	data = NULL;
 	parsing(&data, argc, argv, envp);
 	last_exit_status = run_execution(data);
 	free_data_structure(&data);

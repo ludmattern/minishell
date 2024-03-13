@@ -6,12 +6,16 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/12 17:12:46 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:22:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Writes the arguments to the standard output followed by a newline (or not with 
+option -n).
+*/
 int	ft_echo(char **args)
 {
 	int		i;
@@ -36,6 +40,9 @@ int	ft_echo(char **args)
 	return (EXIT_SUCCESS);
 }
 
+/*
+Check if the command is a builtin and execute it if it is
+*/
 int	checking_builtins(t_data *data, t_node *node)
 {
 	int			status;
@@ -62,11 +69,13 @@ int	checking_builtins(t_data *data, t_node *node)
 	exit(status);
 }
 
+/*
+Get the value of the environment variable.
+*/
 char	*ft_getenv(const char *name, char **env)
 {
 	size_t	name_len;
 	size_t	i;
-
 
 	name_len = ft_strlen(name);
 	i = 0;

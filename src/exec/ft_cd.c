@@ -6,13 +6,16 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 18:27:14 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:40:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-int ft_cd(char **args, char **env)
+/*
+Changes the current directory to the one specified in the arguments.
+*/
+int	ft_cd(char **args, char **env)
 {
 	const char	*path;
 
@@ -20,7 +23,7 @@ int ft_cd(char **args, char **env)
 	{
 		path = ft_getenv("HOME", env);
 		if (path == NULL)
-		   return (ft_eprintf("minishell: cd: HOME not set\n"), EXIT_FAILURE);
+			return (ft_eprintf("minishell: cd: HOME not set\n"), EXIT_FAILURE);
 	}
 	else
 		path = args[1];
