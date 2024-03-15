@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 13:30:11 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:15:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 /*
 Removes the environment variable with the specified name.
 */
-void	ft_unset(char *name, char ***env)
+int	ft_unset(char *name, char ***env)
 {
 	size_t	i;
 	size_t	j;
 	size_t	name_len;
 
+	if (!name)
+		return (EXIT_SUCCESS);
 	name_len = ft_strlen(name);
 	i = 0;
-	while ((*env)[i])
+	while ((*env) && (*env)[i])
 	{
 		if (ft_strncmp((*env)[i], name, name_len) == 0
 			&& (*env)[i][name_len] == '=')
@@ -40,6 +42,7 @@ void	ft_unset(char *name, char ***env)
 		}
 		i++;
 	}
+	return(EXIT_SUCCESS);
 }
 
 /*

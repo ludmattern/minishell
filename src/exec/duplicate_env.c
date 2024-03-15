@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 15:12:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:06:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	copy_env_entries(char **source, char **dest, int size)
 			free(dest);
 			exit(EXIT_FAILURE);
 		}
-		strcpy(dest[i], source[i]);
+		ft_strlcpy(dest[i], source[i], strlen(source[i]) + 1);
 		i++;
 	}
 	dest[size] = NULL;

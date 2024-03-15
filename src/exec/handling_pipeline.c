@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/11 09:02:41 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:20:00 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	if (status < 0)
 		dup2_creation_failure(data, pipefd);
 	close_pipe_fds(pipefd);
-	handling_node(data, node);
+	handling_node(data, node, true);
 	free_data_structure(&data);
 	close_standard_fds();
 	exit(EXIT_SUCCESS);

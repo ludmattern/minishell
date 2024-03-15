@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 17:21:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:29:31 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		in_put = readline(">$ ");
-		if (in_put[0] != '\0')
+		if (in_put[0])
 		{
 			if (check_syntax(in_put) == true)
 			{
