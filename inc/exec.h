@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 11:07:26 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:16:01 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ bool	match_delimiter(const char *line, const char *stop);
 /*
 handling nodes
 */
-int		handling_node(t_data *data, t_node *node);
+int		handling_node(t_data *data, t_node *node, bool piped);
 int		handling_pipeline(t_data *data, t_node *node);
-int		handling_and(t_data *data, t_node *node);
-int		handling_or(t_data *data, t_node *node);
-int		handling_command(t_data *data, t_node *node);
+int		handling_and(t_data *data, t_node *node, bool piped);
+int		handling_or(t_data *data, t_node *node, bool piped);
+int		handling_command(t_data *data, t_node *node, bool piped);
 
 /*
 handling commands utils
@@ -80,7 +80,7 @@ void	wait_for_pipeline_children(pid_t pid1, pid_t pid2);
 /*
 builtins
 */
-int		checking_builtins(t_data *data, t_node *node);
+int		checking_forked_builtins(t_data *data, t_node *node);
 int		ft_cd(char **args, char **env);
 int		ft_pwd(char **args);
 char	*ft_getenv(const char *name, char **env);
@@ -89,6 +89,7 @@ void	ft_print_env_sorted(char **env);
 int		ft_env(char **args, char ***env);
 int		ft_unset_vars(char **names, char ***env);
 void	print_env_var(const char *var);
+int		ft_unset(char *name, char ***env);
 
 /*
 handling environnment

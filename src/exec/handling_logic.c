@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/05 15:37:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:24:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 reminder of the && operator :
 if the left command succeeds, execute the right command
 */
-int	handling_and(t_data *data, t_node *node)
+int	handling_and(t_data *data, t_node *node, bool piped)
 {
-	if (handling_node(data, node->left) == 0)
-		return (handling_node(data, node->right));
+	if (handling_node(data, node->left, piped) == 0)
+		return (handling_node(data, node->right, piped));
 	return (1);
 }
 
@@ -27,9 +27,9 @@ int	handling_and(t_data *data, t_node *node)
 reminder of the OR operator :
 if the left command fails, execute the right command
 */
-int	handling_or(t_data *data, t_node *node)
+int	handling_or(t_data *data, t_node *node, bool piped)
 {
-	if (handling_node(data, node->left) != 0)
-		return (handling_node(data, node->right));
+	if (handling_node(data, node->left, piped) != 0)
+		return (handling_node(data, node->right, piped));
 	return (0);
 }
