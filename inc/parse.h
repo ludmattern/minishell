@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/14 16:34:06 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:07:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# include "libft/inc/libft.h"
+# include "../libft/inc/libft.h"
+# include "./minishell.h"
 # include <termios.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -46,44 +47,6 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
-typedef enum e_node_type
-{
-	N_PIPE,
-	N_AND,
-	N_OR,
-	N_CMD,
-	N_EMPTY
-}		t_node_type;
-
-typedef enum e_io_type
-{
-	IO_IN,
-	IO_OUT,
-	IO_HEREDOC,
-	IO_APPEND
-}		t_io_type;
-
-typedef struct s_io_node
-{
-	t_io_type			type;
-	char				*value;
-	char				**expanded_value;
-	int					here_doc;
-	struct s_io_node	*prev;
-	struct s_io_node	*next;
-}		t_io_node;
-
-typedef struct s_node
-{
-	t_node_type		type;
-	t_io_node		*io_list;
-	char			*args;
-	char			*command_path;
-	char			**expanded_args;
-	struct s_node	*left;
-	struct s_node	*right;
-}		t_node;
-
 typedef struct s_envsize
 {
 	int		size;
@@ -99,18 +62,6 @@ typedef struct s_tkntab
 	int		start;
 	int		i;
 }		t_tkntab;
-
-typedef struct s_data
-{
-	t_node			*ast;
-	int				last_exit_status;
-	int				stdin;
-	int				stdout;
-	char			**env;
-	bool			signint_child;
-	bool			heredoc_sigint;
-	struct termios	initial_terminal_attributes;
-}	t_data;
 
 t_token		*lex_me(char *in_put);
 t_node		*build_ast(t_token **current, int last_exit_status);

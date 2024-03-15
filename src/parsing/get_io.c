@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:49:43 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/13 17:54:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:09:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 t_io_node	*create_io_node(t_io_type type, t_token *tkn, int last_exit_status)
 {

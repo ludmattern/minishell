@@ -6,22 +6,13 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 14:39:58 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:51:36 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
 void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
-
-/*
-Frees the data structure.
-*/
-void	free_data_structure(t_data **data)
-{
-	free_data(*data);
-	free(*data);
-}
 
 /*
 Waits for the child process to finish and return its exit status.

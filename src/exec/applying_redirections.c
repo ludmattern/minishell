@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:36:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:30:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ int	apply_command_redirections(t_data *data, t_io_node *io_list)
 	while (current != NULL)
 	{
 		if (current->type == IO_IN)
-			status = redirect_input(current->expanded_value);
+			status = redirect_input(current->expanded_value[0]);
 		else if (current->type == IO_OUT)
-			status = redirect_output(current->expanded_value);
+			status = redirect_output(current->expanded_value[0]);
 		else if (current->type == IO_APPEND)
-			status = redirect_append(current->expanded_value);
+			status = redirect_append(current->expanded_value[0]);
 		else if (current->type == IO_HEREDOC)
 			status = redirect_heredoc(data, current->value);
 		if (status != EXIT_SUCCESS)

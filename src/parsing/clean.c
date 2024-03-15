@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 10:40:42 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:52:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 void	free_io_node(t_io_node *io_node)
 {
@@ -30,7 +30,7 @@ void	free_io_node(t_io_node *io_node)
 
 void	free_tree(t_node *node)
 {
-	//char	**temp;
+	char	**temp;
 
 	if (node == NULL)
 		return ;
@@ -52,13 +52,31 @@ void	free_tree(t_node *node)
 	free(node);
 }
 
+/* 
+Frees the data structure and its content.
+*/
 void	free_data(t_data *data)
 {
+	char	**temp;
+
 	if (data == NULL)
 		return ;
+	if (data->env != NULL)
+	{
+		temp = data->env;
+		while (*temp != NULL)
+		{
+			free(*temp);
+			temp++;
+		}
+		free(data->env);
+	}
 	free_tree(data->ast);
 }
 
+/*
+Frees the data structure.
+*/
 void	free_data_structure(t_data **data)
 {
 	free_data(*data);

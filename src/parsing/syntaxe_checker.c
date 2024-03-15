@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/14 14:59:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:09:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 bool	check_quotes(const char *cmd)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/14 17:03:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:09:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 char	*quote_token(char *arg, int *i)
 {

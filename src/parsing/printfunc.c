@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   printfunc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:30:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/14 16:16:20 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:09:40 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 void printredir(t_io_node *io)
 {

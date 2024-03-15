@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/13 17:43:45 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:50:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 void	fill_value(t_token *lex, int num)
 {
@@ -91,7 +91,7 @@ void	fill_t_word(t_token *lex, int *i, char *in_put)
 
 void	init_filling(t_token *lex, int *i, char *in_put)
 {
-	while (in_put[*i] == ' ')
+	while (in_put && in_put[*i] == ' ')
 		(*i)++;
 	if (in_put[*i] == '(')
 		fill_type(lex, 9, i, 1);
@@ -125,9 +125,10 @@ t_token	*lex_me(char *in_put)
 	t_token	*new_token;
 
 	i = 0;
+	new_token = NULL;
 	head = NULL;
 	lex = NULL;
-	while (in_put[i])
+	while (in_put && in_put[i])
 	{
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)

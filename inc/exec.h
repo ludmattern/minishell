@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 15:23:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:07:26 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libft/inc/ft_printf.h"
 # include "../libft/inc/get_next_line.h"
 # include "./error_codes.h"
+# include "./minishell.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -34,55 +35,6 @@ typedef enum e_ast_direction
 	AST_LEFT,
 	AST_RIGHT
 }	t_ast_direction;
-
-typedef enum e_node_type
-{
-	N_PIPE,
-	N_AND,
-	N_OR,
-	N_CMD
-}	t_node_type;
-
-typedef enum e_io_type
-{
-	IO_IN,
-	IO_OUT,
-	IO_HEREDOC,
-	IO_APPEND
-}	t_io_type;
-
-typedef struct s_io_node
-{
-	t_io_type			type;
-	char				*value;
-	char				*expanded_value;
-	int					here_doc;
-	struct s_io_node	*prev;
-	struct s_io_node	*next;
-}	t_io_node;
-
-typedef struct s_node
-{
-	t_node_type			type;
-	t_io_node			*io_list;
-	char				*args;
-	char				*command_path;
-	char				**expanded_args;
-	struct s_node		*left;
-	struct s_node		*right;
-}	t_node;
-
-typedef struct s_data
-{
-	t_node			*ast;
-	int				last_exit_status;
-	int				stdin;
-	int				stdout;
-	char			**env;
-	bool			signint_child;
-	bool			heredoc_sigint;
-	struct termios	initial_terminal_attributes;
-}	t_data;
 
 /*
 debug only

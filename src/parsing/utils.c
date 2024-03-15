@@ -10,7 +10,7 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 void	ft_strcpy(char *dest, const char *src)
 {

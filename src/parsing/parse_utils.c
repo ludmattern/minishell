@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/13 18:02:22 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:38:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 t_node	*create_empty_node(t_token *tkn)
 {
@@ -23,7 +23,7 @@ t_node	*create_empty_node(t_token *tkn)
 	new->io_list = NULL;
 	new->right = NULL;
 	new->left = NULL;
-	new->type = N_EMPTY;
+	new->type = N_INIT;
 	return (new);
 }
 
@@ -48,13 +48,11 @@ t_node	*create_command_node(t_token *tkn, int last_exit_status)
 	node = create_empty_node(tkn);
 	node->expanded_args = expander(node->args, last_exit_status);
 	node->command_path = (get_command_path(node->expanded_args[0]));
-	//printf("\n\n---cmd-path----\n%s\n---------------\n\n", node->command_path);
 	node->type = N_CMD;
 	if (tkn->next != NULL && (tkn->next->type == T_DGREAT || tkn->next->type == \
 		T_DLESS || tkn->next->type == T_GREAT || tkn->next->type == T_LESS))
 	{
 		node->io_list = make_io(&tkn, last_exit_status);
-		printredir(node->io_list);
 	}
 	return (node);
 }

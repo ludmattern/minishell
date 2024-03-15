@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/14 16:32:41 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:47:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "../../inc/parse.h"
 
 char	*expand_simple_quote(char *tkn)
 {
@@ -39,8 +39,8 @@ char	*expand_double_quote(char *tkn, int last_exit_status)
 			status_str = ft_itoa(last_exit_status);
 			tkn = replace_substring(tkn, i, 2, status_str);
 			res = tkn;
-			free(status_str);
 			i += strlen(status_str) - 1;
+			free(status_str);
 		}
 		i++;
 	}
@@ -53,15 +53,15 @@ char	*expand_without_quote(char *tkn, int last_exit_status, int i)
 	char	*status_str;
 
 	res = tkn;
-	while (res[i])
+	while (res && res[i])
 	{
 		if (res[i] == '$' && res[i + 1] == '?')
 		{
 			status_str = ft_itoa(last_exit_status);
 			tkn = replace_substring(tkn, i, 2, status_str);
 			res = tkn;
+			i += ft_strlen(status_str) - 1;
 			free(status_str);
-			i += strlen(status_str) - 1;
 		}
 		else if (res[i] == '$')
 		{
@@ -78,7 +78,7 @@ void	expand_tkn_tab(char **tab, int last_exit_status)
 	int	j;
 
 	j = 0;
-	while (tab[j])
+	while (tab && tab[j])
 	{
 		if (ft_strchr(tab[j], '"') != NULL)
 			tab[j] = expand_double_quote(tab[j], last_exit_status);
@@ -94,10 +94,12 @@ char	**expander(char *arg, int last_exit_status)
 {
 	char	**expanded;
 
-	expanded = malloc(sizeof(char **) * 1);
+	expanded = malloc(sizeof(char *));
+	ft_bzero(expanded, sizeof(char *));
+	if (!expanded)
+		return (NULL);
 	expanded = get_tkn_tab(arg, 1, 0, 0);
 	expand_tkn_tab(expanded, last_exit_status);
-	print_exp(expanded, arg);
 	return (expanded);
 }
 

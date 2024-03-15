@@ -6,45 +6,58 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/13 13:51:21 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/15 12:42:18 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				:=	gcc
-NAME			:=	exec
-CFLAGS			:=	-Wextra -Wall -Werror
+NAME			:=	minishell
+CFLAGS			:=	-Wextra -Wall -Werror -lreadline
 LIBFT			:=	./libft
 HEADERS			:=	-I ./inc
 LIBS			:=	-L$(LIBFT) -lft
 PATHLIBS		:=	./lib/libft.a
-DEPS			:=	./inc/exec.h ./inc/error_codes.h
-SRCDIR			:=	./src/exec
-SRCS			:=	$(SRCDIR)/main.c \
-					$(SRCDIR)/parsing.c \
-					$(SRCDIR)/printing.c \
-					$(SRCDIR)/executing.c \
-					$(SRCDIR)/execution_utils.c \
-					$(SRCDIR)/applying_redirections.c \
-					$(SRCDIR)/applying_redirections_utils.c \
-					$(SRCDIR)/handling_command.c \
-					$(SRCDIR)/handling_logic.c \
-					$(SRCDIR)/handling_pipeline.c \
-					$(SRCDIR)/handling_pipeline_utils.c \
-					$(SRCDIR)/ft_echo.c \
-					$(SRCDIR)/ft_cd.c \
-					$(SRCDIR)/ft_pwd.c \
-					$(SRCDIR)/ft_export.c \
-					$(SRCDIR)/handling_env.c \
-					$(SRCDIR)/ft_unset.c \
-					$(SRCDIR)/ft_env.c \
-					$(SRCDIR)/ft_export_utils.c \
-					$(SRCDIR)/duplicate_env.c
+DEPS			:=	./inc/exec.h ./inc/error_codes.h ./inc/parse.h ./inc/minishell.h
+
+EXECDIR			:=	./src/exec
+PARSEDIR		:=	./src/parsing
+MAINDIR			:=	./src/
+
+MAIN_SRC		:=	$(MAINDIR)/minishell.c
+
+EXEC_SRCS		:=	$(EXECDIR)/printing.c \
+					$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
+					$(EXECDIR)/applying_redirections.c $(EXECDIR)/applying_redirections_utils.c \
+					$(EXECDIR)/handling_command.c $(EXECDIR)/handling_logic.c \
+					$(EXECDIR)/handling_pipeline.c $(EXECDIR)/handling_pipeline_utils.c \
+					$(EXECDIR)/ft_echo.c $(EXECDIR)/ft_cd.c $(EXECDIR)/ft_pwd.c \
+					$(EXECDIR)/ft_export.c $(EXECDIR)/handling_env.c $(EXECDIR)/ft_unset.c \
+					$(EXECDIR)/ft_env.c $(EXECDIR)/ft_export_utils.c $(EXECDIR)/duplicate_env.c
+
+PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_var.c \
+					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
+					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
+					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
+					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/utils.c
+
+
 OBJDIR			:=	./.obj
-OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+
+MAIN_OBJ		:=	$(MAIN_SRC:$(MAINDIR)/%.c=$(OBJDIR)/%.o)
+EXEC_OBJS		:=	$(EXEC_SRCS:$(EXECDIR)/%.c=$(OBJDIR)/%.o) 
+PARSE_OBJS		:=	$(PARSE_SRCS:$(PARSEDIR)/%.c=$(OBJDIR)/%.o)
+
+OBJS			:=	$(MAIN_OBJ) $(EXEC_OBJS) $(PARSE_OBJS)
 
 all: $(LIBFT) $(NAME)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS) | $(OBJDIR)
+$(OBJDIR)/%.o: $(EXECDIR)/%.c $(DEPS) | $(OBJDIR)
+	$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
+
+$(OBJDIR)/%.o: $(PARSEDIR)/%.c $(DEPS) | $(OBJDIR)
+	$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
+
+$(OBJDIR)/%.o: $(MAINDIR)/%.c $(DEPS) | $(OBJDIR)
 	$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
 
 $(LIBFT)/libft.a: FORCE

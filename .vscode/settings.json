@@ -13,7 +13,9 @@
         "limits.h": "c",
         "ft_printf.h": "c",
         "libft.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "minishell.h": "c",
+        "parse.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
