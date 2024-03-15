@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:45:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*skip_quote(const char *tkn)
 
 	j = 0;
 	i = 0;
-	res = malloc(ft_strlen(tkn) * sizeof(char));
+	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
 	if (res == NULL)
 		return (NULL);
 	if (tkn[i] == '"' || tkn[i] == '\'')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:15:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,48 +47,44 @@ void	skip_spaces(char *arg, int *i)
 		(*i)++;
 }
 
-char	**realloc_tab(char **tab, int new_size, int j)
-{
-	char	**new_tab;
 
-	new_tab = my_realloc(tab, new_size * sizeof(char *));
-	if (!new_tab)
-	{
-		while (tab[j])
-		{
-			free(tab[j]);
-			j++;
-		}
-		free(tab);
-	}
-	return (new_tab);
+char	**realloc_tab(char **tab, int current_size, int new_size) 
+{
+    return (my_realloc(tab, sizeof(*tab) * current_size, sizeof(*tab) * new_size));
 }
 
-char	**get_tkn_tab(char *arg, int size, int i, int k)
+char	**get_tkn_tab(char *arg, int size, int i, int k) 
 {
-	char	**tab;
-	char	**new_tab;
+    char	**tab;
+	char	**final_tab;
 
 	tab = malloc(size * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	while (arg[i])
+    if (!tab)
+        return (NULL);
+    while (arg[i]) 
 	{
-		skip_spaces(arg, &i);
-		if (!arg[i])
-			break ;
-		if (arg[i] == '"' || arg[i] == '\'')
-			tab[k++] = quote_token(arg, &i);
-		else
-			tab[k++] = space_token(arg, &i);
-		if (k >= size)
-		{
-			size += 1;
-			new_tab = realloc_tab(tab, size, 0);
-			if (!new_tab)
-				return (NULL);
-			tab = new_tab;
-		}
-	}
-	return (tab[k] = NULL, tab);
+        skip_spaces(arg, &i);
+        if (!arg[i])
+            break;
+        if (k >= size - 1) 
+		{ 
+            size += 1;
+            char **new_tab = realloc_tab(tab, k, size);
+            if (!new_tab)
+                return (NULL);
+            tab = new_tab;
+        }
+        if (arg[i] == '"' || arg[i] == '\'')
+            tab[k++] = quote_token(arg, &i);
+        else
+            tab[k++] = space_token(arg, &i);
+    }
+    final_tab = realloc_tab(tab, k, k + 1);
+    if (!final_tab)
+        return (NULL);
+    final_tab[k] = NULL; 
+
+    return (final_tab);
 }
+
+

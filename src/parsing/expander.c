@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 12:47:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:01:30 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ char	**expander(char *arg, int last_exit_status)
 {
 	char	**expanded;
 
-	expanded = malloc(sizeof(char *));
+	/*expanded = malloc(sizeof(char *));
 	ft_bzero(expanded, sizeof(char *));
 	if (!expanded)
-		return (NULL);
+		return (NULL);*/
 	expanded = get_tkn_tab(arg, 1, 0, 0);
 	expand_tkn_tab(expanded, last_exit_status);
 	return (expanded);

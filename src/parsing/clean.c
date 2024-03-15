@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:52:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:22:05 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,8 @@ Frees the data structure and its content.
 */
 void	free_data(t_data *data)
 {
-	char	**temp;
-
 	if (data == NULL)
 		return ;
-	if (data->env != NULL)
-	{
-		temp = data->env;
-		while (*temp != NULL)
-		{
-			free(*temp);
-			temp++;
-		}
-		free(data->env);
-	}
 	free_tree(data->ast);
 }
 

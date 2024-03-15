@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:56:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:10:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,40 @@ void	free_path(char **paths)
 		free(paths[j]);
 		j++;
 	}
+	
 }
 
-char	*get_command_path(char *cmd)
+char *get_command_path(char *cmd)
 {
-	int			i;
-	char		**paths;
-	char		*full_cmd_path;
-	char		*cmd_path;
-	char		*path_env;
-
+    char **paths;
+    char *full_cmd_path;
+    char *cmd_path;
+    char *path_env;
+    int i;
+	
 	i = 0;
-	path_env = getenv("PATH");
-	if (path_env == NULL)
+    path_env = getenv("PATH");
+    if (path_env == NULL) 
 		return (cmd);
-	paths = ft_split(path_env, ':');
-	if (paths == NULL)
+    paths = ft_split(path_env, ':');
+    if (paths == NULL) 
 		return (cmd);
-	i = 0;
-	while (paths[i] != NULL)
+    while (paths[i] != NULL)
 	{
-		cmd_path = ft_strjoin(paths[i], "/");
-		full_cmd_path = ft_strjoin(cmd_path, cmd);
-		if (access(full_cmd_path, X_OK) == 0)
-			return (free_path(paths), full_cmd_path);
-		i++;
-	}
-	free(cmd_path);
-	return (free_path(paths), cmd);
+        cmd_path = ft_strjoin(paths[i], "/");
+        if (cmd_path == NULL) 
+			break;
+        full_cmd_path = ft_strjoin(cmd_path, cmd);
+        free(cmd_path);
+        if (full_cmd_path == NULL)
+			break;
+        if (access(full_cmd_path, X_OK) == 0)
+            return (free_path(paths), free(paths), full_cmd_path);
+		else 
+            free(full_cmd_path);
+        i++;
+    }
+    return (free_path(paths), free(paths), cmd);
 }
+
+                
