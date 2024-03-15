@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "termios.h": "c",
+        "errno.h": "c",
+        "fcntl.h": "c",
+        "exec.h": "c",
+        "wait.h": "c",
+        "stdbool.h": "c",
+        "get_next_line.h": "c",
+        "unistd.h": "c",
+        "cstdlib": "c",
+        "error_codes.h": "c",
+        "limits.h": "c",
+        "ft_printf.h": "c",
+        "libft.h": "c",
+        "string.h": "c"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
+}

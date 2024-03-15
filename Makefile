@@ -6,61 +6,69 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/02/17 22:23:10 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/13 13:51:21 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				:=	cc
-NAME			:=	pipex
+CC				:=	gcc
+NAME			:=	exec
 CFLAGS			:=	-Wextra -Wall -Werror
-LIBFT			:=	./lib/libft
-LIBFTPRINTF		:=	./lib/ft_printf
+LIBFT			:=	./libft
 HEADERS			:=	-I ./inc
-LIBS			:=	-L$(LIBFTPRINTF) -lftprintf -L$(LIBFT) -lft
-PATHLIBS		:=	./lib/libftprintf.a ./lib/libft.a
-DEPS			:=	./inc/pipex.h
-SRCDIR			:=	./src
+LIBS			:=	-L$(LIBFT) -lft
+PATHLIBS		:=	./lib/libft.a
+DEPS			:=	./inc/exec.h ./inc/error_codes.h
+SRCDIR			:=	./src/exec
 SRCS			:=	$(SRCDIR)/main.c \
-					$(SRCDIR)/handle_files.c \
-					$(SRCDIR)/handle_cmds.c \
-					$(SRCDIR)/handle_cmds2.c \
-					$(SRCDIR)/handle_errors.c \
-					$(SRCDIR)/utils.c \
-					$(SRCDIR)/parse_cmd.c \
-					$(SRCDIR)/parse_cmd_2.c \
-					$(SRCDIR)/parse_cmd_3.c \
-					$(SRCDIR)/count_args.c \
-					$(SRCDIR)/handle_process.c
-OBJDIR			:=	./obj
+					$(SRCDIR)/parsing.c \
+					$(SRCDIR)/printing.c \
+					$(SRCDIR)/executing.c \
+					$(SRCDIR)/execution_utils.c \
+					$(SRCDIR)/applying_redirections.c \
+					$(SRCDIR)/applying_redirections_utils.c \
+					$(SRCDIR)/handling_command.c \
+					$(SRCDIR)/handling_logic.c \
+					$(SRCDIR)/handling_pipeline.c \
+					$(SRCDIR)/handling_pipeline_utils.c \
+					$(SRCDIR)/ft_echo.c \
+					$(SRCDIR)/ft_cd.c \
+					$(SRCDIR)/ft_pwd.c \
+					$(SRCDIR)/ft_export.c \
+					$(SRCDIR)/handling_env.c \
+					$(SRCDIR)/ft_unset.c \
+					$(SRCDIR)/ft_env.c \
+					$(SRCDIR)/ft_export_utils.c \
+					$(SRCDIR)/duplicate_env.c
+OBJDIR			:=	./.obj
 OBJS			:=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-all: $(LIBFTPRINTF) $(LIBFT) $(NAME)
+all: $(LIBFT) $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS) | $(OBJDIR)
 	$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
 
 $(LIBFT)/libft.a: FORCE
-	make -C $(LIBFT)
+	@make -C $(LIBFT)
 
-$(LIBFTPRINTF)/libftprintf.a: FORCE
-	make -C $(LIBFTPRINTF)
-
-$(NAME): $(LIBFTPRINTF)/libftprintf.a $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
-	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+$(NAME): $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
+	$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -o $(NAME)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+valgrind: $(NAME)
+	clear
+	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes ./$(NAME)
 
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C $(LIBFTPRINTF)
 	make fclean -C $(LIBFT)
 
-re: clean all
+re: fclean all
 
 FORCE:
 
-.PHONY: all, clean, FORCE, fclean, re
+.PHONY: all, clean, run, valgrind, FORCE, fclean, re

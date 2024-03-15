@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/02/14 14:10:12 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/08 14:47:04 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRCS= 		./src/ft_isalpha.c ./src/ft_isdigit.c ./src/ft_isalnum.c \
 			./src/ft_lstlast_bonus.c ./src/ft_lstadd_back_bonus.c \
 			./src/ft_lstdelone_bonus.c ./src/ft_lstclear_bonus.c \
 			./src/ft_lstiter_bonus.c ./src/ft_lstmap_bonus.c \
-			./src/get_next_line.c ./src/get_next_line_utils.c
+			./src/get_next_line.c ./src/get_next_line_utils.c \
+			./src/printf_fmt.c ./src/itoa_printf.c ./src/libftprintf.c \
+			./src/eprintf_fmt.c ./src/libfteprintf.c
 
 OBJS= 		$(SRCS:.c=.o)
 
@@ -41,7 +43,7 @@ all: 		$(NAME)
 $(NAME): 	$(OBJS)
 				ar rcs $(NAME) $(OBJS)
 
-%.o: 		%.c ./inc/libft.h ./inc/get_next_line.h
+%.o: 		%.c ./inc/libft.h ./inc/get_next_line.h ./inc/ft_printf.h
 				cc $(FLAGS) -c $< -o $@
 
 clean:
