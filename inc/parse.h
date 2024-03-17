@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 15:14:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:04:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <limits.h>
 
 typedef enum e_token_type

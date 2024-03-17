@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:57:28 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 bool	check_quotes(const char *cmd)
 {
-	int	quote;
+	int	squote;
+	int dquote;
 	int	i;
 
 	i = 0;
-	quote = 0;
+	dquote = 0;
+	squote = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
-			quote++;
+			dquote++;
+		else if (cmd[i] == '\'')
+			squote++;
 		i++;
 	}
-	return (quote % 2 == 0);
+	if (dquote % 2 != 0)
+		return (false);
+	else if (squote % 2 != 0)
+		return (false);
+	else
+		return (true);
 }
 
 bool	check_par(const char *cmd)
@@ -48,20 +57,28 @@ bool	check_par(const char *cmd)
 	return (par_count == 0);
 }
 
-bool	check_sep(const char *cmd)
+bool check_sep(const char *cmd) 
 {
-	const char	*sep;
-	int			i;
-
-	sep = "|&<>";
+	int	i;
+	int j;
+	
 	i = 0;
 	while (cmd[i])
 	{
-		if (ft_strchr(sep, cmd[i]) != NULL)
+		if (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')
 		{
-			if (i == 0 || cmd[i + 1] == '\0')
-				return (false);
-			if (cmd[i] == cmd[i + 1])
+			if (cmd[i + 1] == cmd[i])
+				i++;
+			i++;
+			while (cmd[i] == ' ')
+				i++;
+			if (cmd[i] != '\0' && cmd[i] != ' ' && (cmd[i] == '|' \
+				|| cmd[i] == '&' || cmd[i] == '<' || cmd[i] == '>')) 
+                return (false);
+			j = i + 1;
+            while (cmd[j] == ' ')
+				j++; 
+            if (cmd[j] == '\0')
 				return (false);
 		}
 		i++;
