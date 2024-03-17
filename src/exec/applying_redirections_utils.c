@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/08 17:37:45 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/17 10:59:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ int	heredoc_child_process(t_data *data, int pipefd[2], const char *delimiter)
 {
 	int	status;
 
+	(void)data;
 	close(pipefd[0]);
 	status = read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
 	close(pipefd[1]);
 	close_standard_fds();
-	free_data_structure(&data);
+	//free_data_structure(&data);
 	exit(status);
 }
 

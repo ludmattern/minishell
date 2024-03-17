@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 16:14:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/17 10:59:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Prints an error message and exit the child process.
 */
 void	command_exec_failure(t_data *data, const char *context, int error_code)
 {
+	(void)data;
 	if (error_code == EXIT_COMMAND_NOT_FOUND)
 	{
 		if (ft_strchr(context, '/'))
@@ -33,12 +34,12 @@ void	command_exec_failure(t_data *data, const char *context, int error_code)
 	else if (error_code == EXIT_IS_A_DIRECTORY)
 	{
 		ft_eprintf("minishell: %s: Is a directory\n", context);
-		free_data_structure(&data);
+		//free_data_structure(&data);
 		exit(EXIT_INVALID_COMMAND);
 	}
 	else
 		ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
-	free_data_structure(&data);
+	//free_data_structure(&data);
 	exit(EXIT_COMMAND_NOT_FOUND);
 }
 
@@ -94,6 +95,12 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 	return(status);
 }
 
+void	restore_original_fds(t_data *data)
+{
+	dup2(data->stdin, STDIN_FILENO);
+	dup2(data->stdout, STDOUT_FILENO);
+}
+
 /*
 Executes the command in a child process and waits for it to finish.
 */
@@ -122,7 +129,7 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 			execute_command(data, node);
 		else
 		{
-			free_data_structure(&data);
+			//free_data_structure(&data);
 			exit(status);
 		}
 	}

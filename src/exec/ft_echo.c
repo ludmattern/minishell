@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 17:24:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/17 10:58:28 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 		status = ft_env(node->expanded_args, &data->env);
 	else
 		return (0);
-	free_data_structure(&data);
+	//free_data_structure(&data);
 	exit(status);
 }
 

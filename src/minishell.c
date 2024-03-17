@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 17:29:31 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/17 11:01:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 				data->ast = build_ast(&lexed, data->last_exit_status);
 				free_lexed(save);
 				last_exit_status = run_execution(data);
-				free_data_structure(&data);
+				//free_data_structure(&data);
 			}
 			add_history(in_put);
 			free(in_put);
