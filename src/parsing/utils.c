@@ -23,21 +23,25 @@ void	ft_strcpy(char *dest, const char *src)
 	*dest = '\0';
 }
 
-void *my_realloc(void *ptr, size_t original_size, size_t new_size) {
-    if (new_size == 0) {
+void *my_realloc(void *ptr, size_t original_size, size_t new_size) 
+{
+    if (new_size == 0) 
+	{
         free(ptr);
+		ptr = NULL;
         return NULL;
     }
-
     void *new_ptr = malloc(new_size);
-    if (!new_ptr) {
+    if (!new_ptr) 
+	{
         return NULL;
     }
-
-    if (ptr) {
+    if (ptr) 
+	{
         size_t size_to_copy = original_size < new_size ? original_size : new_size;
-        memcpy(new_ptr, ptr, size_to_copy);
+        ft_memcpy(new_ptr, ptr, size_to_copy);
         free(ptr);
+		ptr = NULL;
     }
 
     return new_ptr;

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:56:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 16:10:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:18:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,33 @@ char *get_command_path(char *cmd)
     char *full_cmd_path;
     char *cmd_path;
     char *path_env;
+    char *temp;
     int i;
 	
-	i = 0;
+	  i = 0;
+    temp = ft_strdup(cmd);
     path_env = getenv("PATH");
     if (path_env == NULL) 
-		return (cmd);
+		return (temp);
     paths = ft_split(path_env, ':');
     if (paths == NULL) 
-		return (cmd);
+		return (temp);
     while (paths[i] != NULL)
 	{
         cmd_path = ft_strjoin(paths[i], "/");
         if (cmd_path == NULL) 
 			break;
-        full_cmd_path = ft_strjoin(cmd_path, cmd);
+        full_cmd_path = ft_strjoin(cmd_path, temp);
         free(cmd_path);
         if (full_cmd_path == NULL)
 			break;
         if (access(full_cmd_path, X_OK) == 0)
-            return (free_path(paths), free(paths), full_cmd_path);
+            return (free(temp), free_path(paths), free(paths), full_cmd_path);
 		else 
             free(full_cmd_path);
         i++;
     }
-    return (free_path(paths), free(paths), cmd);
+    return (free_path(paths), free(paths), temp);
 }
 
                 

@@ -6,12 +6,15 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/17 16:05:52 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/19 14:19:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
+
+
+
 
 void sigint_handler(int signal) 
 {
@@ -27,14 +30,16 @@ void ignore_signal()
 
 void free_lexed(t_token *lexed) 
 {
-    t_token *tmp;
+    t_token	*tmp;
 
     while (lexed != NULL) 
 	{
-        tmp = lexed;
-        lexed = lexed->next;
-        free(tmp);
-		
+        tmp = lexed;	
+		lexed = lexed->next;	
+		free(tmp->value);
+		tmp->value = NULL;
+		free(tmp);
+		tmp = NULL;
     }
 }
 
@@ -50,6 +55,13 @@ void	print_start()
 	printf("  \\/  \\/   \\___||_| \\___| \\___/ |_| |_| |_| \\___|  \\__| \\___/  \\/    \\/|_||_| |_||_||___/|_| |_| \\___||_||_| \n");
 	printf("\033[37m");
 }
+void lex_mallox_error(t_token *lex)
+{
+	free_lexed(lex);
+	printf("mallox error");
+	exit(EXIT_FAILURE);
+}
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -81,20 +93,28 @@ int	main(int argc, char **argv, char **envp)
 			if (check_syntax(in_put) == true)
 			{
 				data = malloc(sizeof(t_data));
+				if (!data)
+					return (printf("MALLOC ERROR"));
 				ft_bzero(data, sizeof(t_data));
 				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
+				if (lexed->error == -1)
+					lex_mallox_error(lexed);
 				save = lexed;
 				data->ast = build_ast(&lexed, data->last_exit_status);
 				free_lexed(save);
 				last_exit_status = run_execution(data);
-				//free_data_structure(&data);
+				free_data_structure(&data);
 			}
 			add_history(in_put);
 			free(in_put);
 			in_put = NULL;
 		}
 	}
+	int i = 0;
+	while (global_env[i])
+		free(global_env[i++]);
+	free(global_env);
 	return (0);
 }

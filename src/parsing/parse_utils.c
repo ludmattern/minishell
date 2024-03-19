@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 12:38:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:57:45 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_node	*create_empty_node(t_token *tkn)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node) * 1);
-	new->args = tkn->value;
+	new->args = ft_strdup(tkn->value);
 	new->expanded_args = NULL;
 	new->command_path = NULL;
 	new->io_list = NULL;
@@ -51,8 +51,6 @@ t_node	*create_command_node(t_token *tkn, int last_exit_status)
 	node->type = N_CMD;
 	if (tkn->next != NULL && (tkn->next->type == T_DGREAT || tkn->next->type == \
 		T_DLESS || tkn->next->type == T_GREAT || tkn->next->type == T_LESS))
-	{
 		node->io_list = make_io(&tkn, last_exit_status);
-	}
 	return (node);
 }

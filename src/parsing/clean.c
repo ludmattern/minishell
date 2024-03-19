@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 17:33:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:13:11 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,37 @@ void	free_io_node(t_io_node *io_node)
 	}
 }
 
-void	free_tree(t_node *node)
+void free_tree(t_node *node) 
 {
-	char	**temp;
+    char **temp;
 
-	if (node == NULL)
-		return ;
-	free_tree(node->left);
-	free_tree(node->right);
-	free_io_node(node->io_list);
-	free(node->args);
-	free(node->command_path);
-	if (node->expanded_args != NULL)
+    if (node == NULL) return;
+
+    free_tree(node->left);
+    free_tree(node->right);
+    free_io_node(node->io_list);
+
+    free(node->args);  
+    node->args = NULL;
+	free(node->command_path); 
+    node->command_path = NULL;
+
+    if (node->expanded_args != NULL)
 	{
-		temp = node->expanded_args;
-		while (*temp != NULL)
+        temp = node->expanded_args;
+        while (*temp != NULL)
 		{
-			free(*temp);
-			temp++;
-		}
-		free(node->expanded_args);
-	}
-	free(node);
+            free(*temp); 
+            *temp = NULL;
+            temp++;
+        }
+        free(node->expanded_args);  
+        node->expanded_args = NULL;
+    }
+    free(node);
 }
+
+
 
 /* 
 Frees the data structure and its content.

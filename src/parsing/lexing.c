@@ -3,40 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 13:09:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:20:30 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-void	fill_value(t_token *lex, int num)
+int	fill_value(t_token *lex, int num)
 {
 	if (num == 1)
-		lex->value = "<\0";
+		lex->value = ft_strdup("<\0");
 	else if (num == 2)
-		lex->value = ">\0";
+		lex->value = ft_strdup(">\0");
 	else if (num == 3)
-		lex->value = "<<\0";
+		lex->value = ft_strdup("<<\0");
 	else if (num == 4)
-		lex->value = ">>\0";
+		lex->value = ft_strdup(">>\0");
 	else if (num == 5)
-		lex->value = "|\0";
+		lex->value = ft_strdup("|\0");
 	else if (num == 6)
-		lex->value = "&&\0";
+		lex->value = ft_strdup("&&\0");
 	else if (num == 7)
-		lex->value = "||\0";
+		lex->value = ft_strdup("||\0");
 	else if (num == 8)
-		lex->value = "\n\0";
+		lex->value = ft_strdup("\n\0");
 	else if (num == 9)
-		lex->value = "(\0";
+		lex->value = ft_strdup("(\0");
 	else if (num == 10)
-		lex->value = ")\0";
+		lex->value = ft_strdup(")\0");
+	if (!lex->value)
+		return (-1);
+	return (0);
 }
 
-void	fill_type(t_token *lex, int num, int *i, int size)
+int	fill_type(t_token *lex, int num, int *i, int size)
 {
 	imore(0, size, i);
 	if (num == 1)
@@ -59,10 +62,12 @@ void	fill_type(t_token *lex, int num, int *i, int size)
 		lex->type = 9;
 	else if (num == 10)
 		lex->type = 10;
-	fill_value(lex, num);
+	if (fill_value(lex, num) == -1)
+		return (-1);
+	return (0);
 }
 
-void	fill_t_word(t_token *lex, int *i, char *in_put)
+int	fill_t_word(t_token *lex, int *i, char *in_put)
 {
 	int		start;
 	int		end;
@@ -82,14 +87,17 @@ void	fill_t_word(t_token *lex, int *i, char *in_put)
 	}
 	wl = end - start + 1;
 	lex->value = malloc(wl + 1);
+	if (!lex->value)
+        return (-1);
 	j = -1;
 	while (++j < wl)
 		lex->value[j] = in_put[start + j];
 	lex->value[wl] = '\0';
 	lex->type = T_WORD;
+	return (0);
 }
 
-void	init_filling(t_token *lex, int *i, char *in_put)
+int	init_filling(t_token *lex, int *i, char *in_put)
 {
 	while (in_put && in_put[*i] == ' ')
 		(*i)++;
@@ -100,7 +108,10 @@ void	init_filling(t_token *lex, int *i, char *in_put)
 	else if (in_put[*i] != '|' && in_put[*i] != '<' && in_put[*i] != '>' && \
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '(' \
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
-		fill_t_word(lex, i, in_put);
+	{
+		if (fill_t_word(lex, i, in_put) == -1)
+        	return (-1); 
+	}
 	else if (in_put[*i] == '|' && in_put[*i + 1] != '|')
 		fill_type(lex, 5, i, 1);
 	else if (in_put[*i] == '<' && in_put[*i + 1] == '<')
@@ -115,6 +126,7 @@ void	init_filling(t_token *lex, int *i, char *in_put)
 		fill_type(lex, 6, i, 2);
 	else if (in_put[*i] == '|' && in_put[*i + 1] == '|')
 		fill_type(lex, 7, i, 2);
+	return (0);
 }
 
 t_token	*lex_me(char *in_put)
@@ -132,7 +144,7 @@ t_token	*lex_me(char *in_put)
 	{
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)
-			return (NULL);
+			return (head->error = -1, head);
 		new_token->next = NULL;
 		new_token->prev = lex;
 		if (lex != NULL)
@@ -140,7 +152,8 @@ t_token	*lex_me(char *in_put)
 		else
 			head = new_token;
 		lex = new_token;
-		init_filling(lex, &i, in_put);
+		if (init_filling(lex, &i, in_put) == -1)
+			return (head->error = -1, head); 
 	}
 	return (head);
 }

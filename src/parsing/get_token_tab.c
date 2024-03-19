@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 15:15:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:10:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char	*quote_token(char *arg, int *i)
 	char	quote_type;
 	char	*token;
 
-	start = *i + 1;
+	start = *i;
 	quote_type = arg[*i];
 	(*i)++;
 	while (arg[*i] && arg[*i] != quote_type)
 		(*i)++;
-	token = ft_strndup(arg + start, *i - start);
+	token = ft_strndup(arg + start, *i - start + 1);
 	if (arg[*i])
 		(*i)++;
 	return (token);
@@ -83,7 +83,7 @@ char	**get_tkn_tab(char *arg, int size, int i, int k)
     if (!final_tab)
         return (NULL);
     final_tab[k] = NULL; 
-
+    
     return (final_tab);
 }
 

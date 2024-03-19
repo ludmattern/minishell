@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/17 14:04:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/19 13:51:10 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 	struct s_token	*prev;
+	int		error;
 }	t_token;
 
 typedef struct s_envsize
@@ -70,7 +71,7 @@ char		**expander(char *arg, int last_exit_status);
 
 char		*get_command_path(char *cmd);
 char		*get_env_var(char *tkn, int i, int k, int j);
-char		*skip_quote(const char *tkn);
+char		*skip_quote(char *tkn);
 char	**get_tkn_tab(char *arg, int size, int i, int j);
 char		*replace_substring(const char *original, \
 	int start, int length, const char *replace);
