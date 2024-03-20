@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/19 13:51:10 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:20:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ void		print_ast(t_node *node, int depth);
 void		print_exp(char **tab, char *arg);
 
 bool		check_syntax(const char *cmd);
+
+void free_tree(t_node *node);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/19 14:19:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:31:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
 
 void sigint_handler(int signal) 
 {
+	char *path = getcwd(NULL, 0);
+	char *join = ft_strjoin(path, " $> ");
     if (signal == SIGINT) 
 	{
-        write(1, "\n>$ ", 4); 
+        printf("\n%s", join); 
     }
+	free(join);
+	free(path);
 }
 
 void ignore_signal() 
@@ -63,6 +67,14 @@ void lex_mallox_error(t_token *lex)
 }
 
 
+void free_parsing(t_node *ast,  t_token *lex)
+{
+	free_lexed(lex);
+	free_tree(ast);
+	printf("mallox error");
+	exit(EXIT_FAILURE);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*in_put;
@@ -71,6 +83,9 @@ int	main(int argc, char **argv, char **envp)
 	char		**global_env;
 	int			last_exit_status;
 	t_token		*save;
+	char *join;
+	char *path;
+
 	
 	print_start();
 	last_exit_status = EXIT_SUCCESS;
@@ -79,10 +94,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
     signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, ignore_signal);
-	
 	while (1)
 	{
-		in_put = readline(">$ ");
+		path = getcwd(NULL, 0);
+		join = ft_strjoin(path, " $> ");
+		in_put = readline(join);
+		free(join);
+		free(path);
 		if (in_put == NULL) 
 		{
     		write(STDOUT_FILENO, "\n", 1);  
@@ -103,8 +121,11 @@ int	main(int argc, char **argv, char **envp)
 					lex_mallox_error(lexed);
 				save = lexed;
 				data->ast = build_ast(&lexed, data->last_exit_status);
+				if (!data->ast)
+					free_parsing(data->ast, lexed);
 				free_lexed(save);
 				last_exit_status = run_execution(data);
+				global_env = data->env;
 				free_data_structure(&data);
 			}
 			add_history(in_put);

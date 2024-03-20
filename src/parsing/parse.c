@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:10:24 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:26:57 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,18 @@ t_node	*is_op(t_token **current, t_node *root, int last_exit_status)
 	t_node	*nroot;
 
 	nroot = create_operator_node((*current));
+	if (!nroot)
+	{
+		return (NULL);
+	}
+	last_exit_status++;
 	*current = (*current)->next;
 	nroot->left = root;
 	nroot->right = build_ast(current, last_exit_status);
+	if (!nroot->right)
+	{
+		return (NULL);
+	}
 	return (nroot);
 }
 
@@ -34,6 +43,10 @@ t_node	*build_ast(t_token **current, int last_exit_status)
 		{
 			*current = (*current)->next;
 			root = build_ast(current, last_exit_status);
+			if (!root)
+			{
+				return (NULL);
+			}
 		}
 		else if ((*current)->type == 10)
 			return (*current = (*current)->next, root);
