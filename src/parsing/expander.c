@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/20 13:32:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:41:29 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	**expander(char *arg, int last_exit_status)
 		return (NULL);*/
 	expanded = get_tkn_tab(arg, 1, 0, 0);
 	expand_tkn_tab(expanded, last_exit_status);
-    //print_exp(expanded, arg);
+    print_exp(expanded, arg);
 	return (expanded);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/19 11:10:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:40:36 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*space_token(char *arg, int *i)
 	char	*token;
 
 	start = *i;
-	while (arg[*i] && arg[*i] != ' ')
+	while (arg[*i] && arg[*i] != ' ' && arg[*i] != '"' && arg[*i] != '\'')
 		(*i)++;
 	token = ft_strndup(arg + start, *i - start);
 	return (token);
