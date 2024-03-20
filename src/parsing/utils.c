@@ -79,7 +79,7 @@ char	*ft_strcat(char *dest, const char *src)
 
 void	imore(int k, int size, int *i)
 {
-	while (k++ < size)
+	while (k < size)
 	{
 		(*i)++;
 		k++;
