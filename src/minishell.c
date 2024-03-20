@@ -6,12 +6,25 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 13:31:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:09:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
+
+void	print_start()
+{
+    printf("\033[34m");
+	printf("/ / /\\ \\ \\  ___ | |  ___   ___   _ __ ___    ___  | |_   ___     /\\/\\  (_) _ __  (_) ___ | |__    ___ | || |\n");
+	printf("\033[35m");
+	printf("\\ \\/  \\/ / / _ \\| | / __| / _ \\ | '_ ` _ \\  / _ \\ | __| / _ \\   /    \\ | || '_ \\ | |/ __|| '_ \\  / _ \\| || |\n");
+	printf("\033[36m");
+	printf(" \\  /\\  / |  __/| || (__ | (_) || | | | | ||  __/ | |_ | (_) | / /\\/\\ \\| || | | || |\\__ \\| | | ||  __/| || |\n");
+	printf("\033[33m");
+	printf("  \\/  \\/   \\___||_| \\___| \\___/ |_| |_| |_| \\___|  \\__| \\___/  \\/    \\/|_||_| |_||_||___/|_| |_| \\___||_||_| \n");
+	printf("\033[37m");
+}
 
 
 
@@ -47,18 +60,6 @@ void free_lexed(t_token *lexed)
     }
 }
 
-void	print_start()
-{
-    printf("\033[34m");
-	printf("/ / /\\ \\ \\  ___ | |  ___   ___   _ __ ___    ___  | |_   ___     /\\/\\  (_) _ __  (_) ___ | |__    ___ | || |\n");
-	printf("\033[35m");
-	printf("\\ \\/  \\/ / / _ \\| | / __| / _ \\ | '_ ` _ \\  / _ \\ | __| / _ \\   /    \\ | || '_ \\ | |/ __|| '_ \\  / _ \\| || |\n");
-	printf("\033[36m");
-	printf(" \\  /\\  / |  __/| || (__ | (_) || | | | | ||  __/ | |_ | (_) | / /\\/\\ \\| || | | || |\\__ \\| | | ||  __/| || |\n");
-	printf("\033[33m");
-	printf("  \\/  \\/   \\___||_| \\___| \\___/ |_| |_| |_| \\___|  \\__| \\___/  \\/    \\/|_||_| |_||_||___/|_| |_| \\___||_||_| \n");
-	printf("\033[37m");
-}
 void lex_mallox_error(t_token *lex)
 {
 	free_lexed(lex);
@@ -93,7 +94,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
     signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, ignore_signal);
 	while (1)
 	{
 		path = getcwd(NULL, 0);
@@ -117,6 +117,7 @@ int	main(int argc, char **argv, char **envp)
 				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
+				printlex(lexed);
 				if (lexed->error == -1)
 					lex_mallox_error(lexed);
 				save = lexed;
