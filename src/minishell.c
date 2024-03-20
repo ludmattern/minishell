@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 13:31:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:55:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*lexed;
 	t_data		*data;
 	char		**global_env;
+	int			i;
 	int			last_exit_status;
 	t_token		*save;
 	char *join;
 	char *path;
 
-	
 	print_start();
 	last_exit_status = EXIT_SUCCESS;
 	global_env = duplicate_envp(envp);
@@ -133,7 +133,7 @@ int	main(int argc, char **argv, char **envp)
 			in_put = NULL;
 		}
 	}
-	int i = 0;
+	i = 0;
 	while (global_env[i])
 		free(global_env[i++]);
 	free(global_env);

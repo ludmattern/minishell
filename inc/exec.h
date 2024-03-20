@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 16:16:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:19:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ freeing data
 */
 void	free_data(t_data *data);
 void	free_data_structure(t_data **data);
+void	free_forked_data_structure(t_data **data);
 void	close_pipe_fds(int pipefd[2]);
 void	close_standard_fds(void);
 
