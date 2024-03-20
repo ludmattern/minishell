@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/18 15:29:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:51:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 		status = ft_env(node->expanded_args, &data->env);
 	else
 		return (0);
-	free_data_structure(&data);
+	free_forked_data_structure(&data);
 	exit(status);
 }
 

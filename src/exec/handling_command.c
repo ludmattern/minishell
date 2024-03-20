@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/17 10:59:53 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:50:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 			execute_command(data, node);
 		else
 		{
-			//free_data_structure(&data);
+			free_forked_data_structure(&data);
 			exit(status);
 		}
 	}

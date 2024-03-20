@@ -6,11 +6,11 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/15 12:42:18 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/20 17:11:26 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				:=	gcc
+CC				:=	cc
 NAME			:=	minishell
 CFLAGS			:=	-Wextra -Wall -Werror -lreadline
 LIBFT			:=	./libft
@@ -39,7 +39,6 @@ PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_va
 					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
 					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
 					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/utils.c
-
 
 OBJDIR			:=	./.obj
 
