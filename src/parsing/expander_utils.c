@@ -6,30 +6,33 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/19 11:25:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:25:08 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-char	*skip_quote(char *tkn)
+char *skip_quote(char *tkn, char q)
 {
-	char	*res;
-	int		i;
-	int		j;
+    char *res;
+    int i;
+    int j;
 
-	j = 0;
-	i = 0;
-	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
-	if (res == NULL)
-		return (NULL);
-	if (tkn[i] == '"' || tkn[i] == '\'')
-		i++;
-	while (tkn[i] != '\0' && tkn[i] != '"' && tkn[i] != '\'')
-		res[j++] = tkn[i++];
-	res[j] = '\0';
-	return (res);
+    i = 0;
+    j = 0;
+    res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
+    if (res == NULL) 
+        return (NULL);
+    while (tkn[i] != '\0') 
+	{
+        if (tkn[i] != q)
+            res[j++] = tkn[i];
+        i++;
+    }
+    res[j] = '\0';
+    return (res);
 }
+
 
 char	*replace_substring(const char *original, \
 	int start, int length, const char *replace)

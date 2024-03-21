@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/20 17:17:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:55:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ int	fill_type(t_token *lex, int num, int *i, int size)
 	return (0);
 }
 
+void	imoremore_quote(char *arg, int *i, char c)
+{
+	(*i)++; 
+    while (arg[*i] != c)
+		(*i)++;
+}
+
 int	fill_t_word(t_token *lex, int *i, char *in_put)
 {
 	int		start;
@@ -81,6 +88,8 @@ int	fill_t_word(t_token *lex, int *i, char *in_put)
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '('\
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
 	{
+		if (in_put[*i] == '"' || in_put[*i] == '\'')
+			imoremore_quote(in_put, i, in_put[*i]);
 		if (in_put[*i] != ' ')
 			end = *i;
 		(*i)++;

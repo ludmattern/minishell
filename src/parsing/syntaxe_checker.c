@@ -6,35 +6,43 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/17 13:57:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:49:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-bool	check_quotes(const char *cmd)
+bool check_squotes(const char *cmd) 
 {
-	int	squote;
-	int dquote;
-	int	i;
+    bool squote = false;
+    bool dquote = false;
+    int i = 0;
 
-	i = 0;
-	dquote = 0;
-	squote = 0;
-	while (cmd[i])
+    while (cmd[i])
 	{
-		if (cmd[i] == '"')
-			dquote++;
-		else if (cmd[i] == '\'')
-			squote++;
-		i++;
-	}
-	if (dquote % 2 != 0)
-		return (false);
-	else if (squote % 2 != 0)
-		return (false);
-	else
-		return (true);
+        if (cmd[i] == '"' && !squote)
+            dquote = !dquote; 
+        else if (cmd[i] == '\'' && !dquote)
+            squote = !squote; 
+        i++;
+    }
+    return (!squote); 
+}
+
+bool check_dquotes(const char *cmd)
+{
+    bool squote = false;
+    bool dquote = false;
+    int i = 0;
+
+    while (cmd[i]) {
+        if (cmd[i] == '\'' && !dquote)
+            squote = !squote;
+        else if (cmd[i] == '"' && !squote)
+            dquote = !dquote;
+        i++;
+    }
+    return (!dquote);
 }
 
 bool	check_par(const char *cmd)
@@ -88,7 +96,12 @@ bool check_sep(const char *cmd)
 
 bool	check_syntax(const char *cmd)
 {
-	if (!check_quotes(cmd))
+	if (!check_dquotes(cmd))
+	{
+		printf("Parse Error: bad quotes\n");
+		return (false);
+	}
+	if (!check_squotes(cmd))
 	{
 		printf("Parse Error: bad quotes\n");
 		return (false);
@@ -98,10 +111,6 @@ bool	check_syntax(const char *cmd)
 		printf("Parse Error: bad parentheses\n");
 		return (false);
 	}
-	if (!check_sep(cmd))
-	{
-		printf("Parse Error: bad use of special characters\n");
-		return (false);
-	}
+
 	return (true);
 }

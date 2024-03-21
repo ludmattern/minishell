@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/21 09:55:26 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:04:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,23 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (in_put[0])
 		{
-			if (check_syntax(in_put) == true)
+			if (check_syntax(in_put) == false)
+				last_exit_status = -1;
+			else
 			{
 				data = malloc(sizeof(t_data));
-				if (!data)
-					return (printf("MALLOC ERROR"));
+				//if (!data)
+				//	return (printf("MALLOC ERROR"));
 				ft_bzero(data, sizeof(t_data));
 				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
-				//printlex(lexed);
 				if (lexed->error == -1)
 					lex_mallox_error(lexed);
 				save = lexed;
 				data->ast = build_ast(&lexed, data->last_exit_status);
-				if (!data->ast)
-					free_parsing(data->ast, lexed);
+				//if (!data->ast)
+				//	free_parsing(data->ast, lexed);
 				free_lexed(save);
 				last_exit_status = run_execution(data);
 				global_env = data->env;

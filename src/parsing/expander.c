@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/20 15:07:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:36:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*expand_simple_quote(char *tkn)
 {
-	tkn = skip_quote(tkn);
+	tkn = skip_quote(tkn, '\'');
 	return (tkn);
 }
 
@@ -26,7 +26,7 @@ char	*expand_double_quote(char *tkn, int last_exit_status)
 	char *new;
 
 
-	res = skip_quote(tkn);
+	res = skip_quote(tkn, '"');
 	i = 0;
 	while (res && res[i] != '\0')
     {
@@ -89,6 +89,20 @@ char *expand_without_quote(char *tkn, int last_exit_status, size_t i)
     return (res);
 }
 
+char find_first(char *arg) 
+{
+    int i = 0;
+    while (arg[i])
+    {
+        if (arg[i] == '\'')
+            return ('\'');
+        else if (arg[i] == '"')
+            return ('"');
+        i++;
+    }
+    return ('\0'); 
+}
+
 
 void expand_tkn_tab(char **tab, int last_exit_status)
 {
@@ -97,9 +111,9 @@ void expand_tkn_tab(char **tab, int last_exit_status)
 
     while (tab && tab[j])
 	{
-        if (tab[j][0] == '"')
+        if (find_first(tab[j]) == '"')
             temp = expand_double_quote(tab[j], last_exit_status);
-		else if (ft_strchr(tab[j], '\'') != NULL) 
+		else if (find_first(tab[j]) == '\'') 
             temp = expand_simple_quote(tab[j]);
 		else
             temp = expand_without_quote(tab[j], last_exit_status, 0);
@@ -122,8 +136,9 @@ char	**expander(char *arg, int last_exit_status)
 	if (!expanded)
 		return (NULL);*/
 	expanded = get_tkn_tab(arg, 1, 0, 0);
-	expand_tkn_tab(expanded, last_exit_status);
     //print_exp(expanded, arg);
+	expand_tkn_tab(expanded, last_exit_status);
+    
 	return (expanded);
 }
 
