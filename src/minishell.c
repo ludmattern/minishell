@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 17:13:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/21 09:55:26 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	char *join;
 	char *path;
 
-	print_start();
+	//print_start();
 	last_exit_status = EXIT_SUCCESS;
 	global_env = duplicate_envp(envp);
 	(void)argv;
@@ -117,7 +117,7 @@ int	main(int argc, char **argv, char **envp)
 				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
-				printlex(lexed);
+				//printlex(lexed);
 				if (lexed->error == -1)
 					lex_mallox_error(lexed);
 				save = lexed;

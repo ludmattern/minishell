@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 15:51:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/03/21 10:00:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 	else if (ft_strncmp(str, "echo", 5) == 0)
 		status = ft_echo(node->expanded_args);
 	else if (ft_strncmp(str, "pwd", 3) == 0)
-		status = ft_pwd(node->expanded_args);
+		status = ft_pwd();
 	else if (ft_strncmp(str, "env", 3) == 0)
 		status = ft_env(node->expanded_args, &data->env);
 	else
