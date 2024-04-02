@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/21 13:49:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:23:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,33 @@ bool check_dquotes(const char *cmd)
     return (!dquote);
 }
 
-bool	check_par(const char *cmd)
+bool check_par(const char *cmd)
 {
-	int	i;
-	int	par_count;
+    int i = 0;
+    int par_count = 0;
+    char current_quote = 0;
 
-	i = 0;
-	par_count = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '(')
-			par_count++;
-		if (cmd[i] == ')')
-			par_count--;
-		if (par_count < 0)
-			return (false);
-		i++;
-	}
-	return (par_count == 0);
+    while (cmd[i])
+    {
+        if ((cmd[i] == '\'' || cmd[i] == '\"') && (i == 0 || cmd[i - 1] != '\\'))
+		{
+            if (current_quote == 0)
+                current_quote = cmd[i];
+            else if (current_quote == cmd[i])
+                current_quote = 0;
+        }
+        if (current_quote == 0)
+		{
+            if (cmd[i] == '(')
+                par_count++;
+            else if (cmd[i] == ')')
+                par_count--;
+            if (par_count < 0) 
+                return (false);
+        }
+        i++;
+    }
+    return (par_count == 0);
 }
 
 bool check_sep(const char *cmd) 
