@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 14:50:57 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:39:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ long long	ft_atoll(const char *str)
 	while (ft_isspace(*str))
 		str++;
 	if (*str == '-' || *str == '+')
-		sign = (*str++ == '-') ? -1 : 1;
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
 	while (ft_isdigit(*str))
-		res = res * 10 + (*str++ - '0');
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
 	return (res * sign);
 }
 
@@ -51,14 +58,14 @@ bool	ft_isnumber(const char *str)
 
 int	ft_exit(char **args)
 {
-	long long status;
+	long long	status;
 
 	if (args[1] && !args[2])
 	{
 		if (!ft_isnumber(args[1]))
 		{
 			ft_eprintf("minishell: exit: %s: numeric argument required\n",
-					args[1]);
+				args[1]);
 			exit(EXIT_SYNTAX_ERROR);
 		}
 		status = ft_atoll(args[1]);

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 15:03:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:39:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,25 @@ int	is_valid_env_name(const char *name)
 	return (1);
 }
 
+int	process_export_arg(char *arg, char *equal_pos, char ***env)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_strndup(arg, equal_pos - arg);
+	if (!is_valid_env_name(name))
+	{
+		ft_eprintf("minishell: export: `%s': not a valid identifier\n", name);
+		return (free(name), EXIT_FAILURE);
+	}
+	value = ft_strdup(equal_pos + 1);
+	if (ft_addenv(name, value, env) == NULL)
+		return (free(name), free(value), EXIT_FAILURE);
+	free(name);
+	free(value);
+	return (EXIT_SUCCESS);
+}
+
 /*
 Displays the environment variables in alphabetical order when the command is 
 called without arguments and adds the variables to the environment when the 
@@ -51,8 +70,6 @@ command is called with arguments
 int	ft_export(char **args, char ***env)
 {
 	int		i;
-	char	*name;
-	char	*value;
 	char	*equal_pos;
 
 	if (!args[1])
@@ -62,25 +79,13 @@ int	ft_export(char **args, char ***env)
 	{
 		equal_pos = ft_strchr(args[i], '=');
 		if (equal_pos)
-		{
-			name = ft_strndup(args[i], equal_pos - args[i]);
-			if (!is_valid_env_name(name))
-			{
-				ft_eprintf("minishell: export: `%s': not a valid identifier\n", name);
-				free(name);
-				return (EXIT_FAILURE);
-			}
-			value = ft_strdup(equal_pos + 1);
-			if (ft_addenv(name, value, env) == NULL)
-				return (free(name), free(value), EXIT_FAILURE);
-			free(name);
-			free(value);
-		}
+			return (process_export_arg(args[i], equal_pos, env));
 		else
 		{
 			if (!is_valid_env_name(args[i]))
 			{
-				ft_eprintf("minishell: export: `%s': not a valid identifier\n", args[i]);
+				ft_eprintf("minishell: export: `%s': not a valid identifier\n",
+					args[i]);
 				return (EXIT_FAILURE);
 			}
 			ft_addenv(args[i], "", env);
