@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 12:40:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:55:01 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int	ft_cd(char **args, char **env)
 {
 	const char	*path;
 
+	if (args[1] != NULL && args[2] != NULL)
+		return (ft_eprintf("minishell: cd: too many arguments\n"),
+			EXIT_FAILURE);
 	if (args[1] == NULL)
 	{
 		path = ft_getenv("HOME", env);

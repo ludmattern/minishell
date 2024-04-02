@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 12:44:42 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:32:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,40 @@ Prints an error message and exit the child process.
 */
 void	command_exec_failure(t_data *data, const char *context, int error_code)
 {
-	(void)data;
+	int status;
+
+	status = EXIT_COMMAND_NOT_FOUND;
 	if (error_code == EXIT_COMMAND_NOT_FOUND)
 	{
 		if (ft_strchr(context, '/'))
-			ft_eprintf("minishell: %s: no such file or directory\n", context);
+			ft_eprintf("minishell: %s: No such file or directory\n", context);
 		else
 			ft_eprintf("minishell: %s: command not found\n", context);
 	}
 	else if (error_code == EXIT_PERMISSION_DENIED)
-		ft_eprintf("minishell: %s: Permission denied\n", context);
+	{
+		if (ft_strchr(context, '/'))
+		{
+			status = EXIT_INVALID_COMMAND;
+			ft_eprintf("minishell: %s: Permission denied\n", context);
+		}
+		else
+			ft_eprintf("minishell: %s: command not found\n", context);
+	}
 	else if (error_code == EXIT_IS_A_DIRECTORY)
 	{
-		ft_eprintf("minishell: %s: Is a directory\n", context);
-		//free_data_structure(&data);
-		exit(EXIT_INVALID_COMMAND);
+		if (ft_strchr(context, '/'))
+		{
+			status = EXIT_INVALID_COMMAND;
+			ft_eprintf("minishell: %s: Is a directory\n", context);
+		}
+		else
+			ft_eprintf("minishell: %s: command not found\n", context);
 	}
 	else
 		ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
-	//free_data_structure(&data);
-	exit(EXIT_COMMAND_NOT_FOUND);
+	free_forked_data_structure(&data);
+	exit(status);
 }
 
 void	execute_command(t_data *data, t_node *node)

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 12:59:26 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:28:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		ft_env(char **args, char ***env);
 int		ft_unset_vars(char **names, char ***env);
 void	print_env_var(const char *var);
 int		ft_unset(char *name, char ***env);
+int		ft_exit(char **args);
 
 /*
 handling environnment
