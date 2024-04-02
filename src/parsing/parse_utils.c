@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 11:52:59 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:44:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,51 +41,49 @@ t_node	*create_operator_node(t_token *tkn)
 	return (node);
 }
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+char *del_redir(const char *cmd, int i, int j) 
+{
+    char *result = malloc(ft_strlen(cmd) + 1);
+    if (!result) 
+        return (NULL);
+    int inq = 0;
+    char currentq = 0;
+    char charq;
 
-
-char *del_redir(const char *cmd) {
-    char *result = malloc(strlen(cmd) + 1);
-    if (!result) return NULL;
-    int i = 0, j = 0;
-    int inQuotes = 0; 
-    char currentQuote = 0;
-
-    while (cmd[i] != '\0') {
-        if ((cmd[i] == '\'' || cmd[i] == '\"') && (i == 0 || cmd[i - 1] != '\\'))
+    while (cmd[i] != '\0')
+    {
+        if ((cmd[i] == '\'' || cmd[i] == '\"') && (inq == 0 || currentq == cmd[i]))
         {
-            if (!inQuotes) 
+            inq = !inq;
+            if (inq) 
+                currentq = cmd[i];
+            else   
+                currentq = 0;
+        }
+        if (!inq && (cmd[i] == '>' || cmd[i] == '<')) 
+        {
+            while (cmd[i] == '>' || cmd[i] == '<' || isspace((unsigned char)cmd[i])) 
+                i++; 
+            if (cmd[i] == '\'' || cmd[i] == '\"') 
+            { 
+                charq = cmd[i++];
+                while (cmd[i] != '\0' && cmd[i] != charq) 
+                    i++; 
+                if (cmd[i] == charq) i++; 
+            }
+            else 
             {
-                inQuotes = 1;
-                currentQuote = cmd[i];
-            } 
-            else if (cmd[i] == currentQuote)
-                inQuotes = 0;
+                while (cmd[i] != '\0' && !isspace((unsigned char)cmd[i])) 
+                    i++; 
+            }
         }
-        if (inQuotes) 
-        {
-            result[j++] = cmd[i++];
-            continue;
-        }
-
-        if (cmd[i] == '>' || cmd[i] == '<') {
-            while (cmd[i] == '>' || cmd[i] == '<') 
-                i++;
-            while (isspace((unsigned char)cmd[i])) 
-                i++;
-            while (cmd[i] != '\0' && !isspace((unsigned char)cmd[i])) 
-                i++;
-            while (isspace((unsigned char)cmd[i])) 
-                i++;
-        }
-        else
-            result[j++] = cmd[i++];
+        else 
+            result[j++] = cmd[i++]; 
     }
     result[j] = '\0';
-    return result;
+    return (result);
 }
+
 
 bool redirection_outside_quotes(const char *args)
 {
@@ -115,7 +113,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
     if (redirection_outside_quotes(node->args)) 
     {
         node->io_list = parse_io_from_command(node->args, last_exit_status);
-        node->args = del_redir(node->args);
+        node->args = del_redir(node->args, 0, 0);
         //printf("\n%s\n", node->args);
         
     }
