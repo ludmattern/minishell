@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 14:28:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:53:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ handling commands utils
 int		wait_for_child(pid_t pid, t_data *data);
 int		create_pipe(int pipefd[2]);
 int		wait_for_pipeline_children(pid_t pid1, pid_t pid2);
+void	command_exec_failure(t_data *data, const char *context, int exit_code)
+		__attribute__((noreturn));
+void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
+void	restore_original_fds(t_data *data);
 
 /*
 builtins

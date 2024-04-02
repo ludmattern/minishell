@@ -6,13 +6,23 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/15 11:51:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:53:09 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	execute_command(t_data *data, t_node *node) __attribute__((noreturn));
+void	restore_original_fds(t_data *data)
+{
+	dup2(data->stdin, STDIN_FILENO);
+	dup2(data->stdout, STDOUT_FILENO);
+}
+
+int	fork_creation_failure(const char *message)
+{
+	ft_eprintf("minishell: %s: %s\n", message, strerror(errno));
+	return (EXIT_FORK_FAILURE);
+}
 
 /*
 Waits for the child process to finish and return its exit status.

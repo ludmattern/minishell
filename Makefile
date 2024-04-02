@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/02 17:06:48 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/02 17:51:39 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,14 @@ MAINDIR			:=	./src/
 
 MAIN_SRC		:=	$(MAINDIR)/minishell.c
 
-EXEC_SRCS		:=	$(EXECDIR)/printing.c \
-					$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
+EXEC_SRCS		:=	$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
 					$(EXECDIR)/applying_redirections.c $(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/handling_command.c $(EXECDIR)/handling_logic.c \
 					$(EXECDIR)/handling_pipeline.c $(EXECDIR)/handling_pipeline_utils.c \
 					$(EXECDIR)/ft_echo.c $(EXECDIR)/ft_cd.c $(EXECDIR)/ft_pwd.c \
 					$(EXECDIR)/ft_export.c $(EXECDIR)/handling_env.c $(EXECDIR)/ft_unset.c \
 					$(EXECDIR)/ft_env.c $(EXECDIR)/ft_export_utils.c $(EXECDIR)/duplicate_env.c \
-					$(EXECDIR)/ft_exit.c 
+					$(EXECDIR)/ft_exit.c $(EXECDIR)/command_exec_failure.c
 
 PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_var.c \
 					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
