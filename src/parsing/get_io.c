@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/01 12:24:26 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:05:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,53 @@ static void set_io_type(t_io_type *type, char **cursor)
     }
 }
 
+int countq(const char *str) 
+{
+    int count = 0;
+    while (*str && *str != '>' && *str != '<' && *str != ' ') 
+    {
+        if (*str == '"') 
+        {
+            count++;
+        }
+        str++;
+    }
+    return count;
+}
 
+char *extract_with_quote(char **cursor)
+{
+    char *result = malloc(strlen(*cursor) + 1);
+    if (!result) 
+        return (NULL);
+    char *output = result;
+    int insideq = 0;
+
+    while (**cursor && **cursor != '>' && **cursor != '<')
+    {
+        if (**cursor == '"' && !insideq) 
+        {
+            insideq = 1;
+            (*cursor)++;
+        }
+        else if (**cursor == '"' && insideq) 
+        {
+            insideq = 0;
+            (*cursor)++;
+        }
+        else {
+            *output++ = **cursor;
+            (*cursor)++;
+        }
+        if (!insideq && **cursor == '"')
+        {
+            insideq = 1;
+            (*cursor)++;
+        }
+    }
+    *output = '\0';
+    return (result);
+}
 
 
 static void add_new_io_node(t_io_node **head, t_io_node **tail, \
@@ -58,20 +104,28 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 {
     char c = ' ';
     char *start;
+    char *filename;
     
     while (**cursor == ' ')
         (*cursor)++;
-    if (**cursor == '"')
+    if (countq(*cursor) > 2 && **cursor == '"')
     {
-        c = '"';
-        start = *cursor;
-        (*cursor)++;
+        filename = extract_with_quote(cursor);
     }
     else
-        start = *cursor;
-    while (**cursor && **cursor != c && **cursor != '>' && **cursor != '<')
-        (*cursor)++;
-    char *filename = ft_strndup(start, *cursor - start);
+    {
+        if (**cursor == '"')
+        {
+            c = '"';
+            start = *cursor;
+            (*cursor)++;
+        }
+        else
+            start = *cursor;
+        while (**cursor && **cursor != c && **cursor != '>' && **cursor != '<')
+            (*cursor)++;
+        filename = ft_strndup(start, *cursor - start); 
+    }
     t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status);
     free(filename);
     if (!*head)

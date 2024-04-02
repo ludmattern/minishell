@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 12:44:32 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:02:51 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_node	*create_operator_node(t_token *tkn)
 	return (node);
 }
 
-char *del_redir(const char *cmd, int i, int j) 
+char *del_redir(char *cmd, int i, int j) 
 {
     char *result = malloc(ft_strlen(cmd) + 1);
     if (!result) 
@@ -80,6 +80,7 @@ char *del_redir(const char *cmd, int i, int j)
         else 
             result[j++] = cmd[i++]; 
     }
+    free(cmd);
     result[j] = '\0';
     return (result);
 }
