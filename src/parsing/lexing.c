@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/29 14:49:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 17:17:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_token	*lex_me(char *in_put)
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)
 			return (head->error = -1, head);
+		ft_memset(new_token, 0, sizeof(t_token));
 		new_token->next = NULL;
 		new_token->prev = lex;
 		if (lex != NULL)

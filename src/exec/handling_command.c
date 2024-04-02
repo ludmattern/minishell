@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 16:23:30 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:14:02 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 	pid_t	pid;
 	int		status;
 
+	if (node->expanded_args[0] == NULL)
+		return (EXIT_SUCCESS);
 	if (is_non_forked_builtins(node))
 	{
 		status = apply_command_redirections(data, node->io_list);

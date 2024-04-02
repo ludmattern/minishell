@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/21 13:25:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 17:10:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char *skip_quote(char *tkn, char q)
     res[j] = '\0';
     return (res);
 }
-
 
 char	*replace_substring(const char *original, \
 	int start, int length, const char *replace)
