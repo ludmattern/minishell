@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/21 13:04:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:03:28 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 		if (in_put[0])
 		{
 			if (check_syntax(in_put) == false)
-				last_exit_status = -1;
+				last_exit_status = EXIT_GENERAL_ERROR;
 			else
 			{
 				data = malloc(sizeof(t_data));
