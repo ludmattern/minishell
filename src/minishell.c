@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 17:16:30 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 21:04:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,33 @@ void free_parsing(t_node *ast,  t_token *lex)
 	exit(EXIT_FAILURE);
 }
 
+void initialize_shell_variables_with_export(char ***env) {
+    char cwd[1024];
+    int shlvl;
+    char *shlvlStr, *shlvlCmd, *tempStr;
+
+    // Set PWD
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        char *pwdCmd = ft_strjoin("PWD=", cwd); // Assumes ft_strjoin allocates memory for the result
+        ft_export((char *[]){ "export", pwdCmd, NULL }, env);
+        free(pwdCmd); // Free the memory allocated by ft_strjoin
+    }
+	ft_export((char *[]){ "export", "OLDPWD", NULL }, env);
+    // Handle SHLVL
+    // getenv might not be directly usable if you're not using the actual process environment. Adjust as necessary.
+    shlvlStr = getenv("SHLVL");
+    shlvl = shlvlStr ? ft_atoi(shlvlStr) + 1 : 1;
+
+    tempStr = ft_itoa(shlvl); // Convert integer to string
+    shlvlCmd = ft_strjoin("SHLVL=", tempStr); // Concatenate "SHLVL=" with the SHLVL value
+    free(tempStr); // Free the temporary string created by ft_itoa
+
+    ft_export((char *[]){ "export", shlvlCmd, NULL }, env);
+    free(shlvlCmd); // Free the memory allocated by ft_strjoin
+}
+
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*in_put;
@@ -88,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 	//print_start();
 	last_exit_status = EXIT_SUCCESS;
 	global_env = duplicate_envp(envp);
+	initialize_shell_variables_with_export(&global_env);
 	(void)argv;
 	(void)argc;
     signal(SIGINT, sigint_handler);

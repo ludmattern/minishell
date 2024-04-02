@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 17:53:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:39:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		ft_env(char **args, char ***env);
 int		ft_unset_vars(char **names, char ***env);
 void	print_env_var(const char *var);
 int		ft_unset(char *name, char ***env);
-int		ft_exit(char **args);
+int		ft_exit(char **args, t_data **data);
 
 /*
 handling environnment
@@ -105,6 +105,7 @@ char	**copy_env(char **env, int size);
 void	sort_env(char **env, int size);
 void	print_and_free_env(char **env);
 size_t	count_env_entries(char **envp);
+bool	ft_isvalid_identifier(const char *name);
 
 /*
 handling errors

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 15:39:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:08:31 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ bool	ft_isspace(char c)
 		|| c == '\r');
 }
 
-long long	ft_atoll(const char *str)
+long long	ft_strtol(const char *str, char *endptr, bool *error)
 {
 	long long	res;
 	int			sign;
+	int			digit;
 
 	res = 0;
 	sign = 1;
@@ -35,10 +36,15 @@ long long	ft_atoll(const char *str)
 	}
 	while (ft_isdigit(*str))
 	{
-		res = res * 10 + (*str - '0');
+		digit = *str - '0';
+		if (sign == 1 && (LLONG_MAX - digit) / 10 < res)
+			return (*error = true, LLONG_MAX);
+		else if (sign == -1 && (LLONG_MIN + digit) / 10 > -res)
+			return (*error = true, LLONG_MIN);
+		res = res * 10 + digit;
 		str++;
 	}
-	return (res * sign);
+	return (*endptr = *str, res * sign);
 }
 
 bool	ft_isnumber(const char *str)
@@ -56,25 +62,31 @@ bool	ft_isnumber(const char *str)
 	return (true);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_data **data)
 {
 	long long	status;
+	char		endptr;
+	bool		error;
 
+	error = false;
 	if (args[1] && !args[2])
 	{
-		if (!ft_isnumber(args[1]))
+		status = ft_strtol(args[1], &endptr, &error);
+		if (endptr != '\0' || error == true)
 		{
+			printf("exit\n");
 			ft_eprintf("minishell: exit: %s: numeric argument required\n",
 				args[1]);
 			exit(EXIT_SYNTAX_ERROR);
 		}
-		status = ft_atoll(args[1]);
+		free_data_structure(data);
 		exit((int)(status % 256 + 256) % 256);
 	}
 	else if (args[1] && args[2])
-	{
-		ft_eprintf("minishell: exit: too many arguments\n");
-		return (EXIT_GENERAL_ERROR);
-	}
+		return (printf("exit\n"),
+			ft_eprintf("minishell: exit: too many arguments\n"),
+			EXIT_GENERAL_ERROR);
+	free_data_structure(data);
+	printf("exit\n");
 	exit(EXIT_SUCCESS);
 }

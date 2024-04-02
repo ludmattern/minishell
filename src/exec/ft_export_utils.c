@@ -6,11 +6,29 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 14:40:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:28:30 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+
+/*
+Prints the environment variables as they are stored in the env preceded 
+by "declare -x"
+*/
+void	print_env_var(const char *var)
+{
+	char	*equal_sign;
+
+	equal_sign = strchr(var, '=');
+	if (equal_sign)
+	{
+		printf("declare -x %.*s\"", (int)(equal_sign - var + 1), var);
+		printf("%s\"\n", equal_sign + 1);
+	}
+	else
+		printf("declare -x %s\n", var);
+}
 
 /*
 Main function to print sorted environment variables
@@ -18,6 +36,7 @@ Main function to print sorted environment variables
 void	ft_print_env_sorted(char **env)
 {
 	int		size;
+	int		i;
 	char	**env_copy;
 
 	size = 0;
@@ -25,7 +44,10 @@ void	ft_print_env_sorted(char **env)
 		size++;
 	env_copy = copy_env(env, size);
 	sort_env(env_copy, size);
-	print_and_free_env(env_copy);
+	i = 0;
+	while (env_copy[i])
+		print_env_var(env_copy[i++]);
+	free(env_copy);
 }
 
 /*
@@ -71,17 +93,4 @@ void	sort_env(char **env, int size)
 		env[j + 1] = key;
 		i++;
 	}
-}
-
-/*
-Function to print and free the environment array
-*/
-void	print_and_free_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		print_env_var(env[i++]);
-	free(env);
 }
