@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 15:56:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:00:56 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	if (status < 0)
 		dup2_creation_failure(data, pipefd);
 	close_pipe_fds(pipefd);
-	handling_node(data, node, true);
+	status = handling_node(data, node, true);
 	free_forked_data_structure(&data);
 	close_standard_fds();
-	exit(EXIT_SUCCESS);
+	exit(status);
 }
 
 /*
@@ -57,6 +57,5 @@ int	handling_pipeline(t_data *data, t_node *node)
 	if (pid_right == 0)
 		handling_pipeline_child(data, node->right, pipefd, AST_RIGHT);
 	close_pipe_fds(pipefd);
-	wait_for_pipeline_children(pid_left, pid_right);
-	return (EXIT_SUCCESS);
+	return (wait_for_pipeline_children(pid_left, pid_right));
 }

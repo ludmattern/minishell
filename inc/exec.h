@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/21 10:00:30 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:59:26 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ handling commands utils
 */
 int		wait_for_child(pid_t pid, t_data *data);
 int		create_pipe(int pipefd[2]);
-void	wait_for_pipeline_children(pid_t pid1, pid_t pid2);
+int		wait_for_pipeline_children(pid_t pid1, pid_t pid2);
 
 /*
 builtins
