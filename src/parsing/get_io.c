@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 15:05:14 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:30:40 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ char *extract_with_quote(char **cursor)
             insideq = 0;
             (*cursor)++;
         }
-        else {
+        else 
+        {
             *output++ = **cursor;
             (*cursor)++;
         }

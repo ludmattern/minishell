@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 15:02:51 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:42:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,49 +41,54 @@ t_node	*create_operator_node(t_token *tkn)
 	return (node);
 }
 
-char *del_redir(char *cmd, int i, int j) 
+char *del_redir(char *cmd, int i, int j)
 {
-    char *result = malloc(ft_strlen(cmd) + 1);
+    char *result = malloc(strlen(cmd) + 1);
     if (!result) 
         return (NULL);
     int inq = 0;
     char currentq = 0;
-    char charq;
 
-    while (cmd[i] != '\0')
-    {
-        if ((cmd[i] == '\'' || cmd[i] == '\"') && (inq == 0 || currentq == cmd[i]))
+    while (cmd[i] != '\0') {
+        if ((cmd[i] == '\'' || cmd[i] == '\"') && (inq == 0 || currentq == cmd[i])) 
         {
             inq = !inq;
-            if (inq) 
+            if (inq)
                 currentq = cmd[i];
-            else   
-                currentq = 0;
-        }
-        if (!inq && (cmd[i] == '>' || cmd[i] == '<')) 
-        {
-            while (cmd[i] == '>' || cmd[i] == '<' || isspace((unsigned char)cmd[i])) 
-                i++; 
-            if (cmd[i] == '\'' || cmd[i] == '\"') 
-            { 
-                charq = cmd[i++];
-                while (cmd[i] != '\0' && cmd[i] != charq) 
-                    i++; 
-                if (cmd[i] == charq) i++; 
-            }
             else 
+                currentq = 0;
+        } 
+        else if (!inq && (cmd[i] == '>' || cmd[i] == '<'))
+        {
+            while (cmd[i] == '>' || cmd[i] == '<') 
+                i++;
+            while (isspace((unsigned char)cmd[i])) 
+                i++;
+            while (cmd[i] != '\0' && (inq || (!isspace((unsigned char)cmd[i]) && cmd[i] != '>' && cmd[i] != '<')))
             {
-                while (cmd[i] != '\0' && !isspace((unsigned char)cmd[i])) 
-                    i++; 
+                if (cmd[i] == currentq)
+                {
+                    inq = 0;
+                    currentq = 0;
+                } 
+                else if ((cmd[i] == '\'' || cmd[i] == '\"') && !inq)
+                {
+                    inq = 1;
+                    currentq = cmd[i];
+                }
+                i++;
             }
+            while (isspace((unsigned char)cmd[i])) 
+                i++;
+            continue;
         }
-        else 
-            result[j++] = cmd[i++]; 
+        result[j++] = cmd[i];
+        i++;
     }
-    free(cmd);
-    result[j] = '\0';
+    result[j] = '\0'; 
     return (result);
 }
+
 
 
 bool redirection_outside_quotes(const char *args)
