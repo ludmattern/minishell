@@ -1,0 +1,1 @@
+/home/fprevot/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/sgoinfre/goinfre/Perso/fprevot/VSCode-linux-x64/bin /home/fprevot/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/sgoinfre/goinfre/Perso/fprevot/VSCode-linux-x64/bin

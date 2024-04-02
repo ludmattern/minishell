@@ -3,74 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 17:49:43 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:24 by lmattern         ###   ########.fr       */
+/*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/01 12:24:26 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-t_io_node	*create_io_node(t_io_type type, t_token *tkn, int last_exit_status)
+t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status) 
 {
-	t_io_node	*io;
-
-	io = malloc(sizeof(t_io_node));
-	if (io == NULL)
-		return (NULL);
-	io->type = type;
-	if (tkn->next != NULL)
-		io->value = ft_strdup(tkn->next->next->value);
-	io->expanded_value = expander(io->value, last_exit_status);
-	io->here_doc = 0;
-	io->next = NULL;
-	return (io);
+      t_io_node *io = malloc(sizeof(t_io_node));
+      if (!io) 
+		return NULL;
+      io->type = type;
+      io->value = ft_strdup(value);
+      io->expanded_value = expander(io->value, last_exit_status);
+      io->here_doc = 0;
+      io->prev = NULL;
+      io->next = NULL;
+      return io;
 }
 
-void	add_io_node(t_io_node **head, t_io_node **tail, \
-		t_token **tkn, int last_exit_status)
+static void set_io_type(t_io_type *type, char **cursor)
 {
-	t_io_node	*new_io;
-
-	new_io = NULL;
-	if ((*tkn)->next->type == T_GREAT)
-		new_io = create_io_node(IO_OUT, *tkn, last_exit_status);
-	else if ((*tkn)->next->type == T_LESS)
-		new_io = create_io_node(IO_IN, *tkn, last_exit_status);
-	else if ((*tkn)->next->type == T_DLESS)
-		new_io = create_io_node(IO_HEREDOC, *tkn, last_exit_status);
-	else if ((*tkn)->next->type == T_DGREAT)
-		new_io = create_io_node(IO_APPEND, *tkn, last_exit_status);
-	if (new_io != NULL)
-	{
-		if (*head == NULL)
-		{
-			*head = new_io;
-			*tail = new_io;
-		}
-		else
-		{
-			(*tail)->next = new_io;
-			new_io->prev = *tail;
-			*tail = new_io;
-		}
-	}
+    if (**cursor == '>')
+    {
+        *type = IO_OUT;
+        (*cursor)++;
+        if (**cursor == '>')
+        {
+            *type = IO_APPEND;
+            (*cursor)++;
+        }
+    }
+    else if (**cursor == '<')
+    {
+        *type = IO_IN;
+        (*cursor)++;
+        if (**cursor == '<')
+        {
+            *type = IO_HEREDOC;
+            (*cursor)++;
+        }
+    }
 }
 
-t_io_node	*make_io(t_token **tkn, int last_exit_status)
-{
-	t_io_node	*head;
-	t_io_node	*tail;
 
-	head = NULL;
-	tail = NULL;
-	while (*tkn != NULL && (*tkn)->next != NULL && \
-			((*tkn)->next->type == T_GREAT || (*tkn)->next->type == T_LESS || \
-			(*tkn)->next->type == T_DLESS || (*tkn)->next->type == T_DGREAT))
-	{
-		add_io_node(&head, &tail, tkn, last_exit_status);
-		*tkn = (*tkn)->next->next;
-	}
-	return (head);
+
+
+static void add_new_io_node(t_io_node **head, t_io_node **tail, \
+                            t_io_type type, char **cursor, int last_exit_status)
+{
+    char c = ' ';
+    char *start;
+    
+    while (**cursor == ' ')
+        (*cursor)++;
+    if (**cursor == '"')
+    {
+        c = '"';
+        start = *cursor;
+        (*cursor)++;
+    }
+    else
+        start = *cursor;
+    while (**cursor && **cursor != c && **cursor != '>' && **cursor != '<')
+        (*cursor)++;
+    char *filename = ft_strndup(start, *cursor - start);
+    t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status);
+    free(filename);
+    if (!*head)
+        *head = *tail = new_io;
+    else
+    {
+        (*tail)->next = new_io;
+        new_io->prev = *tail;
+        *tail = new_io;
+    }
 }
+
+t_io_node *parse_io_from_command(char *cmd, int last_exit_status)
+{
+    t_io_node *head = NULL;
+    t_io_node *tail = NULL;
+    char current_quote = 0;
+    char *cursor = cmd;
+
+    while (*cursor)
+    {
+        if ((*cursor == '"' || *cursor == '\'') && !current_quote)
+            current_quote = *cursor;
+        else if (*cursor == current_quote)
+            current_quote = 0;
+        else if ((*cursor == '>' || *cursor == '<') && !current_quote)
+        {
+            t_io_type type;
+            set_io_type(&type, &cursor);
+            add_new_io_node(&head, &tail, type, &cursor, last_exit_status);
+        }
+        
+        cursor++;
+    }
+    return (head);
+}
+
+
+
+
+

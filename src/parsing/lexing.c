@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/21 11:55:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:49:05 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 
 int	fill_value(t_token *lex, int num)
 {
-	if (num == 1)
-		lex->value = ft_strdup("<\0");
-	else if (num == 2)
-		lex->value = ft_strdup(">\0");
-	else if (num == 3)
-		lex->value = ft_strdup("<<\0");
-	else if (num == 4)
-		lex->value = ft_strdup(">>\0");
-	else if (num == 5)
+	if (num == 5)
 		lex->value = ft_strdup("|\0");
 	else if (num == 6)
 		lex->value = ft_strdup("&&\0");
@@ -42,17 +34,8 @@ int	fill_value(t_token *lex, int num)
 int	fill_type(t_token *lex, int num, int *i, int size)
 {
 	imore(0, size, i);
-	if (num == 1)
-		lex->type = T_LESS;
-	else if (num == 2)
-		lex->type = T_GREAT;
-	else if (num == 3)
-		lex->type = T_DLESS;
-	else if (num == 4)
-		lex->type = T_DGREAT;
-	else if (num == 5)
 		lex->type = T_PIPE;
-	else if (num == 6)
+	if (num == 6)
 		lex->type = T_AND;
 	else if (num == 7)
 		lex->type = T_OR;
@@ -84,7 +67,7 @@ int	fill_t_word(t_token *lex, int *i, char *in_put)
 	while (in_put[*i] == ' ')
 		(*i)++;
 	start = *i;
-	while (in_put[*i] != '|' && in_put[*i] != '<' && in_put[*i] != '>' && \
+	while (in_put[*i] != '|'&& \
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '('\
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
 	{
@@ -114,7 +97,7 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 		fill_type(lex, 9, i, 1);
 	else if (in_put[*i] == ')')
 		fill_type(lex, 10, i, 1);
-	else if (in_put[*i] != '|' && in_put[*i] != '<' && in_put[*i] != '>' && \
+	else if (in_put[*i] != '|'&& \
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '(' \
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
 	{
@@ -123,14 +106,6 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 	}
 	else if (in_put[*i] == '|' && in_put[*i + 1] != '|')
 		fill_type(lex, 5, i, 1);
-	else if (in_put[*i] == '<' && in_put[*i + 1] == '<')
-		fill_type(lex, 3, i, 2);
-	else if (in_put[*i] == '<' && in_put[*i + 1] != '<')
-		fill_type(lex, 1, i, 1);
-	else if (in_put[*i] == '>' && in_put[*i + 1] == '>')
-		fill_type(lex, 4, i, 2);
-	else if (in_put[*i] == '>' && in_put[*i + 1] != '>')
-		fill_type(lex, 2, i, 1);
 	else if (in_put[*i] == '&' && in_put[*i + 1] == '&')
 		fill_type(lex, 6, i, 2);
 	else if (in_put[*i] == '|' && in_put[*i + 1] == '|')

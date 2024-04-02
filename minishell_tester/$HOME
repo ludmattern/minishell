@@ -1,1 +1,1 @@
-exit_code -
+exit_code ->$? user ->$USER home -> $HOME

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/21 13:25:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:50:52 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void *my_realloc(void *ptr, size_t original_size, size_t new_size);
 char		*ft_strcat(char	*dest, const char *src);
 void		imore(int k, int size, int *i);
 
-t_io_node	*make_io(t_token **tkn, int last_exit_status);
+t_io_node *parse_io_from_command(char *command, int last_exit_status);
 
 void		free_data_structure(t_data **data);
 

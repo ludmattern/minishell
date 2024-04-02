@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
+#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/20 17:11:26 by lmattern         ###   ########.fr        #
+#    Updated: 2024/03/29 14:47:55 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				:=	cc
+CC				:=	gcc
 NAME			:=	minishell
 CFLAGS			:=	-Wextra -Wall -Werror -lreadline
 LIBFT			:=	./libft
