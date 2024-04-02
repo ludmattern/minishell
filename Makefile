@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
+#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/03/29 14:47:55 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/02 12:37:43 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				:=	gcc
+CC				:=	cc
 NAME			:=	minishell
-CFLAGS			:=	-Wextra -Wall -Werror -lreadline
+CFLAGS			:=	-Wextra -Wall -Werror
 LIBFT			:=	./libft
 HEADERS			:=	-I ./inc
 LIBS			:=	-L$(LIBFT) -lft
@@ -63,7 +63,7 @@ $(LIBFT)/libft.a: FORCE
 	@make -C $(LIBFT)
 
 $(NAME): $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
-	$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -o $(NAME)
+	$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -lreadline -o $(NAME)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/17 11:00:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:58:50 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,21 @@ void	dup2_creation_failure(t_data *data, int pipefd[2])
 /*
 Waits for the child processes to finish.
 */
-void	wait_for_pipeline_children(pid_t pid1, pid_t pid2)
+int	wait_for_pipeline_children(pid_t pid1, pid_t pid2)
 {
 	int	status;
+	int	return_status;
 
+	return_status = EXIT_SUCCESS;
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
+	if (WIFEXITED(status))
+		return_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		return_status = 128 + WTERMSIG(status);
+	else
+		return_status = EXIT_FAILURE;
+	return (return_status);
 }
 
 /*

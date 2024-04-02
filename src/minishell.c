@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/21 13:04:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:03:29 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	print_start()
 	printf("  \\/  \\/   \\___||_| \\___| \\___/ |_| |_| |_| \\___|  \\__| \\___/  \\/    \\/|_||_| |_||_||___/|_| |_| \\___||_||_| \n");
 	printf("\033[37m");
 }
-
-
-
 
 void sigint_handler(int signal) 
 {
@@ -109,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 		if (in_put[0])
 		{
 			if (check_syntax(in_put) == false)
-				last_exit_status = -1;
+				last_exit_status = EXIT_GENERAL_ERROR;
 			else
 			{
 				data = malloc(sizeof(t_data));
