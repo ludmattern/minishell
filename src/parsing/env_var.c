@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 14:39:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 16:55:33 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ char *get_env_var(char *tkn, int i, int k, int j)
 			while (tkn[i] && tkn[i] != ' ' && tkn[i] != '/' && tkn[i] != '$')
 				i++;
 			env_length = i - start;
-			char *tmp_env = malloc((env_length > 0 ? env_length : 1) + 1);
+			char *tmp_env;
+			if (env_length > 0) 
+				tmp_env = malloc(env_length + 1);
+			else
+				tmp_env = malloc(1 + 1);
 			ft_strncpy(tmp_env, tkn + start, env_length);
 			tmp_env[env_length] = '\0';
 			env_val = getenv(tmp_env);
@@ -89,8 +93,8 @@ char *get_env_var(char *tkn, int i, int k, int j)
 					res[k++] = *env_val++;
 			}
 			free(tmp_env);
-		} 
-		else 
+		}
+		else
 			res[k++] = tkn[i++];
 	}
 	res[k] = '\0';
