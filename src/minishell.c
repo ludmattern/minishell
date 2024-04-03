@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 16:30:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:08:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,67 +98,60 @@ void	initialize_shell_variables(char ***env)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*path;
-	char		*join;
-	t_data		*data;
-	t_token		*save;
-	t_token		*lexed;
-	char		*in_put;
-	char		**global_env;
-	char		**local_env;
-	int			last_exit_status;
+	t_global_data	g_data;
 
 	(void)argv;
 	(void)argc;
 	//print_start();
-	last_exit_status = EXIT_SUCCESS;
-	global_env = duplicate_envp(envp);
-	local_env = NULL;
-	initialize_shell_variables(&global_env);
+	g_data.last_exit_status = EXIT_SUCCESS;
+	g_data.global_env = duplicate_envp(envp);
+	g_data.local_env = NULL;
+	initialize_shell_variables(&g_data.global_env);
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
-		path = getcwd(NULL, 0);
-		join = ft_strjoin(path, " $> ");
-		in_put = readline(join);
-		free(join);
-		free(path);
-		if (in_put == NULL) 
+		g_data.path = getcwd(NULL, 0);
+		g_data.join = ft_strjoin(g_data.path, " $> ");
+		g_data.in_put = readline(g_data.join);
+		free(g_data.join);
+		free(g_data.path);
+		if (g_data.in_put == NULL) 
 		{
 			write(STDOUT_FILENO, "\n", 1);  
 			break;
 		}
-		if (in_put[0])
+		if (g_data.in_put[0])
 		{
-			if (check_syntax(in_put) == false)
-				last_exit_status = EXIT_GENERAL_ERROR;
+			if (check_syntax(g_data.in_put) == false)
+				g_data.last_exit_status = EXIT_GENERAL_ERROR;
 			else
 			{
-				data = malloc(sizeof(t_data));
+				g_data.data = malloc(sizeof(t_data));
 				//if (!data)
 				//	return (printf("MALLOC ERROR"));
-				ft_bzero(data, sizeof(t_data));
-				data->env = global_env;
-				data->env = global_env;
-				data->last_exit_status = last_exit_status;
-				lexed = lex_me(in_put);
-				if (lexed->error == -1)
-					lex_mallox_error(lexed);
-				save = lexed;
-				data->ast = build_ast(&lexed, data->last_exit_status);
+				ft_bzero(g_data.data, sizeof(t_data));
+				g_data.data->env = g_data.global_env;
+				g_data.data->env = g_data.global_env;
+				g_data.data->last_exit_status = g_data.last_exit_status;
+				g_data.lexed = lex_me(g_data.in_put);
+				if (g_data.lexed->error == -1)
+					lex_mallox_error(g_data.lexed);
+				g_data.save = g_data.lexed;
+				g_data.lexed->g_data = &g_data;
+				g_data.data->ast = build_ast(&g_data.lexed, g_data.data->last_exit_status);
 				// if (!data->ast)
 				// 	free_parsing(data->ast, lexed);
-				free_lexed(save);
-				last_exit_status = run_execution(data);
-				global_env = data->env;
-				free_data_structure(&data);
+				free_lexed(g_data.save);
+				g_data.last_exit_status = run_execution(g_data.data);
+				g_data.global_env = g_data.data->env;
+				free_data_structure(&g_data.data);
 			}
-			add_history(in_put);
-			free(in_put);
-			in_put = NULL;
+			add_history(g_data.in_put);
+			free(g_data.in_put);
+			g_data.in_put = NULL;
 		}
 	}
-	ft_free_double_array(global_env);
-	ft_free_double_array(local_env);
+	ft_free_double_array(g_data.global_env);
+	ft_free_double_array(g_data.local_env);
 	return (0);
 }

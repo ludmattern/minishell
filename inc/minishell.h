@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 13:24:32 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:07:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,53 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+
+typedef enum e_ast_direction
+{
+	AST_LEFT,
+	AST_RIGHT
+}	t_ast_direction;
+
+typedef enum e_token_type
+{
+	T_WORD,
+	T_LESS,
+	T_GREAT,
+	T_DLESS,
+	T_DGREAT,
+	T_PIPE,
+	T_AND,
+	T_OR,
+	T_NEWLINE,
+	T_LPAR,
+	T_RPAR
+}	t_token_type;
+
+typedef struct s_token
+{
+	t_token_type			type;
+	char					*value;
+	struct s_token			*next;
+	struct s_token			*prev;
+	struct s_global_data	*g_data;
+	int		error;
+}	t_token;
+
+typedef struct s_envsize
+{
+	int		size;
+	int		envsize;
+	char	*env;
+	char	*env_val;
+	char	*res;
+}		t_envsize;
+
+typedef struct s_tkntab
+{
+	int		size;
+	int		start;
+	int		i;
+}			t_tkntab;
 
 typedef enum e_node_type
 {
@@ -81,6 +128,7 @@ typedef struct s_node
 	struct s_node		*right;
 }	t_node;
 
+
 typedef struct s_data
 {
 	t_node			*ast;
@@ -91,6 +139,20 @@ typedef struct s_data
 	bool			signint_child;
 	bool			heredoc_sigint;
 	struct termios	initial_terminal_attributes;
-}	t_data;
+}					t_data;
+
+
+typedef struct s_global_data
+{
+	int				last_exit_status;
+	char			**global_env;
+	char			**local_env;
+	char			*in_put;
+	t_token			*save;
+	t_token			*lexed;
+	char			*path;
+	char			*join;
+	struct s_data	*data;
+}					t_global_data;
 
 #endif

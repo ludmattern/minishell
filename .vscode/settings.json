@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "typeinfo": "c",
-        "parse.h": "c"
+        "parse.h": "c",
+        "get_next_line.h": "c",
+        "ft_printf.h": "c",
+        "unistd.h": "c",
+        "error_codes.h": "c"
     }
 }

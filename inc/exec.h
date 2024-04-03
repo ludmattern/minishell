@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 14:55:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:04:39 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@
 # include <termios.h>
 # include <stdbool.h>
 # include <sys/stat.h>
-
-typedef enum e_ast_direction
-{
-	AST_LEFT,
-	AST_RIGHT
-}	t_ast_direction;
 
 /*
 run execution
