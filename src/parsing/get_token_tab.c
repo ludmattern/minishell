@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/21 12:53:14 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:14:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	**get_tkn_tab(char *arg, int size, int i, int k)
 {
     char	**tab;
 	char	**final_tab;
+    char **new_tab;
 
     
 
@@ -82,7 +83,7 @@ char	**get_tkn_tab(char *arg, int size, int i, int k)
         if (k >= size - 1) 
 		{ 
             size += 1;
-            char **new_tab = realloc_tab(tab, k, size);
+            new_tab = realloc_tab(tab, k, size);
             if (!new_tab)
                 return (NULL);
             tab = new_tab;
@@ -93,7 +94,6 @@ char	**get_tkn_tab(char *arg, int size, int i, int k)
     if (!final_tab)
         return (NULL);
     final_tab[k] = NULL; 
-    
     return (final_tab);
 }
 
