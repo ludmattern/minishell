@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 17:08:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:22:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	main(int argc, char **argv, char **envp)
 				//	return (printf("MALLOC ERROR"));
 				ft_bzero(g_data.data, sizeof(t_data));
 				g_data.data->env = g_data.global_env;
-				g_data.data->env = g_data.global_env;
+				g_data.data->l_env = g_data.local_env;
 				g_data.data->last_exit_status = g_data.last_exit_status;
 				g_data.lexed = lex_me(g_data.in_put);
 				if (g_data.lexed->error == -1)
@@ -144,6 +144,7 @@ int	main(int argc, char **argv, char **envp)
 				free_lexed(g_data.save);
 				g_data.last_exit_status = run_execution(g_data.data);
 				g_data.global_env = g_data.data->env;
+				g_data.local_env = g_data.data->l_env;
 				free_data_structure(&g_data.data);
 			}
 			add_history(g_data.in_put);

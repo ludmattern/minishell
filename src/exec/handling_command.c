@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 19:27:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:49:00 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ bool	is_non_forked_builtins(t_node *node)
 	const char	*str;
 
 	str = (const char *)node->expanded_args[0];
-	if (ft_strncmp(str, "/", ft_strlen(str) == 0))
+	if (node->is_add_local == true)
+		return (true);
+	else if (ft_strncmp(str, "/", ft_strlen(str) == 0))
 		return (false);
 	else if (ft_strncmp(str, "cd", 2) == 0 || ft_strncmp(str, "export", 6) == 0
 		|| ft_strncmp(str, "unset", 5) == 0 || ft_strncmp(str, "exit", 4) == 0)
@@ -49,7 +51,9 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 	const char	*str;
 
 	str = (const char *)node->expanded_args[0];
-	if (ft_strncmp(str, "cd", 2) == 0)
+	if (node->is_add_local == true)
+		status = ft_add_local(node->expanded_args[0], &data->env, &data->l_env);
+	else if (ft_strncmp(str, "cd", 2) == 0)
 		status = ft_cd(node->expanded_args, data->env);
 	else if (ft_strncmp(str, "export", 6) == 0)
 		status = ft_export(node->expanded_args, &data->env);

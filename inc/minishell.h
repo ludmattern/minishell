@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 17:07:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:19:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_data
 	int				stdin;
 	int				stdout;
 	char			**env;
+	char			**l_env;
 	bool			signint_child;
 	bool			heredoc_sigint;
 	struct termios	initial_terminal_attributes;

@@ -6,12 +6,15 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:12:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:41:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Validates a single export argument.
+*/
 bool validate_export_argument(const char *arg)
 {
 	char	*equal_pos;
@@ -29,8 +32,9 @@ bool validate_export_argument(const char *arg)
 	free(name);
 	return is_valid;
 }
-
-// Processes a single export argument, assuming it's already validated.
+/*
+Processes a single export argument, assuming it's already validated.
+*/
 int process_export_argument(const char *arg, char ***env)
 {
 	char	*equal_pos;
@@ -58,7 +62,9 @@ int process_export_argument(const char *arg, char ***env)
 	return status;
 }
 
-// Main export function that iterates over arguments and validates/processes them.
+/*
+Main export function that iterates over arguments and validates/processes them.
+*/
 int ft_export(char **args, char ***env)
 {
 	int	i;

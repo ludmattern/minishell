@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 17:04:39 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:53:29 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	**copy_env(char **env, int size);
 void	sort_env(char **env, int size);
 size_t	count_env_entries(char **envp);
 bool	ft_isvalid_identifier(const char *name);
+int		ft_add_local(char *arg, char ***g_env, char ***l_env);
+int		find_env_index(char **env, const char *name);
 
 /*
 handling errors

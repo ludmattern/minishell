@@ -5,6 +5,7 @@
         "get_next_line.h": "c",
         "ft_printf.h": "c",
         "unistd.h": "c",
-        "error_codes.h": "c"
+        "error_codes.h": "c",
+        "cstdlib": "c"
     }
 }
