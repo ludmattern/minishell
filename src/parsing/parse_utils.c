@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 18:03:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:06:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,4 +162,3 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 	node->type = N_CMD;
 	return (node);
 }
-

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 15:34:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:11:07 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ Creates a pipe and checks for errors in the process.
 int	create_pipe(int pipefd[2])
 {
 	if (pipe(pipefd) < 0)
-	{
-		perror("minishell: pipe error");
-		return (EXIT_PIPE_FAILURE);
-	}
+		return (perror("minishell: pipe error"), EXIT_PIPE_FAILURE);
 	else
 		return (EXIT_SUCCESS);
 }

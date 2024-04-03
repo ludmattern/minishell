@@ -6,13 +6,16 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 21:35:54 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:19:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-void	uptdate_env(char *oldpwd, char ***env)
+/*
+Updates the environment variables PWD and OLDPWD.
+*/
+void	cd_update_env(char *oldpwd, char ***env)
 {
 	char	newpwd[1024];
 
@@ -48,6 +51,6 @@ int	ft_cd(char **args, char **env)
 		path = args[1];
 	if (chdir(path) != 0)
 		return (perror("minishell: cd: "), EXIT_FAILURE);
-	uptdate_env(oldpwd, &env);
+	cd_update_env(oldpwd, &env);
 	return (EXIT_SUCCESS);
 }

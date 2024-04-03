@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 20:26:14 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:12:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,26 @@ int process_export_argument(const char *arg, char ***env)
 int ft_export(char **args, char ***env)
 {
 	int	i;
-	int status;
-	int overall_status;
+	int	status;
+	int	overall_status;
 
-    if (!args[1])
+	if (!args[1])
 	{
-        ft_print_env_sorted(*env);
-        return (EXIT_SUCCESS);
-    }
-    overall_status = EXIT_SUCCESS;
+		ft_print_env_sorted(*env);
+		return (EXIT_SUCCESS);
+	}
+	overall_status = EXIT_SUCCESS;
 	i = 0;
-    while (args[++i] != NULL)
+	while (args[++i] != NULL)
 	{
-        if (validate_export_argument(args[i]))
+		if (validate_export_argument(args[i]))
 		{
-            status = process_export_argument(args[i], env);
-            if (status == EXIT_FAILURE)
-                overall_status = EXIT_FAILURE;
-        }
+			status = process_export_argument(args[i], env);
+			if (status == EXIT_FAILURE)
+				overall_status = EXIT_FAILURE;
+		}
 		else
-            overall_status = EXIT_FAILURE;
-    }
-
-    return (overall_status);
+			overall_status = EXIT_FAILURE;
+	}
+	return (overall_status);
 }
