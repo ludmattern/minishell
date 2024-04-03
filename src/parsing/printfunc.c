@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:30:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/15 11:09:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:05:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,8 @@ void printlex(t_token *lexed)
 void print_exp(char **tab, char *arg)
 {
 	printf("BEFORE : %s\n", arg);
-	int i = 0;
-	while (tab[i])
-	{
+	int i = -1;
+	while (tab[++i])
 		printf("AFTER %i : %s\n", i, tab[i]);
-		i++;
-	}
 	printf("\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n");
 }

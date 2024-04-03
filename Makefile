@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/02 17:51:39 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/03 15:02:45 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_va
 					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
 					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
 					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
-					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/utils.c
+					$(PARSEDIR)/syntaxe_checker.c
 
 OBJDIR			:=	./.obj
 

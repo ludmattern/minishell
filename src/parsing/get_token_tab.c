@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 13:14:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:10:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,22 @@ char	*space_token(char *arg, int *i)
 {
 	int		start;
 	char	*token;
-    bool    dquote = false;
-    bool    squote = false;
-    
-
+	bool	dquote;
+	bool	squote;
+	
+	dquote = false;
+	squote = false;
 	start = *i;
-    while (arg[*i])
-    {
-        if (arg[*i] == '"')
-            dquote = !dquote;
-        else if (arg[*i] == '\'')
-            squote = !squote;
-        if (!squote && !dquote && arg[*i] == ' ')
-            break;
-        (*i)++;
-    }
+	while (arg[*i])
+	{
+		if (arg[*i] == '"')
+			dquote = !dquote;
+		else if (arg[*i] == '\'')
+			squote = !squote;
+		if (!squote && !dquote && arg[*i] == ' ')
+			break;
+		(*i)++;
+	}
 	token = ft_strndup(arg + start, *i - start);
 	return (token);
 }
@@ -58,43 +59,40 @@ void	skip_spaces(char *arg, int *i)
 		(*i)++;
 }
 
-
 char	**realloc_tab(char **tab, int current_size, int new_size) 
 {
-    return (my_realloc(tab, sizeof(*tab) * current_size, sizeof(*tab) * new_size));
+    return (ft_realloc(tab, sizeof(*tab) * current_size, sizeof(*tab) * new_size));
 }
 
 char	**get_tkn_tab(char *arg, int size, int i, int k) 
 {
-    char	**tab;
+	char	**tab;
 	char	**final_tab;
-    char **new_tab;
-
-    
+	char	**new_tab;
 
 	tab = malloc(size * sizeof(char *));
-    if (!tab)
-        return (NULL);
-    while (arg[i]) 
+	if (!tab)
+		return (NULL);
+	while (arg[i]) 
 	{
-        skip_spaces(arg, &i);
-        if (!arg[i])
-            break;
-        if (k >= size - 1) 
+		skip_spaces(arg, &i);
+		if (!arg[i])
+			break;
+		if (k >= size - 1) 
 		{ 
-            size += 1;
-            new_tab = realloc_tab(tab, k, size);
-            if (!new_tab)
-                return (NULL);
-            tab = new_tab;
-        }
-        tab[k++] = space_token(arg, &i);
-    }
-    final_tab = realloc_tab(tab, k, k + 1);
-    if (!final_tab)
-        return (NULL);
-    final_tab[k] = NULL; 
-    return (final_tab);
+			size += 1;
+			new_tab = realloc_tab(tab, k, size);
+			if (!new_tab)
+				return (NULL);
+			tab = new_tab;
+		}
+		tab[k++] = space_token(arg, &i);
+	}
+	final_tab = realloc_tab(tab, k, k + 1);
+	if (!final_tab)
+		return (NULL);
+	final_tab[k] = NULL; 
+	return (final_tab);
 }
 
 

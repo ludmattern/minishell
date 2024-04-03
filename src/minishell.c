@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 13:18:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:30:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,37 +73,31 @@ void	free_parsing(t_node *ast, t_token *lex)
 	exit(EXIT_FAILURE);
 }
 
-void	initialize_shell_variables_with_export(char ***env)
+void	initialize_shell_variables(char ***env)
 {
-	char	cwd[1024];
-	int		shell_lvl;
-	char	*shell_lvl_str;
-	char	*shell_lvl_cmd;
-	char	*tmp;
-	char	*pwd_cmd;
+	t_init_vars s;
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (getcwd(s.cwd, sizeof(s.cwd)) != NULL)
 	{
-		pwd_cmd = ft_strjoin("PWD=", cwd);
-		ft_export((char *[]){ "export", pwd_cmd, NULL }, env);
-		free(pwd_cmd);
+		s.pwd_cmd = ft_strjoin("PWD=", s.cwd);
+		ft_export((char *[]){"export", s.pwd_cmd, NULL}, env);
+		free(s.pwd_cmd);
 	}
-	ft_export((char *[]){ "export", "OLDPWD", NULL }, env);
-	shell_lvl_str = getenv("SHLVL");
-	if (shell_lvl_str)
-		shell_lvl = ft_atoi(shell_lvl_str) + 1;
+	ft_export((char *[]){"export", "OLDPWD", NULL}, env);
+	s.shell_lvl_str = getenv("SHLVL");
+	if (s.shell_lvl_str)
+		s.shell_lvl = ft_atoi(s.shell_lvl_str) + 1;
 	else
-		shell_lvl = 1;
-	tmp = ft_itoa(shell_lvl);
-	shell_lvl_cmd = ft_strjoin("SHLVL=", tmp);
-	free(tmp);
-	ft_export((char *[]){ "export", shell_lvl_cmd, NULL }, env);
-	free(shell_lvl_cmd);
+		s.shell_lvl = 1;
+	s.tmp = ft_itoa(s.shell_lvl);
+	s.shell_lvl_cmd = ft_strjoin("SHLVL=", s.tmp);
+	free(s.tmp);
+	ft_export((char *[]){"export", s.shell_lvl_cmd, NULL}, env);
+	free(s.shell_lvl_cmd);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int			i;
 	char		*path;
 	char		*join;
 	t_data		*data;
@@ -111,14 +105,16 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*lexed;
 	char		*in_put;
 	char		**global_env;
+	char		**local_env;
 	int			last_exit_status;
 
+	(void)argv;
+	(void)argc;
 	//print_start();
 	last_exit_status = EXIT_SUCCESS;
 	global_env = duplicate_envp(envp);
-	initialize_shell_variables_with_export(&global_env);
-	(void)argv;
-	(void)argc;
+	local_env = NULL;
+	initialize_shell_variables(&global_env);
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
@@ -143,6 +139,7 @@ int	main(int argc, char **argv, char **envp)
 				//	return (printf("MALLOC ERROR"));
 				ft_bzero(data, sizeof(t_data));
 				data->env = global_env;
+				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
 				if (lexed->error == -1)
@@ -161,9 +158,7 @@ int	main(int argc, char **argv, char **envp)
 			in_put = NULL;
 		}
 	}
-	i = 0;
-	while (global_env[i])
-		free(global_env[i++]);
-	free(global_env);
+	ft_free_double_array(global_env);
+	ft_free_double_array(local_env);
 	return (0);
 }

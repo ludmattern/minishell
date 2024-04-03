@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 17:10:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:42:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 char *skip_quote(char *tkn, char q)
 {
-    char *res;
-    int i;
-    int j;
+	char *res;
+	int i;
+	int j;
 
-    i = 0;
-    j = 0;
-    res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
-    if (res == NULL) 
-        return (NULL);
-    while (tkn[i] != '\0') 
+	i = 0;
+	j = 0;
+	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
+	if (res == NULL) 
+		return (NULL);
+	while (tkn[i] != '\0') 
 	{
-        if (tkn[i] != q)
-            res[j++] = tkn[i];
-        i++;
-    }
-    res[j] = '\0';
-    return (res);
+		if (tkn[i] != q)
+			res[j++] = tkn[i];
+		i++;
+	}
+	res[j] = '\0';
+	return (res);
 }
 
 char	*replace_substring(const char *original, \

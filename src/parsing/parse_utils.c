@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/03 13:23:53 by fprevot          ###   ########.fr       */
+=======
+/*   Updated: 2024/04/03 15:42:38 by lmattern         ###   ########.fr       */
+>>>>>>> 5c79883a5694c02395415fd7871df39179f80ef4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,7 @@ t_node	*create_empty_node(t_token *tkn)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node) * 1);
+	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
 	new->expanded_args = NULL;
 	new->command_path = NULL;
@@ -82,8 +87,7 @@ char *del_redir(char *cmd, int i, int j)
 				i++;
 			continue;
 		}
-		result[j++] = cmd[i];
-		i++;
+		result[j++] = cmd[i++];
 	}
 	result[j] = '\0'; 
 	return (result);
@@ -126,19 +130,13 @@ char **ft_cleaner(char **args)
 	while (args[i] != NULL)
 	{
 		if (args[i][0] != '\0')
-		{
-			result[j] = ft_strdup(args[i]);
-			j++;
-		}
+			result[j++] = ft_strdup(args[i]);
 		i++;
 	}
 	result[j] = NULL;
 	i = 0;
 	while (args[i] != NULL)
-	{
-		free(args[i]);
-		i++;
-	}
+		free(args[i++]);
 	free(args);
 	return (result);
 }
@@ -153,7 +151,6 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 		node->io_list = parse_io_from_command(node->args, last_exit_status);
 		node->args = del_redir(node->args, 0, 0);
 		//printf("\n%s\n", node->args);
-		
 	}
 	node->expanded_args = expander(node->args, last_exit_status);
 	node->expanded_args = ft_cleaner(node->expanded_args);
@@ -162,7 +159,6 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 	//print_exp(node->expanded_args, node->args);
 	//printredir(node->io_list);
 	node->type = N_CMD;
-
 	return (node);
 }
 

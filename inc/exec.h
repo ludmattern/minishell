@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 19:39:06 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:55:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ typedef enum e_ast_direction
 	AST_LEFT,
 	AST_RIGHT
 }	t_ast_direction;
-
-/*
-debug only
-*/
-t_node	*create_ast(void);
-void	print_ast(t_node *node, int depth);
-void	parsing(t_data **data, int argc, char **argv, char **envp);
 
 /*
 run execution
@@ -103,7 +96,6 @@ char	**ft_addenv(char *name, char *value, char ***env);
 char	**duplicate_envp(char **envp);
 char	**copy_env(char **env, int size);
 void	sort_env(char **env, int size);
-void	print_and_free_env(char **env);
 size_t	count_env_entries(char **envp);
 bool	ft_isvalid_identifier(const char *name);
 
