@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 16:01:55 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:30:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int	main(int argc, char **argv, char **envp)
 				//	return (printf("MALLOC ERROR"));
 				ft_bzero(data, sizeof(t_data));
 				data->env = global_env;
+				data->env = global_env;
 				data->last_exit_status = last_exit_status;
 				lexed = lex_me(in_put);
 				if (lexed->error == -1)
@@ -158,5 +159,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	ft_free_double_array(global_env);
+	ft_free_double_array(local_env);
 	return (0);
 }
