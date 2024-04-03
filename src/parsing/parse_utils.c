@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 13:16:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:23:53 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ bool redirection_outside_quotes(const char *args)
 			return (true);
 		cursor++;
 	}
-
 	return (false);
 }
 
@@ -147,7 +146,7 @@ char **ft_cleaner(char **args)
 t_node *create_command_node(t_token *tkn, int last_exit_status)
 {
 	t_node *node;
-	
+	node->is_add_local = add_local_boot(node);
 	node = create_empty_node(tkn);
 	if (redirection_outside_quotes(node->args)) 
 	{
