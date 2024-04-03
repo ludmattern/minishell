@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 16:36:18 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:03:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ t_node	*create_empty_node(t_token *tkn)
 	new = malloc(sizeof(t_node) * 1);
 	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
-	new->expanded_args = NULL;
-	new->command_path = NULL;
-	new->io_list = NULL;
-	new->right = NULL;
-	new->left = NULL;
 	new->type = N_INIT;
 	return (new);
 }
@@ -120,20 +115,30 @@ char **ft_cleaner(char **args)
 {
 	int i = 0;
 	int j = 0;
+	int k = 0;
 	char **result = malloc(sizeof(char *) * (ft_arrlen(args) + 1));
 	if (!result)
 		return (NULL);
 	while (args[i] != NULL)
 	{
 		if (args[i][0] != '\0')
-			result[j++] = ft_strdup(args[i]);
+		{
+			if (i == 0)
+			{
+				k = 0;
+				while (args[i] && args[i][k] != '\0')
+					k++;
+				if (args[0][k - 1] != '=')
+					result[j++] = ft_strdup(args[i]);
+			}
+			else
+				result[j++] = ft_strdup(args[i]);
+		}
 		i++;
 	}
 	result[j] = NULL;
 	i = 0;
-	while (args[i] != NULL)
-		free(args[i++]);
-	free(args);
+	ft_free_double_array(args);
 	return (result);
 }
 
@@ -152,7 +157,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 	node->expanded_args = ft_cleaner(node->expanded_args);
 	if (node->expanded_args[0] != NULL)
 		node->command_path = get_command_path(node->expanded_args[0]);
-	//print_exp(node->expanded_args, node->args);
+	// print_exp(node->expanded_args, node->args);
 	//printredir(node->io_list);
 	node->type = N_CMD;
 	return (node);
