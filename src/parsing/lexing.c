@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 17:35:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:08:39 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,19 @@ int	fill_value(t_token *lex, int num)
 	return (0);
 }
 
+void	imore(int size, int *i)
+{
+	int	k;
+
+	k = -1;
+	while (++k < size)
+		(*i)++;
+}
+
+
 int	fill_type(t_token *lex, int num, int *i, int size)
 {
-	imore(0, size, i);
+	imore(size, i);
 		lex->type = T_PIPE;
 	if (num == 6)
 		lex->type = T_AND;

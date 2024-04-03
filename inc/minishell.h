@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 13:19:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:24:32 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ typedef enum e_io_type
 	IO_HEREDOC,
 	IO_APPEND
 }	t_io_type;
+
+typedef struct s_init_vars
+{
+	char	cwd[1024];
+	int		shell_lvl;
+	char	*shell_lvl_str;
+	char	*shell_lvl_cmd;
+	char	*tmp;
+	char	*pwd_cmd;
+}	t_init_vars;
 
 typedef struct s_io_node
 {

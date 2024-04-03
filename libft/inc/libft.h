@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:41:15 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/06 12:24:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:49:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,9 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
+char	*ft_strcat(char *dest, const char *src);
+void	*ft_realloc(void *ptr, size_t original_size, size_t new_size);
+void	ft_strcpy(char *dest, const char *src);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+void	ft_free_double_array(char **double_tab);
 #endif

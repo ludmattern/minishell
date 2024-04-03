@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/03/20 16:19:59 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:50:16 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ Frees the tree and its content.
 */
 void free_tree(t_node *node) 
 {
-	char **temp;
-
 	if (node == NULL)
 		return;
 	free_tree(node->left);
@@ -58,19 +56,7 @@ void free_tree(t_node *node)
 	node->args = NULL;
 	free(node->command_path); 
 	node->command_path = NULL;
-
-	if (node->expanded_args != NULL)
-	{
-		temp = node->expanded_args;
-		while (*temp != NULL)
-		{
-			free(*temp); 
-			*temp = NULL;
-			temp++;
-		}
-		free(node->expanded_args);  
-		node->expanded_args = NULL;
-	}
+	ft_free_double_array(node->expanded_args);
 	free(node);
 }
 
@@ -79,17 +65,9 @@ Frees the data structure and its content.
 */
 void	free_forked_data(t_data *data)
 {
-	int i;
-
-	i = 0;
 	if (data == NULL)
 		return ;
-	while (data->env[i] != NULL)
-	{
-		free(data->env[i]);
-		i++;
-	}
-	free(data->env);
+	ft_free_double_array(data->env);
 	free_tree(data->ast);
 }
 
