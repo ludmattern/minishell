@@ -6,90 +6,83 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 15:39:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:26:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-/*
-Prints the environment variables as they are stored in the env preceded 
-by "declare -x"
-*/
-void	print_env_var(const char *var)
+bool validate_export_argument(const char *arg)
 {
-	char	*equal_sign;
+	char	*equal_pos;
+	char	*name;
+	bool	is_valid;
 
-	equal_sign = strchr(var, '=');
-	if (equal_sign)
-	{
-		printf("declare -x %.*s\"", (int)(equal_sign - var + 1), var);
-		printf("%s\"\n", equal_sign + 1);
-	}
+	equal_pos = ft_strchr(arg, '=');
+	if (equal_pos)
+		name = ft_strndup(arg, equal_pos - arg);
 	else
-		printf("declare -x %s\n", var);
+		name = ft_strdup(arg);
+	is_valid = ft_isvalid_identifier(name);
+	if (!is_valid)
+		ft_eprintf("minishell: export: `%s': not a valid identifier\n", name);
+	free(name);
+	return is_valid;
 }
 
-int	is_valid_env_name(const char *name)
+// Processes a single export argument, assuming it's already validated.
+int process_export_argument(const char *arg, char ***env)
 {
-	if (!ft_isalpha(*name) && *name != '_')
-		return (0);
-	while (*name)
-	{
-		if (!ft_isalnum(*name) && *name != '_')
-			return (0);
-		name++;
-	}
-	return (1);
-}
-
-int	process_export_arg(char *arg, char *equal_pos, char ***env)
-{
+	char	*equal_pos;
 	char	*name;
 	char	*value;
+	int		status;
 
-	name = ft_strndup(arg, equal_pos - arg);
-	if (!is_valid_env_name(name))
+	equal_pos = ft_strchr(arg, '=');
+	if (equal_pos)
 	{
-		ft_eprintf("minishell: export: `%s': not a valid identifier\n", name);
-		return (free(name), EXIT_FAILURE);
+		name = ft_strndup(arg, equal_pos - arg);
+		value = ft_strdup(equal_pos + 1);
 	}
-	value = ft_strdup(equal_pos + 1);
-	if (ft_addenv(name, value, env) == NULL)
-		return (free(name), free(value), EXIT_FAILURE);
+	else
+	{
+		name = ft_strndup(arg, ft_strlen(arg));
+		value = ft_strdup("");
+	}
+	if (ft_addenv(name, value, env) != NULL)
+		status = EXIT_SUCCESS;
+	else
+		status = EXIT_FAILURE;
 	free(name);
 	free(value);
-	return (EXIT_SUCCESS);
+	return status;
 }
 
-/*
-Displays the environment variables in alphabetical order when the command is 
-called without arguments and adds the variables to the environment when the 
-command is called with arguments
-*/
-int	ft_export(char **args, char ***env)
+// Main export function that iterates over arguments and validates/processes them.
+int ft_export(char **args, char ***env)
 {
-	int		i;
-	char	*equal_pos;
+	int	i;
+	int status;
+	int overall_status;
 
-	if (!args[1])
-		return (ft_print_env_sorted(*env), EXIT_SUCCESS);
-	i = 0;
-	while (args[++i])
+    if (!args[1])
 	{
-		equal_pos = ft_strchr(args[i], '=');
-		if (equal_pos)
-			return (process_export_arg(args[i], equal_pos, env));
-		else
+        ft_print_env_sorted(*env);
+        return (EXIT_SUCCESS);
+    }
+    overall_status = EXIT_SUCCESS;
+	i = 0;
+    while (args[++i] != NULL)
+	{
+        if (validate_export_argument(args[i]))
 		{
-			if (!is_valid_env_name(args[i]))
-			{
-				ft_eprintf("minishell: export: `%s': not a valid identifier\n",
-					args[i]);
-				return (EXIT_FAILURE);
-			}
-			ft_addenv(args[i], "", env);
-		}
-	}
-	return (EXIT_SUCCESS);
+            status = process_export_argument(args[i], env);
+            if (status == EXIT_FAILURE)
+                overall_status = EXIT_FAILURE;
+        }
+		else
+            overall_status = EXIT_FAILURE;
+    }
+
+    return (overall_status);
 }

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 14:29:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:27:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,6 @@ int	ft_echo(char **args)
 }
 
 /*
-Check if the command is a forked builtin and execute it if it is
-*/
-// int	checking_non_forked_builtins(t_data *data, t_node *node)
-// {
-// 	int			status;
-// 	const char	*str;
-
-// 	str = (const char *)node->expanded_args[0];
-// 	if (ft_strncmp(str, "/", ft_strlen(str) == 0))
-// 		return (-1);
-// 	else if (ft_strncmp(str, "cd", 2) == 0)
-// 		status = ft_cd(node->expanded_args, data->env);
-// 	else if (ft_strncmp(str, "export", 6) == 0)
-// 		status = ft_export(node->expanded_args, &data->env);
-// 	else if (ft_strncmp(str, "unset", 5) == 0)
-// 		status = ft_unset_vars(node->expanded_args, &data->env);
-// 	else
-// 		return (-1);
-// 	return(status);
-// }
-
-/*
 Check if the command is a builtin and execute it if it is
 */
 int	checking_forked_builtins(t_data *data, t_node *node)
@@ -77,8 +55,6 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 		status = ft_echo(node->expanded_args);
 	else if (ft_strncmp(str, "pwd", 3) == 0)
 		status = ft_pwd();
-	else if (ft_strncmp(str, "exit", 5) == 0)
-		status = ft_exit(node->expanded_args);
 	else if (ft_strncmp(str, "env", 3) == 0)
 		status = ft_env(node->expanded_args, &data->env);
 	else
