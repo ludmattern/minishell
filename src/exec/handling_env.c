@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/13 15:21:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:10:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	find_env_index(char **env, const char *name)
 	{
 		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0
 			&& env[i][ft_strlen(name)] == '=')
-		{
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
@@ -55,9 +53,7 @@ char	*create_env_entry(const char *name, const char *value)
 
 	temp = ft_strjoin(name, "=");
 	if (!temp)
-	{
 		return (NULL);
-	}
 	new_entry = ft_strjoin(temp, value);
 	free(temp);
 	return (new_entry);
@@ -104,9 +100,7 @@ char	**ft_addenv(char *name, char *value, char ***env)
 
 	new_entry = create_env_entry(name, value);
 	if (!new_entry)
-	{
 		return (NULL);
-	}
 	index = find_env_index(*env, name);
 	*env = update_env(*env, new_entry, index);
 	return (*env);

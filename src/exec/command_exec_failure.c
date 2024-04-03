@@ -6,24 +6,30 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 17:52:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:16:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Prints an error message and exit the child process.
+*/
 int	handle_permission_denied(const char *context)
 {
 	if (ft_strchr(context, '/'))
 	{
-		return (EXIT_INVALID_COMMAND);
 		ft_eprintf("minishell: %s: Permission denied\n", context);
+		return (EXIT_INVALID_COMMAND);
 	}
 	else
 		ft_eprintf("minishell: %s: command not found\n", context);
 	return (EXIT_COMMAND_NOT_FOUND);
 }
 
+/*
+Prints an error message and exit the child process.
+*/
 int	handle_command_not_found(const char *context)
 {
 	if (ft_strchr(context, '/'))

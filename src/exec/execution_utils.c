@@ -6,18 +6,24 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 17:53:09 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:18:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
+/*
+Restores the original file descriptors.
+*/
 void	restore_original_fds(t_data *data)
 {
 	dup2(data->stdin, STDIN_FILENO);
 	dup2(data->stdout, STDOUT_FILENO);
 }
 
+/*
+Displays an error message if the fork fails.
+*/
 int	fork_creation_failure(const char *message)
 {
 	ft_eprintf("minishell: %s: %s\n", message, strerror(errno));

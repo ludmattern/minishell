@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 18:24:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:26:22 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,4 +176,3 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 	node->type = N_CMD;
 	return (node);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 11:49:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:15:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	redirect_input(const char *filename)
 	if (status < 0)
 	{
 		perror("minishell: dup2 error");
-		close_standard_fds();
-		return (EXIT_DUP2_FAILURE);
+		return (close_standard_fds(), EXIT_DUP2_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
