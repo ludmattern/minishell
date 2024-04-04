@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:10:46 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:44:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**update_env(char **env, char *new_entry, int index)
 	}
 	else
 	{
-		size = count_env_entries(env);
+		size = ft_double_array_len(env);
 		new_env = malloc((size + 2) * sizeof(char *));
 		if (!new_env)
 			return (free(new_entry), NULL);

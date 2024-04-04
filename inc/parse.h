@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 17:04:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:46:58 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		printredir(t_io_node *io);
 void		printlex(t_token *lexed);
 void		print_ast(t_node *node, int depth);
 void		print_exp(char **tab, char *arg);
-bool		check_syntax(const char *cmd);
+bool		syntax_error(const char *cmd, int *status);
 void		free_tree(t_node *node);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/02 16:23:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 12:49:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,23 +103,25 @@ bool check_sep(const char *cmd)
 	return (true);
 }
 
-bool	check_syntax(const char *cmd)
+bool	syntax_error(const char *cmd, int *status)
 {
 	if (!check_dquotes(cmd))
 	{
 		printf("Parse Error: bad quotes\n");
-		return (false);
+		*status = EXIT_GENERAL_ERROR;
+		return (true);
 	}
 	if (!check_squotes(cmd))
 	{
 		printf("Parse Error: bad quotes\n");
-		return (false);
+		*status = EXIT_GENERAL_ERROR;
+		return (true);
 	}
 	if (!check_par(cmd))
 	{
 		printf("Parse Error: bad parentheses\n");
-		return (false);
+		*status = EXIT_GENERAL_ERROR;
+		return (true);
 	}
-
-	return (true);
+	return (false);
 }

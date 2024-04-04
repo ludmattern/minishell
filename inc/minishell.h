@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 19:19:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:42:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct s_token
 	struct s_token			*next;
 	struct s_token			*prev;
 	struct s_global_data	*g_data;
-	int		error;
-}	t_token;
+	int						error;
+}							t_token;
 
 typedef struct s_envsize
 {
@@ -96,6 +96,14 @@ typedef enum e_io_type
 	IO_APPEND
 }	t_io_type;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	bool			is_local;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_init_vars
 {
 	char	cwd[1024];
@@ -104,7 +112,7 @@ typedef struct s_init_vars
 	char	*shell_lvl_cmd;
 	char	*tmp;
 	char	*pwd_cmd;
-}	t_init_vars;
+}				t_init_vars;
 
 typedef struct s_io_node
 {
@@ -114,7 +122,7 @@ typedef struct s_io_node
 	int					here_doc;
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
-}	t_io_node;
+}						t_io_node;
 
 typedef struct s_node
 {
@@ -126,7 +134,7 @@ typedef struct s_node
 	bool				is_add_local;
 	struct s_node		*left;
 	struct s_node		*right;
-}	t_node;
+}						t_node;
 
 
 typedef struct s_data
@@ -149,6 +157,7 @@ typedef struct s_global_data
 	char			**global_env;
 	char			**local_env;
 	char			*in_put;
+	t_env			*env;
 	t_token			*save;
 	t_token			*lexed;
 	char			*path;
