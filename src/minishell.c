@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 13:04:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:01:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
+
 
 void	print_start(void)
 {
@@ -26,7 +27,7 @@ void	print_start(void)
 	printf("\033[37m");
 }
 
-void	sigint_handler(int signal)
+void	sigint_hhandler(int signal)
 {
 	char	*path;
 	char	*join;
@@ -105,7 +106,6 @@ t_global_data	initialize_environnement(char **envp)
 	g_data.global_env = duplicate_envp(envp);
 	g_data.local_env = NULL;
 	initialize_shell_variables(&g_data.global_env);
-	signal(SIGINT, sigint_handler);
 	return (g_data);
 }
 
@@ -167,11 +167,35 @@ void	update_input(t_global_data *g_data)
 	free(g_data->path);
 	if (!g_data->in_put) 
 	{
-		write(STDOUT_FILENO, "\n", 1);  
+		write(STDOUT_FILENO, "exit\n", 5);  
 		ft_clear_memory(g_data);
-		exit(EXIT_GENERAL_ERROR);
+		exit(EXIT_SUCCESS);
 	}
 }
+int	event(void)
+{
+	return (EXIT_SUCCESS);
+}
+
+void	sigint_handler(int sig)
+{
+	ft_putstr_fd("\n", STDERR_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	(void) sig;
+}
+
+
+
+void	init_signals(void)
+{
+	rl_event_hook = event;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -180,10 +204,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	//print_start();
+	init_signals();
 	g_data = initialize_environnement(envp);
 	while (1)
 	{
 		update_input(&g_data);
+
+		
 		if (g_data.in_put[0])
 		{
 			if (syntax_error(g_data.in_put, &g_data.last_exit_status))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 11:42:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:07:49 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,15 @@ typedef struct s_global_data
 	char			*join;
 	struct s_data	*data;
 }					t_global_data;
+
+typedef struct s_global
+{
+	int	error_num;
+	int	stop_heredoc;
+	int	in_cmd;
+	int	in_heredoc;
+}	t_global;
+
+t_global	g_global;
 
 #endif
