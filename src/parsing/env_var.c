@@ -6,11 +6,17 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 16:55:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:42:33 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
+
+
+
+
+
+
 
 void smoremore(t_envsize *s, int *i, char *env_val, int c)
 {
@@ -60,11 +66,13 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i)
 }
 
 
-char *get_env_var(char *tkn, int i, int k, int j)
+char *get_env_var(char *tkn, int i, int k, int j, t_global_data *data)
 {
 	int start; 
 	int env_length;
 	char *env_val;
+
+	data->local_env = NULL;
 	t_envsize s = get_mal_size(tkn, 0, 0, 0);
 	j++;
 	char *res = malloc(s.size);

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 12:21:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:05:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +162,11 @@ t_node *create_command_node(t_token *tkn, int last_exit_status)
 	node = create_empty_node(tkn);
 	if (redirection_outside_quotes(node->args)) 
 	{
-		node->io_list = parse_io_from_command(node->args, last_exit_status);
+		node->io_list = parse_io_from_command(node->args, last_exit_status, tkn->g_data);
 		node->args = del_redir(node->args, 0, 0);
 		//printf("\n%s\n", node->args);
 	}
-	node->expanded_args = expander(node->args, last_exit_status);
+	node->expanded_args = expander(node->args, last_exit_status, tkn->g_data);
 	node->expanded_args = ft_cleaner(node->expanded_args);
 	if (node->expanded_args[0] != NULL)
 		node->command_path = get_command_path(node->expanded_args[0]);

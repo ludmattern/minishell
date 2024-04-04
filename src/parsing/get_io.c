@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 14:43:39 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:15:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status) 
+t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status, t_global_data *data) 
 {
 	t_io_node *io = malloc(sizeof(t_io_node));
 	if (!io) 
 	return NULL;
 	io->type = type;
 	io->value = ft_strdup(value);
-	io->expanded_value = expander(io->value, last_exit_status);
+	io->expanded_value = expander(io->value, last_exit_status, data);
 	io->here_doc = 0;
 	io->prev = NULL;
 	io->next = NULL;
@@ -101,7 +101,7 @@ char *extract_with_quote(char **cursor)
 
 
 static void add_new_io_node(t_io_node **head, t_io_node **tail, \
-							t_io_type type, char **cursor, int last_exit_status)
+							t_io_type type, char **cursor, int last_exit_status, t_global_data *data)
 {
 	char c = ' ';
 	char *start;
@@ -127,7 +127,7 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 			(*cursor)++;
 		filename = ft_strndup(start, *cursor - start); 
 	}
-	t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status);
+	t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status, data);
 	free(filename);
 	if (!*head)
 		*head = *tail = new_io;
@@ -139,7 +139,7 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 	}
 }
 
-t_io_node *parse_io_from_command(char *cmd, int last_exit_status)
+t_io_node *parse_io_from_command(char *cmd, int last_exit_status, t_global_data *data)
 {
 	t_io_node *head = NULL;
 	t_io_node *tail = NULL;
@@ -156,7 +156,7 @@ t_io_node *parse_io_from_command(char *cmd, int last_exit_status)
 		{
 			t_io_type type;
 			set_io_type(&type, &cursor);
-			add_new_io_node(&head, &tail, type, &cursor, last_exit_status);
+			add_new_io_node(&head, &tail, type, &cursor, last_exit_status, data);
 		}
 		
 		cursor++;
