@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:41:15 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:22:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:24:26 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,6 @@ void	ft_strcpy(char *dest, const char *src);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 void	ft_free_double_array(char **double_tab);
 bool	ft_isspace(char c);
+size_t	ft_double_array_len(char **array);
+
 #endif

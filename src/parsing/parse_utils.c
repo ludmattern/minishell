@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 11:14:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:05:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ bool check_local(char *arg)
 {
 	int i = 0;
 
-	while (arg[i])
+	while (arg && arg[i])
 	{
 		if (arg[i] == '=' && arg[i + 1] != ' ' && arg[i - 1] != ' ')
 			return (true);

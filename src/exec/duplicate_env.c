@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:14:50 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:24:17 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,6 @@ void	copy_env_entries(char **source, char **dest, int size)
 }
 
 /*
-Counts the number of environment entries.
-*/
-size_t	count_env_entries(char **envp)
-{
-	size_t	i;
-
-	i = 0;
-	while (envp[i] != NULL)
-		i++;
-	return (i);
-}
-
-/*
 Allocates memory for the environment copy.
 */
 char	**allocate_env_copy(int size)
@@ -76,7 +63,7 @@ char	**duplicate_envp(char **envp)
 	int		size;
 	char	**minishell_env;
 
-	size = count_env_entries(envp);
+	size = ft_double_array_len(envp);
 	minishell_env = allocate_env_copy(size);
 	copy_env_entries(envp, minishell_env, size);
 	return (minishell_env);
