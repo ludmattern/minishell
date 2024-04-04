@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 16:07:49 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:29:59 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_data
 	int				stdin;
 	int				stdout;
 	char			**env;
+	t_env			*mini_env;
 	char			**l_env;
 	bool			signint_child;
 	bool			heredoc_sigint;
@@ -157,13 +158,13 @@ typedef struct s_global_data
 	char			**global_env;
 	char			**local_env;
 	char			*in_put;
-	t_env			*env;
+	t_env			*mini_env;
 	t_token			*save;
 	t_token			*lexed;
 	char			*path;
 	char			*join;
 	struct s_data	*data;
-}					t_global_data;
+}					t_g_data;
 
 typedef struct s_global
 {

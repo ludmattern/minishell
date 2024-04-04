@@ -6,6 +6,9 @@
         "ft_printf.h": "c",
         "unistd.h": "c",
         "error_codes.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "libft.h": "c",
+        "type_traits": "c",
+        "exec.h": "c"
     }
 }

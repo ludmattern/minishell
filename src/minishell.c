@@ -6,7 +6,11 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/04 18:01:37 by fprevot          ###   ########.fr       */
+=======
+/*   Updated: 2024/04/04 18:11:33 by lmattern         ###   ########.fr       */
+>>>>>>> 7f712d8d752fe4253f9305058708b70e0def85be
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,53 +78,19 @@ void	free_parsing(t_node *ast, t_token *lex)
 	exit(EXIT_FAILURE);
 }
 
-void	initialize_shell_variables(char ***env)
-{
-	t_init_vars s;
-
-	if (getcwd(s.cwd, sizeof(s.cwd)) != NULL)
-	{
-		s.pwd_cmd = ft_strjoin("PWD=", s.cwd);
-		ft_export((char *[]){"export", s.pwd_cmd, NULL}, env);
-		free(s.pwd_cmd);
-	}
-	ft_export((char *[]){"export", "OLDPWD", NULL}, env);
-	s.shell_lvl_str = getenv("SHLVL");
-	if (s.shell_lvl_str)
-		s.shell_lvl = ft_atoi(s.shell_lvl_str) + 1;
-	else
-		s.shell_lvl = 1;
-	s.tmp = ft_itoa(s.shell_lvl);
-	s.shell_lvl_cmd = ft_strjoin("SHLVL=", s.tmp);
-	free(s.tmp);
-	ft_export((char *[]){"export", s.shell_lvl_cmd, NULL}, env);
-	free(s.shell_lvl_cmd);
-}
-
-t_global_data	initialize_environnement(char **envp)
-{
-	t_global_data	g_data;
-
-	memset(&g_data, 0, sizeof(t_global_data));
-	g_data.last_exit_status = EXIT_SUCCESS;
-	g_data.global_env = duplicate_envp(envp);
-	g_data.local_env = NULL;
-	initialize_shell_variables(&g_data.global_env);
-	return (g_data);
-}
-
-void	update_data(t_global_data *g_data)
+void	update_data(t_g_data *g_data)
 {
 	g_data->data = malloc(sizeof(t_data));
 	//if (!data)
 	//	return (printf("MALLOC ERROR"));
 	ft_bzero(g_data->data, sizeof(t_data));
+	g_data->data->mini_env = g_data->mini_env;
 	g_data->data->env = g_data->global_env;
 	g_data->data->l_env = g_data->local_env;
 	g_data->data->last_exit_status = g_data->last_exit_status;
 }
 
-void launch_lexing(t_global_data *g_data)
+void launch_lexing(t_g_data *g_data)
 {
 	g_data->lexed = lex_me(g_data->in_put);
 	if (g_data->lexed->error == -1)
@@ -129,7 +99,7 @@ void launch_lexing(t_global_data *g_data)
 	g_data->lexed->g_data = g_data;
 }
 
-void launch_parsing(t_global_data *g_data)
+void launch_parsing(t_g_data *g_data)
 {
 	g_data->data->ast = build_ast(&g_data->lexed, g_data->data->last_exit_status);
 	// if (!data->ast)
@@ -137,28 +107,26 @@ void launch_parsing(t_global_data *g_data)
 	free_lexed(g_data->save);
 }
 
-void	launch_execution(t_global_data *g_data)
+void	launch_execution(t_g_data *g_data)
 {
 	g_data->last_exit_status = run_execution(g_data->data);
-	g_data->global_env = g_data->data->env;
-	g_data->local_env = g_data->data->l_env;
+	g_data->mini_env = g_data->data->mini_env;
 	free_data_structure(&g_data->data);
 }
 
-void	update_history(t_global_data *g_data)
+void	update_history(t_g_data *g_data)
 {
 	add_history(g_data->in_put);
 	free(g_data->in_put);
 	g_data->in_put = NULL;
 }
 
-void	ft_clear_memory(t_global_data *g_data)
+void	ft_clear_memory(t_g_data *g_data)
 {
-	ft_free_double_array(g_data->global_env);
-	ft_free_double_array(g_data->local_env);
+	free_mini_env(g_data->mini_env);
 }
 
-void	update_input(t_global_data *g_data)
+void	update_input(t_g_data *g_data)
 {
 	g_data->path = getcwd(NULL, 0);
 	g_data->join = ft_strjoin(g_data->path, " $> ");
@@ -199,7 +167,7 @@ void	init_signals(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_global_data	g_data;
+	t_g_data	g_data;
 
 	(void)argv;
 	(void)argc;

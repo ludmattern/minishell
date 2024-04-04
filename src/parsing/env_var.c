@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 11:42:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:03:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
-
-
-
-
-
-
 
 void smoremore(t_envsize *s, int *i, char *env_val, int c)
 {
@@ -34,7 +28,7 @@ void smoremore(t_envsize *s, int *i, char *env_val, int c)
 	}
 }
 
-t_envsize get_mal_size(char *tkn, int start, int env_length, int i)
+t_envsize get_mal_size(char *tkn, int start, int env_length, int i, t_env *mini_env)
 {
 	char *env_val;
 	t_envsize s = {0};
@@ -51,7 +45,7 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i)
 			s.env = malloc((env_length > 0 ? env_length : 1) + 1);
 			ft_strncpy(s.env, tkn + start, env_length);
 			s.env[env_length] = '\0';
-			env_val = getenv(s.env);
+			env_val = ft_get_env(s.env, mini_env);
 			if (env_val) s.size += ft_strlen(env_val);
 			free(s.env);
 			s.env = NULL;
@@ -65,15 +59,33 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i)
 	return (s);  
 }
 
+char	*ft_get_env(char *tmp_env, t_env *mini_env)
+{
+	t_env	*tmp;
+	char	*env_val;
+	size_t	tmp_env_len;
 
-char *get_env_var(char *tkn, int i, int k, int j, t_global_data *data)
+	tmp = mini_env;
+	tmp_env_len = ft_strlen(tmp_env);
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len) == 0)
+		{
+			env_val = ft_strdup(tmp->value);
+			return (env_val);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
 {
 	int start; 
 	int env_length;
 	char *env_val;
 
-	data->local_env = NULL;
-	t_envsize s = get_mal_size(tkn, 0, 0, 0);
+	t_envsize s = get_mal_size(tkn, 0, 0, 0, data->mini_env);
 	j++;
 	char *res = malloc(s.size);
 	if (!res) return NULL;
@@ -94,7 +106,7 @@ char *get_env_var(char *tkn, int i, int k, int j, t_global_data *data)
 				tmp_env = malloc(1 + 1);
 			ft_strncpy(tmp_env, tkn + start, env_length);
 			tmp_env[env_length] = '\0';
-			env_val = getenv(tmp_env);
+			env_val = ft_get_env(tmp_env, data->mini_env);
 			if (env_val)
 			{
 				while (*env_val) 

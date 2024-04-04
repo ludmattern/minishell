@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 11:15:32 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:51:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status, t_global_data *data) 
+t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status, t_g_data *data) 
 {
 	t_io_node *io = malloc(sizeof(t_io_node));
 	if (!io) 
@@ -101,7 +101,7 @@ char *extract_with_quote(char **cursor)
 
 
 static void add_new_io_node(t_io_node **head, t_io_node **tail, \
-							t_io_type type, char **cursor, int last_exit_status, t_global_data *data)
+							t_io_type type, char **cursor, int last_exit_status, t_g_data *data)
 {
 	char c = ' ';
 	char *start;
@@ -139,7 +139,7 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 	}
 }
 
-t_io_node *parse_io_from_command(char *cmd, int last_exit_status, t_global_data *data)
+t_io_node *parse_io_from_command(char *cmd, int last_exit_status, t_g_data *data)
 {
 	t_io_node *head = NULL;
 	t_io_node *tail = NULL;

@@ -6,11 +6,53 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 19:49:00 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:26:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+
+size_t	ft_env_size(t_env *lst)
+{
+	int	i;
+
+	if (!lst)
+		return (0);
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+char **transform_env_to_array(t_env *mini_env, char **env)
+{
+	char	*temp;
+	size_t	env_size;
+	size_t	i;
+
+	env_size = ft_env_size(mini_env);
+	if (env_size == 0)
+		return (NULL);
+	env = ft_calloc(env_size + 1, sizeof(char *));
+	i = 0;
+	while (mini_env)
+	{
+		if (mini_env->value)
+		{
+			temp = ft_strjoin(mini_env->name, "=");
+			env[i] = ft_strjoin(temp, mini_env->value);
+			free(temp);
+		}
+		else
+			env[i] = ft_strdup(mini_env->name);
+		mini_env = mini_env->next;
+		i++;
+	}
+	return (env);
+}
 
 void	execute_command(t_data *data, t_node *node)
 {
@@ -25,7 +67,11 @@ void	execute_command(t_data *data, t_node *node)
 	if (access(node->command_path, X_OK) == -1)
 		command_exec_failure(data, node->expanded_args[0],
 			EXIT_PERMISSION_DENIED);
+	if (data->env)
+		ft_free_double_array(data->env);
+	data->env = transform_env_to_array(data->mini_env, data->env);
 	execve(node->command_path, node->expanded_args, data->env);
+	ft_free_double_array(data->env);
 	command_exec_failure(data, node->expanded_args[0], EXIT_GENERAL_ERROR);
 }
 
