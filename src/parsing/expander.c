@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 11:44:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:04:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*expand_simple_quote(char *tkn)
 	return (tkn);
 }
 
-char	*expand_double_quote(char *tkn, int last_exit_status, t_global_data *data)
+char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data)
 {
 	size_t		i;
 	char	*res;
@@ -54,7 +54,7 @@ char	*expand_double_quote(char *tkn, int last_exit_status, t_global_data *data)
 	return (res);
 }
 
-char *expand_without_quote(char *tkn, int last_exit_status, size_t i, t_global_data *data)
+char *expand_without_quote(char *tkn, int last_exit_status, size_t i, t_g_data *data)
 {
 	char *res = tkn;
 	char *status_str;
@@ -77,7 +77,7 @@ char *expand_without_quote(char *tkn, int last_exit_status, size_t i, t_global_d
 		}
 		else if (res[i] == '$' && res[i + 1] != '\0' && res[i + 1] != ' ')
 		{
-			tkn = get_env_var(tkn,0 ,0 ,0 ,data);
+			tkn = get_env_var(tkn, 0, 0, 0, data);
 			res = tkn; 
 		}
 		else
@@ -103,7 +103,7 @@ char find_first(char *arg)
 }
 
 
-void expand_tkn_tab(char **tab, int last_exit_status, t_global_data *data)
+void expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data)
 {
 	int j = 0;
 	char *temp;
@@ -116,7 +116,7 @@ void expand_tkn_tab(char **tab, int last_exit_status, t_global_data *data)
 			temp = expand_simple_quote(tab[j]);
 		else
 			temp = expand_without_quote(tab[j], last_exit_status, 0, data);
-		if (temp != tab[j]) 
+		if (temp != tab[j])
 			free(tab[j]);
 		tab[j] = temp;  
 		j++;
@@ -124,7 +124,7 @@ void expand_tkn_tab(char **tab, int last_exit_status, t_global_data *data)
 }
 
 
-char	**expander(char *arg, int last_exit_status, t_global_data *data)
+char	**expander(char *arg, int last_exit_status, t_g_data *data)
 {
 	char	**expanded;
 

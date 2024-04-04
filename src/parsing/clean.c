@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 15:50:16 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:11:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	free_forked_data(t_data *data)
 {
 	if (data == NULL)
 		return ;
-	ft_free_double_array(data->env);
+	free_mini_env(data->mini_env);
 	free_tree(data->ast);
 }
 
