@@ -6,17 +6,14 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/04 18:01:37 by fprevot          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/04 18:11:33 by lmattern         ###   ########.fr       */
->>>>>>> 7f712d8d752fe4253f9305058708b70e0def85be
+/*   Updated: 2024/04/05 18:05:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
 
+int	g_sglobal;
 
 void	print_start(void)
 {
@@ -31,22 +28,6 @@ void	print_start(void)
 	printf("\033[37m");
 }
 
-void	sigint_hhandler(int signal)
-{
-	char	*path;
-	char	*join;
-
-	path = getcwd(NULL, 0);
-	join = ft_strjoin(path, " $> ");
-	if (signal == SIGINT)
-		printf("\n%s", join);
-	free(join);
-	free(path);
-}
-
-void	ignore_signal(void)
-{
-}
 
 void	free_lexed(t_token *lexed)
 {
@@ -140,45 +121,50 @@ void	update_input(t_g_data *g_data)
 		exit(EXIT_SUCCESS);
 	}
 }
-int	event(void)
-{
-	return (EXIT_SUCCESS);
-}
 
-void	sigint_handler(int sig)
+
+void	handle_sigint(int sig)
 {
-	ft_putstr_fd("\n", STDERR_FILENO);
+	(void)sig;
+	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	(void) sig;
 }
 
-
-
-void	init_signals(void)
+void	handle_sigquit(int sig)
 {
-	rl_event_hook = event;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	(void)sig;
+	rl_redisplay();
 }
 
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(1);
+}
 
+void	signals_init(void)
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	g_data;
 
+	g_sglobal = 0;
 	(void)argv;
 	(void)argc;
 	//print_start();
-	init_signals();
+	signals_init();
 	g_data = initialize_environnement(envp);
 	while (1)
 	{
+    	g_sglobal = 0;
 		update_input(&g_data);
-
-		
 		if (g_data.in_put[0])
 		{
 			if (syntax_error(g_data.in_put, &g_data.last_exit_status))

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:11:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:38:34 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/parse.h"
 
 /*
 Closes the standard file descriptors.
@@ -40,7 +41,8 @@ int	wait_for_pipeline_children(pid_t pid1, pid_t pid2)
 {
 	int	status;
 	int	return_status;
-
+	
+	
 	return_status = EXIT_SUCCESS;
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);

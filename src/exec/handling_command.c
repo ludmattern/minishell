@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 18:26:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:04:02 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/parse.h"
 
 size_t	ft_env_size(t_env *lst)
 {
@@ -122,6 +123,17 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 	return (status);
 }
 
+static void	proc_handle_sigint(int sig)
+{
+	(void)sig;
+	exit(2);
+}
+
+static void	proc_handle_sigquit(int sig)
+{
+	(void)sig;
+	exit(3);
+}
 /*
 Executes the command in a child process and waits for it to finish.
 */
@@ -134,9 +146,13 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 		return (EXIT_SUCCESS);
 	if (is_non_forked_builtins(node))
 		return (launch_non_forked_builtins(data, node, piped));
+		
+	signal(SIGINT, proc_handle_sigint);
+	signal(SIGQUIT, proc_handle_sigquit);
 	pid = fork();
 	if (pid == 0)
 	{
+		
 		status = apply_command_redirections(data, node->io_list);
 		if (status == EXIT_SUCCESS)
 			execute_command(data, node);
@@ -147,7 +163,9 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 		}
 	}
 	else if (pid > 0)
+	{
 		return (wait_for_child(pid, data));
+	}
 	else
 		return (fork_creation_failure("fork"));
 }

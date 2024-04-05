@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 18:29:59 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/05 14:57:15 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,7 @@ typedef struct s_global_data
 	struct s_data	*data;
 }					t_g_data;
 
-typedef struct s_global
-{
-	int	error_num;
-	int	stop_heredoc;
-	int	in_cmd;
-	int	in_heredoc;
-}	t_global;
 
-t_global	g_global;
+extern int	g_sglobal;
 
 #endif

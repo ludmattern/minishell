@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 13:05:46 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:07:13 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char *del_redir(char *cmd, int i, int j)
 		{
 			while (cmd[i] == '>' || cmd[i] == '<') 
 				i++;
-			while (isspace((unsigned char)cmd[i])) 
+			while (ft_isspace((unsigned char)cmd[i])) 
 				i++;
-			while (cmd[i] != '\0' && (inq || (!isspace((unsigned char)cmd[i]) && cmd[i] != '>' && cmd[i] != '<')))
+			while (cmd[i] != '\0' && (inq || (!ft_isspace((unsigned char)cmd[i]) && cmd[i] != '>' && cmd[i] != '<')))
 			{
 				if (cmd[i] == currentq)
 				{
@@ -74,7 +74,7 @@ char *del_redir(char *cmd, int i, int j)
 				}
 				i++;
 			}
-			while (isspace((unsigned char)cmd[i])) 
+			while (ft_isspace((unsigned char)cmd[i])) 
 				i++;
 			continue;
 		}
