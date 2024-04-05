@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/04 18:01:37 by fprevot          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/04 18:11:33 by lmattern         ###   ########.fr       */
->>>>>>> 7f712d8d752fe4253f9305058708b70e0def85be
+/*   Updated: 2024/04/05 17:11:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
-
 
 void	print_start(void)
 {
@@ -85,12 +80,10 @@ void	update_data(t_g_data *g_data)
 	//	return (printf("MALLOC ERROR"));
 	ft_bzero(g_data->data, sizeof(t_data));
 	g_data->data->mini_env = g_data->mini_env;
-	g_data->data->env = g_data->global_env;
-	g_data->data->l_env = g_data->local_env;
 	g_data->data->last_exit_status = g_data->last_exit_status;
 }
 
-void launch_lexing(t_g_data *g_data)
+void	launch_lexing(t_g_data *g_data)
 {
 	g_data->lexed = lex_me(g_data->in_put);
 	if (g_data->lexed->error == -1)
@@ -99,7 +92,7 @@ void launch_lexing(t_g_data *g_data)
 	g_data->lexed->g_data = g_data;
 }
 
-void launch_parsing(t_g_data *g_data)
+void	launch_parsing(t_g_data *g_data)
 {
 	g_data->data->ast = build_ast(&g_data->lexed, g_data->data->last_exit_status);
 	// if (!data->ast)
@@ -140,6 +133,7 @@ void	update_input(t_g_data *g_data)
 		exit(EXIT_SUCCESS);
 	}
 }
+
 int	event(void)
 {
 	return (EXIT_SUCCESS);
@@ -154,16 +148,12 @@ void	sigint_handler(int sig)
 	(void) sig;
 }
 
-
-
 void	init_signals(void)
 {
 	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
-
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -177,13 +167,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		update_input(&g_data);
-
-		
 		if (g_data.in_put[0])
 		{
-			if (syntax_error(g_data.in_put, &g_data.last_exit_status))
-				continue ;
-			else
+			if (!syntax_error(g_data.in_put, &g_data.last_exit_status))
 			{
 				update_data(&g_data);
 				launch_lexing(&g_data);

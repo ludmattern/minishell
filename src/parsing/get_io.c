@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 16:51:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:07:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 	t_io_node *io = malloc(sizeof(t_io_node));
 	if (!io) 
 	return NULL;
+	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	io->value = ft_strdup(value);
 	io->expanded_value = expander(io->value, last_exit_status, data);

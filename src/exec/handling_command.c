@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 18:26:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:47:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_env_size(t_env *lst)
 	return (i);
 }
 
-char **transform_env_to_array(t_env *mini_env, char **env)
+void	transform_env_to_array(t_env *mini_env, char ***env)
 {
 	char	*temp;
 	size_t	env_size;
@@ -35,23 +35,25 @@ char **transform_env_to_array(t_env *mini_env, char **env)
 
 	env_size = ft_env_size(mini_env);
 	if (env_size == 0)
-		return (NULL);
-	env = ft_calloc(env_size + 1, sizeof(char *));
+	{
+		*env = NULL;
+		return ;
+	}
+	*env = ft_calloc(env_size + 1, sizeof(char *));
 	i = 0;
 	while (mini_env)
 	{
 		if (mini_env->value)
 		{
 			temp = ft_strjoin(mini_env->name, "=");
-			env[i] = ft_strjoin(temp, mini_env->value);
+			(*env)[i] = ft_strjoin(temp, mini_env->value);
 			free(temp);
 		}
 		else
-			env[i] = ft_strdup(mini_env->name);
+			(*env)[i] = ft_strdup(mini_env->name);
 		mini_env = mini_env->next;
 		i++;
 	}
-	return (env);
 }
 
 void	execute_command(t_data *data, t_node *node)
@@ -69,7 +71,7 @@ void	execute_command(t_data *data, t_node *node)
 			EXIT_PERMISSION_DENIED);
 	if (data->env)
 		ft_free_double_array(data->env);
-	data->env = transform_env_to_array(data->mini_env, data->env);
+	transform_env_to_array(data->mini_env, &data->env);
 	execve(node->command_path, node->expanded_args, data->env);
 	ft_free_double_array(data->env);
 	command_exec_failure(data, node->expanded_args[0], EXIT_GENERAL_ERROR);
@@ -98,15 +100,15 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 
 	str = (const char *)node->expanded_args[0];
 	if (node->is_add_local == true)
-		status = ft_add_local(node->expanded_args[0], &data->env, &data->l_env);
+		status = ft_add_local(node->expanded_args[0], &data->mini_env);//TO DO
 	else if (ft_strncmp(str, "cd", 2) == 0)
-		status = ft_cd(node->expanded_args, data->env);
+		status = ft_cd(node->expanded_args, &data->mini_env); //TO DO
 	else if (ft_strncmp(str, "export", 6) == 0)
-		status = ft_export(node->expanded_args, &data->env);
+		status = ft_export(node->expanded_args, data); //TO DO
 	else if (ft_strncmp(str, "exit", 4) == 0)
-		status = ft_exit(node->expanded_args, &data);
+		status = ft_exit(node->expanded_args, &data); //TO DO
 	else
-		status = ft_unset_vars(node->expanded_args, &data->env);
+		status = ft_unset_vars(node->expanded_args, &data->mini_env); //TO DO
 	return (status);
 }
 
@@ -122,6 +124,20 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 	return (status);
 }
 
+int	update_last_arg(t_data *data, t_node *node)
+{
+	char	*last_arg;
+	size_t	nb_args;
+
+	nb_args = ft_double_array_len(node->expanded_args);
+	last_arg = ft_strdup(node->expanded_args[nb_args - 1]);
+	if (!last_arg)
+		return (EXIT_GENERAL_ERROR);
+	if (add_or_update_env(&data->mini_env, "_", last_arg, true))
+		return (ft_free(last_arg), EXIT_GENERAL_ERROR);
+	return (EXIT_SUCCESS);
+}
+
 /*
 Executes the command in a child process and waits for it to finish.
 */
@@ -132,6 +148,8 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 
 	if (node->expanded_args[0] == NULL)
 		return (EXIT_SUCCESS);
+	if (update_last_arg(data, node))
+		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
 		return (launch_non_forked_builtins(data, node, piped));
 	pid = fork();

@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/04 12:24:17 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/05 15:16:45 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS= 	./src/ft_isalpha.c ./src/ft_isdigit.c ./src/ft_isalnum.c \
 		./src/eprintf_fmt.c ./src/libfteprintf.c ./src/ft_strcat.c \
 		./src/ft_strncpy.c ./src/ft_strcpy.c ./src/ft_realloc.c \
 		./src/ft_free_double_array.c ./src/ft_isspace.c \
-		./src/ft_double_array_len.c
+		./src/ft_double_array_len.c ./src/ft_free.c
 
 OBJS= 	$(SRCS:.c=.o)
 

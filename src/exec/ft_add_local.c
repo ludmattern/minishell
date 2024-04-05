@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 19:23:50 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 19:53:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:21:28 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,21 @@ int	get_local_name_n_value(char *arg, char *name, char *value)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_add_local(char *arg, char ***g_env, char ***l_env)
+int	ft_add_local(char *arg, t_env **mini_env)
 {
-	char    *name;
-	char    *value;
+	char *equal_pos = ft_strchr(arg, '=');
+	char *name = NULL;
+	char *value = NULL;
 
-	name = NULL;
-	value = NULL;
-	if (get_local_name_n_value(arg, name, value) != 0)
-		return (EXIT_FAILURE);
-	if (find_env_index(*g_env, name) != -1)
-		ft_addenv(name, value, g_env);
-	else
-		ft_addenv(name, value, l_env);
-	return (EXIT_SUCCESS);
+	name = ft_strndup(arg, equal_pos - arg);
+	value = ft_strdup(equal_pos + 1);
+
+	if (name == NULL || value == NULL)
+	{
+		free(name); // Cleanup on error
+		free(value);
+		return EXIT_FAILURE;
+	}
+
+	return add_or_update_env(mini_env, name, value, true);
 }

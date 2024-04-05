@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 16:42:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:13:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@ int	ft_env(char **args, t_env *mini_env)
 	tmp = mini_env;
 	while (tmp)
 	{
+		if (tmp->name && ft_strlen(tmp->name) == 1 && tmp->name[0] == '_')
+		{
+			if (tmp->value)
+				ft_printf("%s=%s\n", tmp->name, tmp->value);
+			else
+				ft_printf("%s\n", tmp->name);
+		}
 		if (tmp->is_local)
+		{
+			tmp = tmp->next;
 			continue ;
-		else if (tmp->value)
+		}
+		else if (tmp->value && tmp->value[0])
 			ft_printf("%s=%s\n", tmp->name, tmp->value);
-		else
-			ft_printf("%s=\n", tmp->name);
 		tmp = tmp->next;
 	}
 	return (EXIT_SUCCESS);

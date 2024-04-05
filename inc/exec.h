@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 18:11:05 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:28:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,23 @@ void		restore_original_fds(t_data *data);
 builtins
 */
 int			checking_forked_builtins(t_data *data, t_node *node);
-int			ft_cd(char **args, char **env);
+int			ft_cd(char **args, t_env **env);
 int			ft_pwd(void);
 char		*ft_getenv(const char *name, char **env);
-int			ft_export(char **args, char ***env);
-void		ft_print_env_sorted(char **env);
+int			ft_export(char **args, t_data *data);
 int			ft_env(char **args, t_env *mini_env);
-int			ft_unset_vars(char **names, char ***env);
-void		print_env_var(const char *var);
-int			ft_unset(char *name, char ***env);
+int			ft_unset_vars(char **names, t_env **mini_env);
+int			ft_unset(char *name, t_env **mini_env);
 int			ft_exit(char **args, t_data **data);
 
 /*
 handling environnment
 */
-char		**ft_addenv(char *name, char *value, char ***env);
 char		**duplicate_envp(char **envp);
 char		**copy_env(char **env, int size);
-void		sort_env(char **env, int size);
+void		ft_sort_env(char **env, size_t size);
 bool		ft_isvalid_identifier(const char *name);
-int			ft_add_local(char *arg, char ***g_env, char ***l_env);
-int			find_env_index(char **env, const char *name);
+int			ft_add_local(char *arg, t_env **mini_env);
 
 /*
 handling errors
@@ -115,7 +111,7 @@ new
 */
 void		env_err(t_env *mini_env, char *name, char *value);
 void		free_mini_env(t_env *mini_env);
-void		initialize_shell_variables(char ***env);
+void		initialize_shell_variables(t_env **mini_env);
 t_env		*ft_env_last(t_env *lst);
 void		ft_env_add_back(t_env **lst, t_env *new);
 t_env		*ft_env_new_entrie(char *name, char *value, bool is_local);
@@ -123,5 +119,9 @@ t_env		*ft_create_env_entry(const char *env_str);
 t_env		*create_mini_env(char **envp);
 t_g_data	initialize_environnement(char **envp);
 char		*ft_get_env(char *tmp_env, t_env *mini_env);
+t_env		*find_env_var(t_env *env, const char *name);
+void		ft_addenv_or_update(t_env **env, const char *name, const char *value);
+void		ft_removeenv(t_env **env, const char *name);
+int			add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local);
 
 #endif

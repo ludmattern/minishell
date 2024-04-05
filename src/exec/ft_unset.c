@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 19:34:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:47:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,37 @@ bool ft_isvalid_identifier(const char *name)
 /*
 Removes the environment variable with the specified name.
 */
-int	ft_unset(char *name, char ***env)
+int ft_unset(char *name, t_env **mini_env)
 {
-	size_t	i;
-	size_t	j;
-	size_t	name_len;
+    t_env *current = *mini_env;
+    t_env *prev = NULL;
 
-	if (!name || !ft_isvalid_identifier(name))
-		return (ft_eprintf("minishell: unset: `%s': not a valid identifier\n", name), EXIT_FAILURE);
-	name_len = ft_strlen(name);
-	i = -1;
-	while ((*env) && (*env)[++i])
-	{
-		if (ft_strncmp((*env)[i], name, name_len) == 0
-			&& (*env)[i][name_len] == '=')
+    if (!name || !ft_isvalid_identifier(name))
+        return (ft_eprintf("minishell: unset: `%s': not a valid identifier\n", name), EXIT_FAILURE);
+    while (current != NULL) {
+        if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
 		{
-			free((*env)[i]);
-			j = i - 1;
-			while ((*env)[++j])
-				(*env)[j] = (*env)[j + 1];
-			(*env)[j - 1] = NULL;
-			i--;
-		}
-	}
-	return (EXIT_SUCCESS);
+            if (prev == NULL)
+                *mini_env = current->next;
+            else
+                prev->next = current->next;
+
+            // Free the node
+            free(current->name);
+            free(current->value);
+            free(current);
+            return EXIT_SUCCESS;
+        }
+        prev = current;
+        current = current->next;
+    }
+    return EXIT_SUCCESS;
 }
 
 /*
 Removes the environment variables with the specified names.
 */
-int	ft_unset_vars(char **names, char ***env)
+int	ft_unset_vars(char **names, t_env **mini_env)
 {
 	int	i;
 	int status;
@@ -67,7 +68,7 @@ int	ft_unset_vars(char **names, char ***env)
 	status = EXIT_SUCCESS;
 	while (names[i])
 	{
-		if (ft_unset(names[i++], env) == EXIT_FAILURE)
+		if (ft_unset(names[i++], mini_env) == EXIT_FAILURE)
 			status = EXIT_FAILURE;
 	}
 	return (status);

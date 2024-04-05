@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 18:29:59 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:10:48 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ typedef struct s_data
 	int				stdout;
 	char			**env;
 	t_env			*mini_env;
-	char			**l_env;
 	bool			signint_child;
 	bool			heredoc_sigint;
 	struct termios	initial_terminal_attributes;
@@ -155,8 +154,6 @@ typedef struct s_data
 typedef struct s_global_data
 {
 	int				last_exit_status;
-	char			**global_env;
-	char			**local_env;
 	char			*in_put;
 	t_env			*mini_env;
 	t_token			*save;

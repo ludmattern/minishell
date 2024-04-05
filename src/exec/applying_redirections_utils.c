@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/02 14:54:26 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:35:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	heredoc_child_process(t_data *data, int pipefd[2], const char *delimiter)
 {
 	int	status;
 
+	data->heredoc_sigint = true;
 	close(pipefd[0]);
 	status = read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
 	close(pipefd[1]);
