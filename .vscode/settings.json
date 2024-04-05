@@ -9,6 +9,7 @@
         "cstdlib": "c",
         "libft.h": "c",
         "type_traits": "c",
-        "exec.h": "c"
+        "exec.h": "c",
+        "stdbool.h": "c"
     }
 }

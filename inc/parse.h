@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 18:11:09 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:50:50 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,10 @@ bool		syntax_error(const char *cmd, int *status);
 void		free_tree(t_node *node);
 char		*ft_get_env(char *tmp_env, t_env *mini_env);
 void		free_mini_env(t_env *mini_env);
+
+void	signals_init(void);
+void	handle_sigint_heredoc(int sig);
+void	handle_sigquit(int sig);
+void	handle_sigint(int sig);
 
 #endif

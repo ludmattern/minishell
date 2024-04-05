@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/03 18:18:25 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:25:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/parse.h"
 
 /*
 Restores the original file descriptors.
@@ -33,10 +34,14 @@ int	fork_creation_failure(const char *message)
 /*
 Waits for the child process to finish and return its exit status.
 */
+
+
 int	wait_for_child(pid_t pid, t_data *data)
 {
 	int	status;
-
+	
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		data->last_exit_status = WEXITSTATUS(status);
@@ -44,6 +49,7 @@ int	wait_for_child(pid_t pid, t_data *data)
 		data->last_exit_status = 128 + WTERMSIG(status);
 	else
 		data->last_exit_status = EXIT_FAILURE;
+	signals_init();
 	return (data->last_exit_status);
 }
 
@@ -92,3 +98,4 @@ int	read_heredoc_and_write_to_pipe(const char *delimiter, int write_fd)
 	get_next_line(-1);
 	return (EXIT_SUCCESS);
 }
+

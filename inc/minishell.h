@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:10:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:26:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +163,7 @@ typedef struct s_global_data
 	struct s_data	*data;
 }					t_g_data;
 
-typedef struct s_global
-{
-	int	error_num;
-	int	stop_heredoc;
-	int	in_cmd;
-	int	in_heredoc;
-}	t_global;
 
-t_global	g_global;
+extern int	g_sglobal;
 
 #endif
