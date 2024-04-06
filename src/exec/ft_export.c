@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:57:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:20:37 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ bool	validate_export_argument(const char *arg)
 	return (is_valid);
 }
 
+bool	has_updated(t_env *current, char *name, char *value, bool is_local)
+{
+	if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+	{
+		if (value && value[0])
+		{
+			ft_free(current->value);
+			current->value = value;
+		}
+		return (current->is_local = is_local, true);
+	}
+	return (false);
+}
+
 /*
 Processes a single export argument, assuming it's already validated.
 */
@@ -46,15 +60,8 @@ int	add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local)
 	last = NULL;
 	while (current != NULL)
 	{
-		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
-		{
-			if (value && value[0])
-			{
-				ft_free(current->value);
-				current->value = value;
-			}
-			return (current->is_local = is_local, EXIT_SUCCESS);
-		}
+		if (has_updated(current, name, value, is_local))
+			return (EXIT_SUCCESS);
 		last = current;
 		current = current->next;
 	}
@@ -68,7 +75,7 @@ int	add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local)
 	return (EXIT_SUCCESS);
 }
 
-int process_export_argument(const char *arg, t_env **mini_env)
+int	process_export_argument(const char *arg, t_env **mini_env)
 {
 	char	*equal_pos;
 	char	*name;
@@ -127,7 +134,7 @@ char	*format_env_var(const char *name, const char *value)
 	return (formatted_var);
 }
 
-bool display_sorted_env(t_env *mini_env, char ***env_array)
+bool	display_sorted_env(t_env *mini_env, char ***env_array)
 {
 	size_t	i;
 	size_t	env_size;
@@ -152,15 +159,11 @@ bool display_sorted_env(t_env *mini_env, char ***env_array)
 		current = current->next;
 	}
 	(*env_array)[env_size] = NULL;
-	ft_sort_env(*env_array, env_size);
-	i = 0;
-	while (i < env_size)
-		printf("%s\n", (*env_array)[i++]);
-	ft_free_double_array(*env_array);
+	ft_sort_and_print_env(*env_array, env_size);
 	return (true);
 }
 
-void	ft_sort_env(char **env, size_t size)
+void	ft_sort_and_print_env(char **env, size_t size)
 {
 	char	*temp;
 	size_t	i;
@@ -180,18 +183,22 @@ void	ft_sort_env(char **env, size_t size)
 			}
 		}
 	}
+	i = 0;
+	while (i < size)
+		printf("%s\n", (env)[i++]);
+	ft_free_double_array(env);
 }
 
 /*
 Main export function that iterates over arguments and validates/processes them.
 */
-int ft_export(char **args, t_data *data)
+int	ft_export(char **args, t_data *data)
 {
 	int	i;
 	int	status;
 	int	overall_status;
-	data->env = NULL;
 
+	data->env = NULL;
 	if (!args[1])
 	{
 		if (!display_sorted_env(data->mini_env, &data->env))

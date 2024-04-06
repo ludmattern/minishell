@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:02:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:23:36 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,32 @@ void	free_mini_env(t_env *mini_env)
 		tmp = mini_env;
 		mini_env = mini_env->next;
 		free(tmp->name);
-		if (tmp->value) 
+		if (tmp->value)
 			free(tmp->value);
 		free(tmp);
 	}
 }
 
-void initialize_shell_variables(t_env **mini_env)
+void	initialize_shell_variables(t_env **mini_env)
 {
-    char cwd[1024];
-    char *shell_lvl_str = getenv("SHLVL");
-    long shell_lvl = shell_lvl_str ? ft_atoi(shell_lvl_str) + 1 : 1;
-    char *tmp;
+	char	cwd[1024];
+	t_env	*env_entry;
+	char	*tmp;
+	long	shell_lvl;
 
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        ft_addenv_or_update(mini_env, "PWD", strdup(cwd));
-    }
-
-    ft_addenv_or_update(mini_env, "OLDPWD", "");
-
-    tmp = malloc(20); // Enough to hold any integer
-    tmp = ft_itoa((int)shell_lvl);
-    ft_addenv_or_update(mini_env, "SHLVL", tmp);
+	env_entry = find_env_var(*mini_env, "SHLVL");
+	if (env_entry && env_entry->value)
+		shell_lvl = ft_atoi(env_entry->value) + 1;
+	else
+		shell_lvl = 1;
+	tmp = ft_itoa((int)shell_lvl);
+	ft_addenv_or_update(mini_env, "SHLVL", tmp);
+	free(tmp);
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		ft_addenv_or_update(mini_env, "PWD", ft_strdup(cwd));
+	env_entry = find_env_var(*mini_env, "OLDPWD");
+	if (!env_entry)
+		ft_addenv_or_update(mini_env, "OLDPWD", ft_strdup(""));
 }
 
 t_env	*ft_env_last(t_env *lst)
@@ -125,19 +129,18 @@ t_env	*create_mini_env(char **envp)
 	t_env	*minishell_env;
 	t_env	*tmp;
 	size_t	i;
-	
+
 	i = 0;
 	minishell_env = NULL;
 	while (envp && envp[i])
 	{
-		tmp = ft_create_env_entry(envp[i]);
+		tmp = ft_create_env_entry(envp[i++]);
 		if (!tmp)
 		{
 			free_mini_env(minishell_env);
 			exit (EXIT_GENERAL_ERROR);
 		}
 		ft_env_add_back(&minishell_env, tmp);
-		i++;
 	}
 	return (minishell_env);
 }
@@ -150,6 +153,5 @@ t_g_data	initialize_environnement(char **envp)
 	g_data.last_exit_status = EXIT_SUCCESS;
 	g_data.mini_env = create_mini_env(envp);
 	initialize_shell_variables(&g_data.mini_env);
-	//signal(SIGINT, sigint_handler);
 	return (g_data);
 }

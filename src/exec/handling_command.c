@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 18:26:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:27:16 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,15 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 
 	str = (const char *)node->expanded_args[0];
 	if (node->is_add_local == true)
-		status = ft_add_local(node->expanded_args[0], &data->mini_env);//TO DO
+		status = ft_add_local(node->expanded_args[0], &data->mini_env);
 	else if (ft_strncmp(str, "cd", 2) == 0)
-		status = ft_cd(node->expanded_args, &data->mini_env); //TO DO
+		status = ft_cd(node->expanded_args, &data->mini_env);
 	else if (ft_strncmp(str, "export", 6) == 0)
-		status = ft_export(node->expanded_args, data); //TO DO
+		status = ft_export(node->expanded_args, data);
 	else if (ft_strncmp(str, "exit", 4) == 0)
-		status = ft_exit(node->expanded_args, &data); //TO DO
+		status = ft_exit(node->expanded_args, &data);
 	else
-		status = ft_unset_vars(node->expanded_args, &data->mini_env); //TO DO
+		status = ft_unset_vars(node->expanded_args, &data->mini_env);
 	return (status);
 }
 
@@ -150,13 +150,28 @@ static void	proc_handle_sigquit(int sig)
 	(void)sig;
 	exit(3);
 }
+
+int	handle_command_child(t_data *data, t_node *node)
+{
+	int	status;
+
+	status = apply_command_redirections(data, node->io_list);
+	if (status == EXIT_SUCCESS)
+		execute_command(data, node);
+	else
+	{
+		free_forked_data_structure(&data);
+		exit(status);
+	}
+	return (EXIT_GENERAL_ERROR);
+}
+
 /*
 Executes the command in a child process and waits for it to finish.
 */
 int	handling_command(t_data *data, t_node *node, bool piped)
 {
 	pid_t	pid;
-	int		status;
 
 	if (node->expanded_args[0] == NULL)
 		return (EXIT_SUCCESS);
@@ -164,26 +179,13 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
 		return (launch_non_forked_builtins(data, node, piped));
-		
 	signal(SIGINT, proc_handle_sigint);
 	signal(SIGQUIT, proc_handle_sigquit);
 	pid = fork();
 	if (pid == 0)
-	{
-		
-		status = apply_command_redirections(data, node->io_list);
-		if (status == EXIT_SUCCESS)
-			execute_command(data, node);
-		else
-		{
-			free_forked_data_structure(&data);
-			exit(status);
-		}
-	}
+		return (handle_command_child(data, node));
 	else if (pid > 0)
-	{
 		return (wait_for_child(pid, data));
-	}
 	else
 		return (fork_creation_failure("fork"));
 }

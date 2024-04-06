@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:40:41 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 #include "../../inc/parse.h"
-
 
 /*
 Handles the child process of a pipeline.
@@ -21,7 +20,6 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 		t_ast_direction direction)
 {
 	int	status;
-
 
 	status = EXIT_SUCCESS;
 	if (direction == AST_LEFT)

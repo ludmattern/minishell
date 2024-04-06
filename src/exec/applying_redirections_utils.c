@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 18:26:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/05 19:35:28 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ Handles the child process of a pipeline.
 int	heredoc_child_process(t_data *data, int pipefd[2], const char *delimiter)
 {
 	int	status;
-	
+
 	signal(SIGINT, handle_sigint_heredoc);
 	close(pipefd[0]);
 	status = read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
 	close(pipefd[1]);
 	close_standard_fds();
 	free_forked_data_structure(&data);
-	
 	exit(status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:38:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:55 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	wait_for_pipeline_children(pid_t pid1, pid_t pid2)
 {
 	int	status;
 	int	return_status;
-	
-	
+
 	return_status = EXIT_SUCCESS;
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
