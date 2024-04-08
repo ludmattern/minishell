@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 20:27:16 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/07 17:47:52 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,12 @@ static void	proc_handle_sigquit(int sig)
 	(void)sig;
 	exit(3);
 }
-
+/*static void	sigign(int sig)
+{
+	(void)sig;
+	signal(SIGINT, SIG_IGN);
+	printf("no heredoc pls\n");
+}*/
 int	handle_command_child(t_data *data, t_node *node)
 {
 	int	status;
@@ -179,13 +184,18 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
 		return (launch_non_forked_builtins(data, node, piped));
-	signal(SIGINT, proc_handle_sigint);
-	signal(SIGQUIT, proc_handle_sigquit);
 	pid = fork();
 	if (pid == 0)
+	{
+		signal(SIGINT, proc_handle_sigint);
+		signal(SIGQUIT, proc_handle_sigquit);
 		return (handle_command_child(data, node));
+	}
 	else if (pid > 0)
+	{
+		signals_init();
 		return (wait_for_child(pid, data));
+	}
 	else
 		return (fork_creation_failure("fork"));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 19:35:28 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/07 17:34:35 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	heredoc_parent_process(pid_t pid, int pipefd[2])
 {
 	int	status;
 
-	signal(SIGINT, SIG_IGN);
+	
 	close(pipefd[1]);
 	status = dup2(pipefd[0], STDIN_FILENO);
 	if (status < 0)
@@ -67,8 +67,12 @@ int	heredoc_parent_process(pid_t pid, int pipefd[2])
 	}
 	close(pipefd[0]);
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != EXIT_SUCCESS)
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 12)
+	{
+		signals_init();
+        return (EXIT_SUCCESS);
+	}
+	else if (WIFEXITED(status) && WEXITSTATUS(status) != EXIT_SUCCESS)
 		return (heredoc_redirection_failure("heredoc", EXIT_GENERAL_ERROR));
-	signals_init();
 	return (status);
 }

@@ -6,11 +6,12 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:02:06 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/07 17:33:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/parse.h"
 
 /*
 Redirects the input to the given file.
@@ -85,6 +86,7 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 	int		pipefd[2];
 	pid_t	pid;
 
+	signal(SIGINT, SIG_IGN);
 	if (pipe(pipefd) < 0)
 		return (command_redirection_failure("pipe", EXIT_PIPE_FAILURE));
 	pid = fork();
@@ -97,7 +99,10 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 	else if (pid == 0)
 		return (heredoc_child_process(data, pipefd, delimiter));
 	else
+	{
+		signals_init();
 		return (heredoc_parent_process(pid, pipefd));
+	}
 }
 
 /*

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 14:42:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:40:49 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-char *skip_quote(char *tkn, char q)
+char *skip_quote(char *tkn, char q, t_g_data *data)
 {
 	char *res;
 	int i;
@@ -21,8 +21,8 @@ char *skip_quote(char *tkn, char q)
 	i = 0;
 	j = 0;
 	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
-	if (res == NULL) 
-		return (NULL);
+	if (!res)
+		fail_exit_shell(data);
 	while (tkn[i] != '\0') 
 	{
 		if (tkn[i] != q)
@@ -34,7 +34,7 @@ char *skip_quote(char *tkn, char q)
 }
 
 char	*replace_substring(const char *original, \
-	int start, int length, const char *replace)
+	int start, int length, const char *replace, t_g_data *data)
 {
 	int		original_len;
 	int		replace_len;
@@ -45,8 +45,8 @@ char	*replace_substring(const char *original, \
 	replace_len = ft_strlen(replace);
 	new_len = original_len - length + replace_len;
 	new = malloc(new_len + 1);
-	if (new == NULL)
-		return (NULL);
+	if (!new)
+		fail_exit_shell(data);
 	ft_strncpy(new, original, start);
 	new[start] = '\0';
 	ft_strcat(new, replace);
@@ -54,12 +54,4 @@ char	*replace_substring(const char *original, \
 	return (new);
 }
 
-char	**init_tab(int capacity)
-{
-	char	**tab;
 
-	tab = malloc(capacity * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	return (tab);
-}
