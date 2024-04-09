@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 18:32:42 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:40:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,50 +102,6 @@ void	update_history(t_g_data *g_data)
 void	ft_clear_memory(t_g_data *g_data)
 {
 	free_mini_env(g_data->mini_env);
-}
-
-void	update_input(t_g_data *g_data)
-{
-	g_data->path = getcwd(NULL, 0);
-	g_data->join = ft_strjoin(g_data->path, " $> ");
-	g_data->in_put = readline(g_data->join);
-	free(g_data->join);
-	free(g_data->path);
-	if (!g_data->in_put) 
-	{
-		write(STDOUT_FILENO, "exit\n", 5);  
-		ft_clear_memory(g_data);
-		exit(EXIT_SUCCESS);
-	}
-}
-
-
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-	rl_redisplay();
-}
-
-void	handle_sigint_heredoc(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(1);
-}
-
-void	signals_init(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
 }
 
 int	main(int argc, char **argv, char **envp)
