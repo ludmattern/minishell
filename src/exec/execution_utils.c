@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 19:07:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/07 16:18:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	wait_for_child(pid_t pid, t_data *data)
 {
 	int	status;
 
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		data->last_exit_status = WEXITSTATUS(status);
@@ -47,7 +45,6 @@ int	wait_for_child(pid_t pid, t_data *data)
 		data->last_exit_status = 128 + WTERMSIG(status);
 	else
 		data->last_exit_status = EXIT_FAILURE;
-	signals_init();
 	return (data->last_exit_status);
 }
 

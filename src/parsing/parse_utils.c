@@ -6,28 +6,32 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/04 19:07:13 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/08 15:46:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-t_node	*create_empty_node(t_token *tkn)
+t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 {
 	t_node	*new;
 
 	new = malloc(sizeof(t_node) * 1);
+	if(!new)
+		fail_exit_shell(g_data);
 	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
+	if(!new->args)
+		fail_exit_shell(g_data);
 	new->type = N_INIT;
 	return (new);
 }
 
-t_node	*create_operator_node(t_token *tkn)
+t_node	*create_operator_node(t_token *tkn, t_g_data *g_data)
 {
 	t_node	*node;
 
-	node = create_empty_node(tkn);
+	node = create_empty_node(tkn, g_data);
 	if (tkn->type == T_PIPE)
 		node->type = N_PIPE;
 	else if (tkn->type == T_AND)
@@ -37,11 +41,11 @@ t_node	*create_operator_node(t_token *tkn)
 	return (node);
 }
 
-char *del_redir(char *cmd, int i, int j)
+char *del_redir(char *cmd, int i, int j, t_g_data *g_data)
 {
 	char *result = malloc(strlen(cmd) + 1);
-	if (!result) 
-		return (NULL);
+	if(!result)
+		fail_exit_shell(g_data);
 	int inq = 0;
 	char currentq = 0;
 
@@ -111,14 +115,14 @@ size_t ft_arrlen(char **arr)
 	return (i);
 }
 
-char **ft_cleaner(char **args)
+char **ft_cleaner(char **args,  t_g_data *g_data)
 {
 	int i = 0;
 	int j = 0;
 	int k = 0;
 	char **result = malloc(sizeof(char *) * (ft_arrlen(args) + 1));
-	if (!result)
-		return (NULL);
+	if(!result)
+		fail_exit_shell(g_data);
 	while (args[i] != NULL)
 	{
 		if (args[i][0] != '\0')
@@ -133,6 +137,8 @@ char **ft_cleaner(char **args)
 			}
 			else
 				result[j++] = ft_strdup(args[i]);
+			if(!result)
+				fail_exit_shell(g_data);
 		}
 		i++;
 	}
@@ -155,24 +161,52 @@ bool check_local(char *arg)
 	return (false);
 }
 
-t_node *create_command_node(t_token *tkn, int last_exit_status)
+
+
+t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data)
 {
 	t_node *node;
 
-	node = create_empty_node(tkn);
-	if (redirection_outside_quotes(node->args)) 
-	{
-		node->io_list = parse_io_from_command(node->args, last_exit_status, tkn->g_data);
-		node->args = del_redir(node->args, 0, 0);
-		//printf("\n%s\n", node->args);
-	}
-	node->expanded_args = expander(node->args, last_exit_status, tkn->g_data);
-	node->expanded_args = ft_cleaner(node->expanded_args);
+	(void)last_exit_status;
+	node = create_empty_node(tkn, g_data);
+	node->io_list = tkn->io_list;
+	node->expanded_args = tkn->expanded;
 	if (node->expanded_args[0] != NULL)
+	{
 		node->command_path = get_command_path(node->expanded_args[0]);
+	}
 	node->is_add_local = check_local(node->command_path);
 	// print_exp(node->expanded_args, node->args);
 	//printredir(node->io_list);
 	node->type = N_CMD;
 	return (node);
+}
+
+void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
+{
+	t_token *fir;
+	fir = lexed;
+    while (lexed != NULL)
+    {
+		lexed->first = fir;
+		if (lexed->type == T_WORD)
+		{
+			if (redirection_outside_quotes(lexed->value)) 
+			{
+				lexed->io_list = parse_io_from_command(lexed->value, last_exit_status, lexed->g_data);
+				lexed->value = del_redir(lexed->value, 0, 0, g_data);
+				//printf("\n%s\n", node->args);
+			}
+			lexed->expanded = expander(lexed->value, last_exit_status, lexed->g_data);
+			lexed->expanded = ft_cleaner(lexed->expanded, g_data);
+		}
+        lexed = lexed->next;
+    }
+}
+
+
+void	launch_expand(t_g_data *g_data)
+{
+    expe(g_data->lexed, g_data->last_exit_status, g_data);
+	 
 }

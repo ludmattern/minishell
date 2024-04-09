@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/05 14:07:49 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:55:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status, t_g_data *data) 
 {
 	t_io_node *io = malloc(sizeof(t_io_node));
-	if (!io) 
-	return NULL;
+	if (!io)
+		fail_exit_shell(data);
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	io->value = ft_strdup(value);
+	if (!io->value)
+		fail_exit_shell(data);
 	io->expanded_value = expander(io->value, last_exit_status, data);
 	io->here_doc = 0;
 	io->prev = NULL;
 	io->next = NULL;
-	return io;
+	return (io);
 }
 
 static void set_io_type(t_io_type *type, char **cursor)
@@ -65,11 +67,11 @@ int countq(const char *str)
 	return count;
 }
 
-char *extract_with_quote(char **cursor)
+char *extract_with_quote(char **cursor,  t_g_data *data)
 {
-	char *result = malloc(strlen(*cursor) + 1);
-	if (!result) 
-		return (NULL);
+	char *result = malloc(strlen(*cursor) + 1); 
+	if (!result)
+		fail_exit_shell(data);
 	char *output = result;
 	int insideq = 0;
 
@@ -112,7 +114,7 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 		(*cursor)++;
 	if (countq(*cursor) > 2 && **cursor == '"')
 	{
-		filename = extract_with_quote(cursor);
+		filename = extract_with_quote(cursor, data);
 	}
 	else
 	{
@@ -127,6 +129,8 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 		while (**cursor && **cursor != c && **cursor != '>' && **cursor != '<')
 			(*cursor)++;
 		filename = ft_strndup(start, *cursor - start); 
+		if (!filename)
+			fail_exit_shell(data);
 	}
 	t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status, data);
 	free(filename);

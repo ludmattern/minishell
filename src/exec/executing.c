@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/03/20 15:20:40 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/07 17:44:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+#include "../../inc/parse.h"
 
 /*
 Handles the node by calling the appropriate function based on its type.
@@ -34,5 +35,6 @@ Executes the AST by handling each node.
 */
 int	run_execution(t_data *data)
 {
+	signals_init();
 	return (handling_node(data, data->ast, false));
 }

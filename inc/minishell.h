@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/06 15:41:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:41:07 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,32 @@ typedef enum e_token_type
 	T_RPAR
 }	t_token_type;
 
+typedef enum e_io_type
+{
+	IO_IN,
+	IO_OUT,
+	IO_HEREDOC,
+	IO_APPEND
+}	t_io_type;
+
+typedef struct s_io_node
+{
+	t_io_type			type;
+	char				*value;
+	char				**expanded_value;
+	int					here_doc;
+	struct s_io_node	*prev;
+	struct s_io_node	*next;
+}						t_io_node;
+
+
 typedef struct s_token
 {
 	t_token_type			type;
+	struct s_token			*first;
 	char					*value;
+	char					**expanded;
+	t_io_node				*io_list;
 	struct s_token			*next;
 	struct s_token			*prev;
 	struct s_global_data	*g_data;
@@ -88,13 +110,7 @@ typedef enum e_node_type
 	N_INIT
 }	t_node_type;
 
-typedef enum e_io_type
-{
-	IO_IN,
-	IO_OUT,
-	IO_HEREDOC,
-	IO_APPEND
-}	t_io_type;
+
 
 typedef struct s_env
 {
@@ -114,15 +130,6 @@ typedef struct s_init_vars
 	char	*pwd_cmd;
 }				t_init_vars;
 
-typedef struct s_io_node
-{
-	t_io_type			type;
-	char				*value;
-	char				**expanded_value;
-	int					here_doc;
-	struct s_io_node	*prev;
-	struct s_io_node	*next;
-}						t_io_node;
 
 typedef struct s_node
 {
@@ -154,6 +161,7 @@ typedef struct s_data
 typedef struct s_global_data
 {
 	int				last_exit_status;
+	int 			exit_fail;
 	char			*in_put;
 	t_env			*mini_env;
 	t_token			*save;

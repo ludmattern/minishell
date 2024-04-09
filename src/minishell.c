@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/06 15:40:23 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:41:05 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,17 @@ void	update_data(t_g_data *g_data)
 void	launch_lexing(t_g_data *g_data)
 {
 	g_data->lexed = lex_me(g_data->in_put);
-	if (g_data->lexed->error == -1)
+	if (g_data->exit_fail == -1)
 		lex_mallox_error(g_data->lexed);
 	g_data->save = g_data->lexed;
 	g_data->lexed->g_data = g_data;
 }
 
+
+
 void	launch_parsing(t_g_data *g_data)
 {
-	g_data->data->ast = build_ast(&g_data->lexed, g_data->data->last_exit_status);
+	g_data->data->ast = build_ast(&g_data->lexed->first, g_data->data->last_exit_status, g_data);
 	// if (!data->ast)
 	// 	free_parsing(data->ast, lexed);
 	free_lexed(g_data->save);
@@ -104,6 +106,50 @@ void	ft_clear_memory(t_g_data *g_data)
 	free_mini_env(g_data->mini_env);
 }
 
+void	update_input(t_g_data *g_data)
+{
+	g_data->path = getcwd(NULL, 0);
+	g_data->join = ft_strjoin(g_data->path, " $> ");
+	g_data->in_put = readline(g_data->join);
+	free(g_data->join);
+	free(g_data->path);
+	if (!g_data->in_put) 
+	{
+		write(STDOUT_FILENO, "exit\n", 5);  
+		ft_clear_memory(g_data);
+		exit(EXIT_SUCCESS);
+	}
+}
+
+
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	handle_sigquit(int sig)
+{
+	(void)sig;
+	rl_redisplay();
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(12);
+}
+
+void	signals_init(void)
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	g_data;
@@ -113,6 +159,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	//print_start();
 	signals_init();
+	g_data.exit_fail = 0;
 	g_data = initialize_environnement(envp);
 	while (1)
 	{
@@ -124,6 +171,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				update_data(&g_data);
 				launch_lexing(&g_data);
+				launch_expand(&g_data);
 				launch_parsing(&g_data);
 				launch_execution(&g_data);
 			}
