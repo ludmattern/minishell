@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/10 11:38:12 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:38:25 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,5 @@ typedef struct s_global_data
 	char			*join;
 	struct s_data	*data;
 }					t_g_data;
-
-
-extern int	g_sglobal;
 
 #endif

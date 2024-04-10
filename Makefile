@@ -6,7 +6,7 @@
 #    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/08 13:59:51 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/10 17:41:03 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ EXECDIR			:=	./src/exec
 PARSEDIR		:=	./src/parsing
 MAINDIR			:=	./src/
 
-MAIN_SRC		:=	$(MAINDIR)/minishell.c
+MAIN_SRC		:=	$(MAINDIR)/minishell.c $(MAINDIR)/launch2.c $(MAINDIR)/launch1.c
 
 EXEC_SRCS		:=	$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
 					$(EXECDIR)/applying_redirections.c \
@@ -45,7 +45,7 @@ PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_va
 					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
 					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
 					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
-					$(PARSEDIR)/syntaxe_checker.c
+					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/signal.c
 
 OBJDIR			:=	./.obj
 
