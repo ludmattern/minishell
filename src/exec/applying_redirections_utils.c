@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/07 17:34:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 13:10:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	heredoc_child_process(t_data *data, int pipefd[2], const char *delimiter)
 {
 	int	status;
 
-	signal(SIGINT, handle_sigint_heredoc);
+	//signal(SIGINT, handle_sigint_heredoc);
 	close(pipefd[0]);
 	status = read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
 	close(pipefd[1]);
@@ -69,7 +69,7 @@ int	heredoc_parent_process(pid_t pid, int pipefd[2])
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 12)
 	{
-		signals_init();
+		//signals_init();
         return (EXIT_SUCCESS);
 	}
 	else if (WIFEXITED(status) && WEXITSTATUS(status) != EXIT_SUCCESS)

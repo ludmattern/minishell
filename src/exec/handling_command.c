@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/07 17:47:52 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:12:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,24 +138,6 @@ int	update_last_arg(t_data *data, t_node *node)
 		return (ft_free(last_arg), EXIT_GENERAL_ERROR);
 	return (EXIT_SUCCESS);
 }
-
-static void	proc_handle_sigint(int sig)
-{
-	(void)sig;
-	exit(2);
-}
-
-static void	proc_handle_sigquit(int sig)
-{
-	(void)sig;
-	exit(3);
-}
-/*static void	sigign(int sig)
-{
-	(void)sig;
-	signal(SIGINT, SIG_IGN);
-	printf("no heredoc pls\n");
-}*/
 int	handle_command_child(t_data *data, t_node *node)
 {
 	int	status;
@@ -177,6 +159,7 @@ Executes the command in a child process and waits for it to finish.
 int	handling_command(t_data *data, t_node *node, bool piped)
 {
 	pid_t	pid;
+	int		exit_status;
 
 	if (node->expanded_args[0] == NULL)
 		return (EXIT_SUCCESS);
@@ -184,6 +167,8 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
 		return (launch_non_forked_builtins(data, node, piped));
+	signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -193,8 +178,10 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 	}
 	else if (pid > 0)
 	{
+		exit_status = wait_for_child(pid, data);
 		signals_init();
-		return (wait_for_child(pid, data));
+		return (exit_status);
+
 	}
 	else
 		return (fork_creation_failure("fork"));

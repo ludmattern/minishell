@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printfunc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:30:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 15:05:49 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:00:13 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void printredir(t_io_node *io)
 {
-	while (io != NULL)
+	if (io)
 	{
-		printf("\n==============IO=============\n");
-		printf("evalue = %s type = %d\n", io->expanded_value[0], io->type);
-		printf("==============IO=============\n");
-		io = io->next;
+		while (io != NULL)
+		{
+			printf("\n==============IO=============\n");
+			printf("evalue = %s type = %d\n", io->expanded_value[0], io->type);
+			printf("==============IO=============\n");
+			io = io->next;
+		}
 	}
 }
 

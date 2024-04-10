@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/08 15:02:49 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 11:38:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_global_data
 	int				last_exit_status;
 	int 			exit_fail;
 	char			*in_put;
+	char			*in_putsave;
 	t_env			*mini_env;
 	t_token			*save;
 	t_token			*lexed;

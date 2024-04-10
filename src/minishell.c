@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/08 15:36:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,23 @@ void	launch_execution(t_g_data *g_data)
 	free_data_structure(&g_data->data);
 }
 
-void	update_history(t_g_data *g_data)
+void	update_history(t_g_data *g_data, int t)
 {
-	add_history(g_data->in_put);
-	free(g_data->in_put);
-	g_data->in_put = NULL;
+	if (t == 1)
+	{
+		add_history(g_data->in_putsave);
+		free(g_data->in_putsave);
+		g_data->in_putsave = NULL;
+		free(g_data->in_put);
+		g_data->in_put = NULL;
+	}
+	else
+	{
+		add_history(g_data->in_put);
+		free(g_data->in_put);
+		g_data->in_put = NULL;
+	}
+	
 }
 
 void	ft_clear_memory(t_g_data *g_data)
@@ -122,13 +134,13 @@ void	update_input(t_g_data *g_data)
 }
 
 
-void	handle_sigint(int sig)
+void handle_sigint(int sig) 
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+    write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
 }
 
 void	handle_sigquit(int sig)
@@ -137,11 +149,18 @@ void	handle_sigquit(int sig)
 	rl_redisplay();
 }
 
-void	handle_sigint_heredoc(int sig)
+
+void	proc_handle_sigint(int sig)
+{
+	printf("\n");
+	(void)sig;
+	exit(2);
+}
+
+void	proc_handle_sigquit(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	exit(12);
+	exit(3);
 }
 
 void	signals_init(void)
@@ -150,10 +169,53 @@ void	signals_init(void)
 	signal(SIGQUIT, handle_sigquit);
 }
 
+char *replace_env_vars(t_g_data *data)
+{
+    size_t i = 0;
+    bool squotes = false;
+    char *res = ft_strdup(data->in_putsave);
+	if (!res)
+		fail_exit_shell(data);
+    char *status_str;
+	char *new;
+
+
+    while (res && res[i] != '\0') 
+	{
+        if (res[i] == '\'')
+		{
+            squotes = !squotes;
+        } 
+		else if (!squotes && res[i] == '$' && res[i + 1] == '?')
+		{
+            status_str = ft_itoa(data->last_exit_status);
+            if (!status_str) fail_exit_shell(data); 
+            new = replace_substring(res, i, 2, status_str, data);
+            free(res);
+            res = new;
+			new = NULL;
+            i += ft_strlen(status_str) - 1;
+            free(status_str);
+        } 
+		else if (!squotes && res[i] == '$' && res[i + 1] == '$')
+            i += 1;
+		else if (!squotes && res[i] == '$' && res[i + 1] != '\0' && res[i + 1] != ' ' && res[i + 1] != '"')
+		{
+            new = get_env_var(res, 0,0, 0, data);
+            free(res);
+            res = new;
+			new = NULL;
+        }
+        i++;
+    }
+    return (res);
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	g_data;
-
+	int			t;
 	g_sglobal = 0;
 	(void)argv;
 	(void)argc;
@@ -163,6 +225,7 @@ int	main(int argc, char **argv, char **envp)
 	g_data = initialize_environnement(envp);
 	while (1)
 	{
+		t = 0;
     	g_sglobal = 0;
 		update_input(&g_data);
 		if (g_data.in_put[0])
@@ -170,14 +233,24 @@ int	main(int argc, char **argv, char **envp)
 			if (!syntax_error(g_data.in_put, &g_data.last_exit_status))
 			{
 				update_data(&g_data);
+				g_data.in_putsave = ft_strdup(g_data.in_put);
+				free(g_data.in_put);
+				g_data.in_put = NULL;
+				g_data.in_put = replace_env_vars(&g_data);
 				launch_lexing(&g_data);
 				launch_expand(&g_data);
 				launch_parsing(&g_data);
 				launch_execution(&g_data);
+				t = 1;
 			}
-			update_history(&g_data);
+			update_history(&g_data, t);
 		}
 	}
 	ft_clear_memory(&g_data);
 	return (0);
 }
+
+
+//LEAKS A CAUSE DE LENV au debut
+//LEAKS DANS LE CAS DE > dans le lexing
+//Le EOF de heredoc fonctonne pas imposible de faire entree

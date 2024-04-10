@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 16:47:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 16:33:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,14 @@ void		free_mini_env(t_env *mini_env);
 void	launch_expand(t_g_data *g_data);
 void fail_exit_shell(t_g_data *g_data);
 void	ft_clear_memory(t_g_data *g_data);
+void expand_input(t_g_data *data);
 
 void	signals_init(void);
 void	handle_sigint_heredoc(int sig);
 void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
+void	proc_handle_sigint(int sig);
+void	proc_handle_sigquit(int sig);
+
 
 #endif

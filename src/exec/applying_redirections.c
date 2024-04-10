@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/07 17:33:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 13:11:52 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 	int		pipefd[2];
 	pid_t	pid;
 
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	if (pipe(pipefd) < 0)
 		return (command_redirection_failure("pipe", EXIT_PIPE_FAILURE));
 	pid = fork();
@@ -100,7 +100,7 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 		return (heredoc_child_process(data, pipefd, delimiter));
 	else
 	{
-		signals_init();
+		//signals_init();
 		return (heredoc_parent_process(pid, pipefd));
 	}
 }
