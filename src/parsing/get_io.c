@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 18:09:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:24:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char **replace_input_vars(t_g_data *data, char *input)
     bool squotes = false;
 	res = malloc(sizeof(char *) * 2);
     res[0] = ft_strdup(input);
-	printf("res[0] = %s\n", res[0]);
 	if (!res)
 		fail_exit_shell(data);
     char *status_str;
@@ -111,8 +110,11 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 		fail_exit_shell(data);
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
-	if (io->type == IO_HEREDOC) 
+	if (io->type == IO_HEREDOC)
+	{
 		read_heredoc_into_string(value, &io->value);
+		
+	}
 	else
 		io->value = ft_strdup(value);
 	if (!io->value)
