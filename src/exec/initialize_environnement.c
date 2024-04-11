@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/06 15:23:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:59:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	initialize_shell_variables(t_env **mini_env)
 	ft_addenv_or_update(mini_env, "SHLVL", tmp);
 	free(tmp);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_addenv_or_update(mini_env, "PWD", ft_strdup(cwd));
+		ft_addenv_or_update(mini_env, "PWD", cwd);
 	env_entry = find_env_var(*mini_env, "OLDPWD");
 	if (!env_entry)
-		ft_addenv_or_update(mini_env, "OLDPWD", ft_strdup(""));
+		ft_addenv_or_update(mini_env, "OLDPWD", "");
 }
 
 t_env	*ft_env_last(t_env *lst)

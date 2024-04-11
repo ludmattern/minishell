@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 18:56:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:01:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	ft_addenv_or_update(t_env **env, const char *name, const char *value)
 	if (var)
 	{
 		free(var->value);
-		var->value = strdup(value);
+		var->value = ft_strdup(value);
 	}
 	else
 	{
-		new_var = ft_env_new_entrie(strdup(name), strdup(value), false);
+		new_var = ft_env_new_entrie(strdup(name), ft_strdup(value), false);
 		if (new_var)
 			ft_env_add_back(env, new_var);
 	}
@@ -54,7 +54,7 @@ void	ft_removeenv(t_env **env, const char *name)
 	prev = NULL;
 	while (current)
 	{
-		if (strcmp(current->name, name) == 0)
+		if (ft_strncmp(current->name, name, ft_strlen(current->name)) == 0)
 		{
 			if (prev)
 				prev->next = current->next;

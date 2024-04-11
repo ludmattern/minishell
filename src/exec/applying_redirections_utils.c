@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/07 17:34:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 16:32:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	heredoc_child_process(t_data *data, int pipefd[2], const char *delimiter)
 	int	status;
 
 	signal(SIGINT, handle_sigint_heredoc);
-	close(pipefd[0]);
 	status = read_heredoc_and_write_to_pipe(delimiter, pipefd[1]);
+	close(pipefd[0]);
 	close(pipefd[1]);
 	close_standard_fds();
 	free_forked_data_structure(&data);
@@ -56,7 +56,6 @@ int	heredoc_parent_process(pid_t pid, int pipefd[2])
 {
 	int	status;
 
-	
 	close(pipefd[1]);
 	status = dup2(pipefd[0], STDIN_FILENO);
 	if (status < 0)

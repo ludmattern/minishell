@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 20:20:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:18:57 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	has_updated(t_env *current, char *name, char *value, bool is_local)
 	{
 		if (value && value[0])
 		{
-			ft_free(current->value);
+			free(current->value);
 			current->value = value;
 		}
 		return (current->is_local = is_local, true);

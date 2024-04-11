@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 15:46:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:27:32 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,5 +208,4 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 void	launch_expand(t_g_data *g_data)
 {
     expe(g_data->lexed, g_data->last_exit_status, g_data);
-	 
 }

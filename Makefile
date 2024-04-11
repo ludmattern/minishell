@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/09 11:41:04 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/09 11:43:01 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ EXECDIR			:=	./src/exec
 PARSEDIR		:=	./src/parsing
 MAINDIR			:=	./src/
 
-MAIN_SRC		:=	$(MAINDIR)/minishell.c $(MAINDIR)/shell_signals.c 
+MAIN_SRC		:=	$(MAINDIR)/minishell.c
 
 EXEC_SRCS		:=	$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
 					$(EXECDIR)/applying_redirections.c \

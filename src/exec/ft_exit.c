@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 17:56:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:06:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	ft_exit(char **args, t_data **data)
 		return (printf("exit\n"),
 			ft_eprintf("minishell: exit: too many arguments\n"),
 			EXIT_GENERAL_ERROR);
+	free_mini_env((*data)->mini_env);
 	free_data_structure(data);
 	printf("exit\n");
 	exit(EXIT_SUCCESS);
