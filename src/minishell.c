@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 16:44:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:14:26 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ int	main(int argc, char **argv, char **envp)
 				free(g_data.in_put);
 				g_data.in_put = NULL;
 				g_data.in_put = replace_env_vars(&g_data);
-				launch_lexing(&g_data);
-				launch_expand(&g_data);
-				launch_parsing(&g_data);
-				launch_execution(&g_data);
+				if (g_data.in_put[0])
+				{
+					launch_lexing(&g_data);
+					launch_expand(&g_data);
+					launch_parsing(&g_data);
+					launch_execution(&g_data);
+				}
 				t = 1;
 			}
 			update_history(&g_data, t);
@@ -50,11 +53,9 @@ int	main(int argc, char **argv, char **envp)
 }
 
 
-//LEAKS A CAUSE DE LENV au debut
 //LEAKS DANS LE CAS DE > dans le lexing
 //Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux + leaks
-//$EMPTY segfault
-//
+//Rajouter des syntaxe error;
 
 
 

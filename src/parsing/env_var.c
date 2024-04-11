@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 16:43:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:05:40 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,8 @@ char *replace_env_vars(t_g_data *data)
     }
     return (res);
 }
+
+
 /*
 char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
 {
