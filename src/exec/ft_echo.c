@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 16:38:00 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:42:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 		return (0);
 	else if (ft_strncmp(str, "echo", 5) == 0)
 		status = ft_echo(node->expanded_args);
-	else if (ft_strncmp(str, "pwd", 3) == 0)
+	else if (ft_strncmp(str, "pwd", 4) == 0)
 		status = ft_pwd();
-	else if (ft_strncmp(str, "env", 3) == 0)
+	else if (ft_strncmp(str, "env", 4) == 0)
 		status = ft_env(node->expanded_args, data->mini_env);
 	else
 		return (0);
@@ -75,7 +75,8 @@ char	*ft_getenv(const char *name, char **env)
 	i = 0;
 	while (env && env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		if (ft_strncmp(env[i], name, name_len + 1)
+			== 0 && env[i][name_len] == '=')
 			return (env[i] + name_len + 1);
 		i++;
 	}

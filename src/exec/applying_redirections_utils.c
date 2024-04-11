@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 11:32:50 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:53:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ print an error message and return the exit code.
 */
 int	command_redirection_failure(const char *context, int exit_code)
 {
-	ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
+	ft_eprintf(MS"%s: %s\n", context, strerror(errno));
 	return (exit_code);
 }
 
@@ -28,7 +28,7 @@ the exit code.
 */
 int	heredoc_redirection_failure(const char *context, int exit_code)
 {
-	ft_eprintf("minishell: %s: %s\n", context, strerror(errno));
+	ft_eprintf(MS"%s: %s\n", context, strerror(errno));
 	close_standard_fds();
 	return (exit_code);
 }

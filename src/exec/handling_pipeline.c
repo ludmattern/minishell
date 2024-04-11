@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 16:10:38 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:43:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,4 @@ int	handling_pipeline(t_data *data, t_node *node)
 	status = wait_for_pipeline_children(pid_left, pid_right);
 	signals_init(); 
 	return (status);
-
 }

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 19:08:55 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:56:22 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Prints an error message and exit the child process if dup2 fails.
 */
 void	dup2_creation_failure(t_data *data, int pipefd[2])
 {
-	perror("minishell: dup2 error");
+	perror(MS"dup2 error");
 	close_pipe_fds(pipefd);
 	free_forked_data_structure(&data);
 	close_standard_fds();
@@ -69,7 +69,7 @@ Creates a pipe and checks for errors in the process.
 int	create_pipe(int pipefd[2])
 {
 	if (pipe(pipefd) < 0)
-		return (perror("minishell: pipe error"), EXIT_PIPE_FAILURE);
+		return (perror(MS"pipe error"), EXIT_PIPE_FAILURE);
 	else
 		return (EXIT_SUCCESS);
 }

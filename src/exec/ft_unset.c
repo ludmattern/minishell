@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 11:50:00 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:56:09 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	ft_unset(char *name, t_env **mini_env)
 
 	current = *mini_env;
 	prev = NULL;
-	// if (!name || !ft_isvalid_identifier(name))
-	// 	return (ft_eprintf("minishell: unset: `%s': not a valid identifier\n",
-	// 			name), EXIT_FAILURE);
+	if (!name || !ft_isvalid_identifier(name))
+		return (ft_eprintf(MS"unset: `%s': not a valid identifier\n",
+				name), EXIT_FAILURE);
 	while (current != NULL)
 	{
-		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(current->name, name, ft_strlen(name) + 1) == 0)
 		{
 			if (prev == NULL)
 				*mini_env = current->next;

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 17:37:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:55:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	cd_update_env(char *oldpwd, t_env **env)
 	if (getcwd(newpwd, sizeof(newpwd)) != NULL)
 		ft_addenv_or_update(env, "PWD", newpwd);
 	else
-		perror("minishell: error updating PWD");
+		perror(MS"error updating PWD");
 }
 
 /*
@@ -37,20 +37,20 @@ int	ft_cd(char **args, t_env **env)
 
 	oldpwd[0] = '\0';
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
-		perror("minishell: error retrieving current directory");
+		perror(MS"error retrieving current directory");
 	if (args[1] != NULL && args[2] != NULL)
-		return (ft_eprintf("minishell: cd: too many arguments\n"),
+		return (ft_eprintf(MS"cd: too many arguments\n"),
 			EXIT_FAILURE);
 	if (args[1] == NULL)
 	{
 		path = ft_get_env("HOME", *env);
 		if (path == NULL)
-			return (ft_eprintf("minishell: cd: HOME not set\n"), EXIT_FAILURE);
+			return (ft_eprintf(MS"cd: HOME not set\n"), EXIT_FAILURE);
 	}
 	else
 		path = args[1];
 	if (chdir(path) != 0)
-		return (perror("minishell: cd: "), EXIT_FAILURE);
+		return (perror(MS"cd: "), EXIT_FAILURE);
 	cd_update_env(oldpwd, env);
 	return (EXIT_SUCCESS);
 }

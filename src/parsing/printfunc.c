@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printfunc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:30:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/10 18:06:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:17:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void printredir(t_io_node *io)
 		}
 	}
 }
-
 
 void print_ast(t_node* node, int depth) 
 {
@@ -82,6 +81,7 @@ void print_exp(char **tab, char *arg)
 		printf("AFTER %i : %s\n", i, tab[i]);
 	printf("\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n");
 }
+
 /*
 void	print_start(void)
 {
@@ -95,6 +95,7 @@ void	print_start(void)
 	printf("  \\/  \\/   \\___||_| \\___| \\___/ |_| |_| |_| \\___|  \\__| \\___/  \\/    \\/|_||_| |_||_||___/|_| |_| \\___||_||_| \n");
 	printf("\033[37m");
 }*/
+
 void	print_start(void)
 {
 	printf("\033[34m");
@@ -123,9 +124,7 @@ void	print_start(void)
 	printf("  ▀█   ███   █▀  █▀    ▀█   █▀  █▀    ▄████████▀    ███    █▀      ██████████ █████▄▄██ █████▄▄██ \n");
 	printf("\033[34m");
 	usleep(100000);
-	printf("                                                                              ▀         ▀         \n");
+	printf("                                                                                                  \n");
 	printf("\033[37m");
 	usleep(100000);
 }
-
-

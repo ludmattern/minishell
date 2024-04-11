@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/05 15:13:14 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:55:55 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_env(char **args, t_env *mini_env)
 	t_env	*tmp;
 
 	if (args[1])
-		return (ft_eprintf("minishell: env: too many args\n"), EXIT_FAILURE);
+		return (ft_eprintf(MS"env: too many args\n"), EXIT_FAILURE);
 	tmp = mini_env;
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 13:18:57 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:56:02 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	validate_export_argument(const char *arg)
 		name = ft_strdup(arg);
 	is_valid = ft_isvalid_identifier(name);
 	if (!is_valid)
-		ft_eprintf("minishell: export: `%s': not a valid identifier\n", name);
+		ft_eprintf(MS"export: `%s': not a valid identifier\n", name);
 	free(name);
 	return (is_valid);
 }
