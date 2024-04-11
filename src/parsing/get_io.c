@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 15:55:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:36:34 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 		fail_exit_shell(data);
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
+	/*if (io->type == IO_HEREDOC)   HEREDOC 
+	{
+		io->type = IO_IN;	
+		io->value = 
+	}
+	else*/
 	io->value = ft_strdup(value);
 	if (!io->value)
 		fail_exit_shell(data);

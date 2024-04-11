@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 14:09:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:10:38 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handling_pipeline(t_data *data, t_node *node)
 	pid_t	pid_right;
 	int status;
 
+	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	if (create_pipe(pipefd) != EXIT_SUCCESS)
 		return (EXIT_PIPE_FAILURE);

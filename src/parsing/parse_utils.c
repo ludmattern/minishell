@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 11:33:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:46:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data
 		node->command_path = get_command_path(node->expanded_args[0]);
 	}
 	node->is_add_local = check_local(node->command_path);
+	
 	//print_exp(node->expanded_args, node->args);
 	//printredir(node->io_list);
 	node->type = N_CMD;
