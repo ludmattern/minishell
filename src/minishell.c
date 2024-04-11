@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 18:17:22 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:48:22 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	main(int argc, char **argv, char **envp)
 
 
 //LEAKS DANS LE CAS DE > dans le lexing
-//Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux + leaks
 //Rajouter des syntaxe error;
+//signaux heredoc
 
 
 
