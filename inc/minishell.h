@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:51:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:56:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include <limits.h>
 
 #define MS "minishell: "
+
+extern int g_heredoc_sigint;
 
 typedef enum e_ast_direction
 {
@@ -155,7 +157,6 @@ typedef struct s_data
 	char			**env;
 	t_env			*mini_env;
 	bool			signint_child;
-	bool			heredoc_sigint;
 	struct termios	initial_terminal_attributes;
 }					t_data;
 

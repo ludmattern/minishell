@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 18:24:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 19:59:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 		}
 		total_size += ft_strlen(line);
 		free(line);
+	}
+	if (result == NULL)
+	{
+		result = ft_strdup("");
+		if (!result)
+		{
+			perror("Allocation failed");
+			return (EXIT_GENERAL_ERROR);
+		}
 	}
 	*out_buffer = result;
 	get_next_line(-1);
@@ -113,7 +122,6 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 	if (io->type == IO_HEREDOC)
 	{
 		read_heredoc_into_string(value, &io->value);
-		
 	}
 	else
 		io->value = ft_strdup(value);
