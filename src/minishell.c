@@ -6,12 +6,14 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 18:48:22 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 20:00:52 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
+
+int g_heredoc_sigint = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

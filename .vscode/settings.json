@@ -10,6 +10,8 @@
         "libft.h": "c",
         "type_traits": "c",
         "exec.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "stat.h": "c",
+        "errno.h": "c"
     }
 }

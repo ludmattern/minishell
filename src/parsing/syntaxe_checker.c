@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 17:34:16 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:58:10 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,26 +108,26 @@ bool	syntax_error(const char *cmd, int *status)
 {
 	if (!check_dquotes(cmd))
 	{
-		printf("Parse Error: bad quotes\n");
-		*status = EXIT_GENERAL_ERROR;
+		ft_eprintf("Parse Error: bad quotes\n");
+		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_squotes(cmd))
 	{
-		printf("Parse Error: bad quotes\n");
-		*status = EXIT_GENERAL_ERROR;
+		ft_eprintf("Parse Error: bad quotes\n");
+		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_par(cmd))
 	{
-		printf("Parse Error: bad parentheses\n");
-		*status = EXIT_GENERAL_ERROR;
+		ft_eprintf("Parse Error: bad parentheses\n");
+		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
     if (!check_sep(cmd))
 	{
-		printf("Parse Error: bad delimiter\n");
-		*status = EXIT_GENERAL_ERROR;
+		ft_eprintf(MS"syntax error near unexpected [token]\n");
+		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	return (false);
