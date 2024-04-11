@@ -3,14 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 16:36:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:09:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
+#include "../../inc/exec.h"
+
+int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
+{
+	char	*line;
+	char	*result = NULL;
+	size_t	total_size = 0;
+
+	while (1)
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (line == NULL || match_delimiter(line, delimiter))
+		{
+			free(line);
+			break;
+		}
+		if (result == NULL)
+		{
+			result = strdup(line);
+			if (!result)
+			{
+				perror("Allocation failed");
+				free(line);
+				return (EXIT_GENERAL_ERROR);
+			}
+		}
+		else
+		{
+			char *new_result = ft_realloc(result, ft_strlen(line), total_size + ft_strlen(line) + 1);
+			if (!new_result)
+			{
+				perror("Reallocation failed");
+				free(line);
+				free(result);
+				return (EXIT_GENERAL_ERROR);
+			}
+			result = new_result;
+			ft_strcat(result, line);
+		}
+		total_size += ft_strlen(line);
+		free(line);
+	}
+	*out_buffer = result;
+	get_next_line(-1);
+	return (EXIT_SUCCESS);
+}
+
+char **replace_input_vars(t_g_data *data, char *input)
+{
+	char **res;
+    size_t i = 0;
+    bool squotes = false;
+	res = malloc(sizeof(char *) * 2);
+    res[0] = ft_strdup(input);
+	printf("res[0] = %s\n", res[0]);
+	if (!res)
+		fail_exit_shell(data);
+    char *status_str;
+	char *new;
+
+
+    while (res[0] && res[0][i] != '\0') 
+	{
+        if (res[0][i] == '\'')
+		{
+            squotes = !squotes;
+        } 
+		else if (!squotes && res[0][i] == '$' && res[0][i + 1] == '?')
+		{
+            status_str = ft_itoa(data->last_exit_status);
+            if (!status_str) fail_exit_shell(data); 
+            new = replace_substring(res[0], i, 2, status_str, data);
+            free(res[0]);
+            res[0] = new;
+			new = NULL;
+            i += ft_strlen(status_str) - 1;
+            free(status_str);
+        }
+		else if (!squotes && res[0][i] == '$' && res[0][i + 1] == '$')
+            i += 1;
+		else if (!squotes && res[0][i] == '$' && res[0][i + 1] != '\0' && res[0][i + 1] != ' ' && res[0][i + 1] != '"')
+		{
+            new = get_env_var(res[0], 0,0, 0, data);
+            free(res[0]);
+            res[0] = new;
+			new = NULL;
+        }
+        i++;
+    }
+	res[1] = NULL;
+    return (res);
+}
 
 t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit_status, t_g_data *data) 
 {
@@ -19,16 +111,16 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 		fail_exit_shell(data);
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
-	/*if (io->type == IO_HEREDOC)   HEREDOC 
-	{
-		io->type = IO_IN;	
-		io->value = 
-	}
-	else*/
-	io->value = ft_strdup(value);
+	if (io->type == IO_HEREDOC) 
+		read_heredoc_into_string(value, &io->value);
+	else
+		io->value = ft_strdup(value);
 	if (!io->value)
 		fail_exit_shell(data);
-	io->expanded_value = expander(io->value, last_exit_status, data);
+	if (io->type == IO_HEREDOC)
+		io->expanded_value = replace_input_vars(data, io->value);
+	else
+		io->expanded_value = expander(io->value, last_exit_status, data);
 	io->here_doc = 0;
 	io->prev = NULL;
 	io->next = NULL;

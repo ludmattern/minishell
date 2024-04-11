@@ -6,12 +6,49 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 16:03:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:40:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 #include "../../inc/parse.h"
+
+int redirect_heredoc_value_to_pipe(const char *heredoc_input, bool piped) {
+    int pipefd[2];
+    if (pipe(pipefd) == -1) {
+        perror("pipe error");
+        return EXIT_GENERAL_ERROR;
+    }
+
+    write(pipefd[1], heredoc_input, strlen(heredoc_input));
+    close(pipefd[1]); // Close the write-end immediately after writing
+
+    if (!piped) {
+        if (dup2(pipefd[0], STDIN_FILENO) == -1) {
+            perror("dup2 error");
+            close(pipefd[0]);
+            return EXIT_DUP2_FAILURE;
+        }
+    } else {
+        int stdin_copy = dup(STDIN_FILENO);  // Backup the current STDIN
+        if (stdin_copy == -1) {
+            perror("dup error");
+            close(pipefd[0]);
+            return EXIT_FAILURE;
+        }
+
+        if (dup2(pipefd[0], STDIN_FILENO) == -1) {
+            perror("dup2 error");
+            close(pipefd[0]);
+            close(stdin_copy);
+            return EXIT_DUP2_FAILURE;
+        }
+    }
+    close(pipefd[0]);
+    return EXIT_SUCCESS;
+}
+
+
 
 /*
 Redirects the input to the given file.
@@ -108,11 +145,11 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 /*
 Applies the redirections in the io_list to the current process.
 */
-int	apply_command_redirections(t_data *data, t_io_node *io_list)
+int	apply_command_redirections(t_data *data, t_io_node *io_list, bool piped)
 {
 	t_io_node	*current;
 	int			status;
-
+	(void)data;
 	status = EXIT_SUCCESS;
 	current = io_list;
 	while (current != NULL)
@@ -123,8 +160,10 @@ int	apply_command_redirections(t_data *data, t_io_node *io_list)
 			status = redirect_output(current->expanded_value[0]);
 		else if (current->type == IO_APPEND)
 			status = redirect_append(current->expanded_value[0]);
+		// else if (current->type == IO_HEREDOC)
+		// 	status = redirect_heredoc(data, current->value);
 		else if (current->type == IO_HEREDOC)
-			status = redirect_heredoc(data, current->value);
+			status = redirect_heredoc_value_to_pipe(current->expanded_value[0], piped);
 		if (status != EXIT_SUCCESS)
 			return (status);
 		current = current->next;
