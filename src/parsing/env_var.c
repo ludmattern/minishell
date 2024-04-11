@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 15:19:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:43:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i, t_env *mini_
 			while (tkn[i] && tkn[i] != ' ' && tkn[i] != '/' && tkn[i] != '$' && tkn[i] != '"') 
 				i++;
 			env_length = i - start;
-			s.env = malloc((env_length > 0 ? env_length : 1) + 1);
+			if (env_length > 0)
+				s.env = malloc(env_length + 1);
+			else
+				s.env = malloc(1);
 			if (!s.env)
 				fail_exit_shell(data);
 			ft_strncpy(s.env, tkn + start, env_length);
@@ -109,11 +112,14 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i, t_env *mini_
 char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data) 
 {
     int start;
+	char *res;
     int env_length;
     char *env_val = NULL;
+	t_envsize s;
+	memset(&s, 0, sizeof(t_envsize));
 	
-	t_envsize s = get_mal_size(tkn, 0, 0, 0, data->mini_env, data);
-    char *res = malloc(s.size);
+	s = get_mal_size(tkn, 0, 0, 0, data->mini_env, data);
+    res = malloc(s.size);
     if (!res)
         fail_exit_shell(data);
     ft_bzero(res, s.size);
@@ -139,7 +145,6 @@ char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
 			{
                 while (env_val[j])
                     res[k++] = env_val[j++];
-					
                 free(env_val);
                 env_val = NULL; 
             }
@@ -154,9 +159,10 @@ char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
 
 char *replace_env_vars(t_g_data *data)
 {
+	char *res;
     size_t i = 0;
     bool squotes = false;
-    char *res = ft_strdup(data->in_putsave);
+    res = ft_strdup(data->in_putsave);
 	if (!res)
 		fail_exit_shell(data);
     char *status_str;
@@ -179,7 +185,7 @@ char *replace_env_vars(t_g_data *data)
 			new = NULL;
             i += ft_strlen(status_str) - 1;
             free(status_str);
-        } 
+        }
 		else if (!squotes && res[i] == '$' && res[i + 1] == '$')
             i += 1;
 		else if (!squotes && res[i] == '$' && res[i + 1] != '\0' && res[i + 1] != ' ' && res[i + 1] != '"')

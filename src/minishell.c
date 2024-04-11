@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:56:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:44:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ int	main(int argc, char **argv, char **envp)
 
 //LEAKS A CAUSE DE LENV au debut
 //LEAKS DANS LE CAS DE > dans le lexing
-//Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux
+//Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux + leaks
 //$EMPTY segfault
-//ajouter is alnum dans expand exemple : echo $HOME.
+//
+
+
+
+

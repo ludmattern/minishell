@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 14:38:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:44:15 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_clear_memory(t_g_data *g_data)
 void	update_input(t_g_data *g_data)
 {/*
 	char *prompt;
+	char *prompt2;
 	const char *green = "\033[1;36m";
 	const char *blue = "\033[1;35m";
 	const char *reset = "\033[0m"; 
