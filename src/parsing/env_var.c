@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 17:05:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:38:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
+#include "../../inc/exec.h"
 
 void smoremore(t_envsize *s, int *i, char *env_val, int c)
 {
@@ -131,7 +132,7 @@ char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
             i++;
 			j = 0;
             start = i;
-            while (tkn[i] && tkn[i] != ' ' && tkn[i] != '/' && tkn[i] != '$' && tkn[i] != '"')
+            while (tkn && tkn[i] && ft_isalnum(tkn[i]))
                 i++;
             env_length = i - start;
             char *tmp_env = malloc(env_length + 1);
