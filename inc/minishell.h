@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 11:41:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:29:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_global_data
 	int				last_exit_status;
 	int 			exit_fail;
 	char			*in_put;
+	char			*in_putsave;
 	t_env			*mini_env;
 	t_token			*save;
 	t_token			*lexed;
@@ -170,8 +171,5 @@ typedef struct s_global_data
 	char			*join;
 	struct s_data	*data;
 }					t_g_data;
-
-
-extern int	g_sglobal;
 
 #endif

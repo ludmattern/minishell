@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 15:10:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:13:08 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	fill_t_word(t_token *lex, int *i, char *in_put)
 	if (!lex->value)
         return (-1);
 	j = -1;
-	while (++j < wl)
+	while (++j < wl)       
 		lex->value[j] = in_put[start + j];
 	lex->value[wl] = '\0';
 	lex->type = T_WORD;

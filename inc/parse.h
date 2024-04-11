@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 16:47:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:43:04 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,27 @@ void		free_mini_env(t_env *mini_env);
 void	launch_expand(t_g_data *g_data);
 void fail_exit_shell(t_g_data *g_data);
 void	ft_clear_memory(t_g_data *g_data);
+void expand_input(t_g_data *data);
+char *replace_env_vars(t_g_data *data);
+void	print_start(void);
 
 void	signals_init(void);
 void	handle_sigint_heredoc(int sig);
 void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
+void	proc_handle_sigint(int sig);
+void	proc_handle_sigquit(int sig);
+
+void	launch_parsing(t_g_data *g_data);
+void	launch_lexing(t_g_data *g_data);
+void	launch_execution(t_g_data *g_data);
+void	update_history(t_g_data *g_data, int t);
+void	update_input(t_g_data *g_data);
+void	ft_clear_memory(t_g_data *g_data);
+void	update_data(t_g_data *g_data);
+void	free_parsing(t_node *ast, t_token *lex);
+void	lex_mallox_error(t_token *lex);
+void	free_lexed(t_token *lexed);
+
 
 #endif
