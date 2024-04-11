@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/10 17:42:24 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:58:24 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,10 @@ int	main(int argc, char **argv, char **envp)
 
 //LEAKS A CAUSE DE LENV au debut
 //LEAKS DANS LE CAS DE > dans le lexing
-//Le EOF de heredoc fonctonne pas imposible de faire entree
+//Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux
+//$EMPTY segfault
+//
+
+
+
+
