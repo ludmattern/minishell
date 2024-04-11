@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 11:33:31 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:56:29 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	int			t;
 	(void)argv;
 	(void)argc;
-	print_start();
+	//print_start();
 	signals_init();
 	g_data.exit_fail = 0;
 	g_data = initialize_environnement(envp);
@@ -54,8 +54,4 @@ int	main(int argc, char **argv, char **envp)
 //LEAKS DANS LE CAS DE > dans le lexing
 //Le EOF de heredoc fonctonne pas imposible de faire entre surement a cause de mes signaux
 //$EMPTY segfault
-//
-
-
-
-
+//ajouter is alnum dans expand exemple : echo $HOME.

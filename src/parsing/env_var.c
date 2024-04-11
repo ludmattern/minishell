@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/10 17:35:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 15:19:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_get_env(char *tmp_env, t_env *mini_env)
 	tmp_env_len = ft_strlen(tmp_env);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len) == 0)
+		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len + 1) == 0)
 		{
 			env_val = ft_strdup(tmp->value);
 			return (env_val);
@@ -57,7 +57,7 @@ char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data)
 	tmp_env_len = ft_strlen(tmp_env);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len) == 0)
+		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len + 1) == 0)
 		{
 			env_val = ft_strdup(tmp->value);
 			if (!env_val)
@@ -123,6 +123,7 @@ char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)
         if (tkn[i] == '$' && tkn[i + 1] && tkn[i + 1] != ' ' && tkn[i + 1] != '$' && tkn[i + 1] != '"')
 		{
             i++;
+			j = 0;
             start = i;
             while (tkn[i] && tkn[i] != ' ' && tkn[i] != '/' && tkn[i] != '$' && tkn[i] != '"')
                 i++;

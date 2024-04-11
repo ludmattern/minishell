@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 14:09:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:17:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ int	handling_pipeline(t_data *data, t_node *node)
 	status = wait_for_pipeline_children(pid_left, pid_right);
 	signals_init(); 
 	return (status);
-
 }

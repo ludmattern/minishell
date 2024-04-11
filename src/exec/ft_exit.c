@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 14:06:45 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:52:42 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int	ft_exit(char **args, t_data **data)
 		if (endptr != '\0' || error == true)
 		{
 			printf("exit\n");
-			ft_eprintf("minishell: exit: %s: numeric argument required\n",
-				args[1]);
+			ft_eprintf(MS"exit: %s: numeric argument required\n", args[1]);
 			exit(EXIT_SYNTAX_ERROR);
 		}
 		free_data_structure(data);
@@ -78,8 +77,7 @@ int	ft_exit(char **args, t_data **data)
 	}
 	else if (args[1] && args[2])
 		return (printf("exit\n"),
-			ft_eprintf("minishell: exit: too many arguments\n"),
-			EXIT_GENERAL_ERROR);
+			ft_eprintf(MS"exit: too many arguments\n"), EXIT_GENERAL_ERROR);
 	free_mini_env((*data)->mini_env);
 	free_data_structure(data);
 	printf("exit\n");

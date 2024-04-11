@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/07 16:18:32 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 15:55:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Displays an error message if the fork fails.
 */
 int	fork_creation_failure(const char *message)
 {
-	ft_eprintf("minishell: %s: %s\n", message, strerror(errno));
+	ft_eprintf(MS"%s: %s\n", message, strerror(errno));
 	return (EXIT_FORK_FAILURE);
 }
 

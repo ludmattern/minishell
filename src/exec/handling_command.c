@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 11:33:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:20:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,19 @@ void	transform_env_to_array(t_env *mini_env, char ***env)
 	i = 0;
 	while (mini_env)
 	{
-		if (mini_env->value)
+		if (mini_env->is_local == false)
 		{
-			temp = ft_strjoin(mini_env->name, "=");
-			(*env)[i] = ft_strjoin(temp, mini_env->value);
-			free(temp);
+			if (mini_env->value)
+			{
+				temp = ft_strjoin(mini_env->name, "=");
+				(*env)[i] = ft_strjoin(temp, mini_env->value);
+				free(temp);
+			}
+			else
+				(*env)[i] = ft_strdup(mini_env->name);
+			i++;
 		}
-		else
-			(*env)[i] = ft_strdup(mini_env->name);
 		mini_env = mini_env->next;
-		i++;
 	}
 }
 
@@ -87,8 +90,8 @@ bool	is_non_forked_builtins(t_node *node)
 		return (true);
 	else if (ft_strncmp(str, "/", ft_strlen(str) == 0))
 		return (false);
-	else if (ft_strncmp(str, "cd", 2) == 0 || ft_strncmp(str, "export", 6) == 0
-		|| ft_strncmp(str, "unset", 5) == 0 || ft_strncmp(str, "exit", 4) == 0)
+	else if (ft_strncmp(str, "cd", 3) == 0 || ft_strncmp(str, "export", 7) == 0
+		|| ft_strncmp(str, "unset", 6) == 0 || ft_strncmp(str, "exit", 5) == 0)
 		return (true);
 	else
 		return (false);
@@ -102,11 +105,11 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 	str = (const char *)node->expanded_args[0];
 	if (node->is_add_local == true)
 		status = ft_add_local(node->expanded_args[0], &data->mini_env);
-	else if (ft_strncmp(str, "cd", 2) == 0)
+	else if (ft_strncmp(str, "cd", 3) == 0)
 		status = ft_cd(node->expanded_args, &data->mini_env);
-	else if (ft_strncmp(str, "export", 6) == 0)
+	else if (ft_strncmp(str, "export", 7) == 0)
 		status = ft_export(node->expanded_args, data);
-	else if (ft_strncmp(str, "exit", 4) == 0)
+	else if (ft_strncmp(str, "exit", 5) == 0)
 		status = ft_exit(node->expanded_args, &data);
 	else
 		status = ft_unset_vars(node->expanded_args, &data->mini_env);
@@ -138,10 +141,13 @@ int	update_last_arg(t_data *data, t_node *node)
 		return (ft_free(last_arg), EXIT_GENERAL_ERROR);
 	return (EXIT_SUCCESS);
 }
+
 int	handle_command_child(t_data *data, t_node *node)
 {
 	int	status;
 
+	signal(SIGINT, proc_handle_sigint);
+	signal(SIGQUIT, proc_handle_sigquit);
 	status = apply_command_redirections(data, node->io_list);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);
@@ -171,11 +177,7 @@ int	handling_command(t_data *data, t_node *node, bool piped)
     signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, proc_handle_sigint);
-		signal(SIGQUIT, proc_handle_sigquit);
 		return (handle_command_child(data, node));
-	}
 	else if (pid > 0)
 	{
 		exit_status = wait_for_child(pid, data);
