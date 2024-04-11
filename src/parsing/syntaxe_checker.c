@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/09 11:52:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:34:16 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,33 @@ bool check_par(const char *cmd)
 
 bool check_sep(const char *cmd) 
 {
-	int	i;
-	int j;
-	
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')
-		{
-			if (cmd[i + 1] == cmd[i])
-				i++;
-			i++;
-			while (cmd[i] == ' ')
-				i++;
-			if (cmd[i] != '\0' && cmd[i] != ' ' && (cmd[i] == '|' \
-				|| cmd[i] == '&' || cmd[i] == '<' || cmd[i] == '>')) 
+    int	i;
+    bool squotes = false;
+    bool dquotes = false;
+
+    i = 0;
+    while (cmd[i])
+    {
+        if (cmd[i] == '\'' && !dquotes) 
+            squotes = !squotes;
+        else if (cmd[i] == '"' && !squotes)  
+            dquotes = !dquotes;
+        if (!squotes && !dquotes && (cmd[i] == '|' || cmd[i] == '&'))
+        {
+            if (cmd[i + 1] == cmd[i])
+                i++;
+            i++;
+            while (cmd[i] == ' ')
+                i++;
+            if (cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&')) 
                 return (false);
-			j = i + 1;
-            while (cmd[j] == ' ')
-				j++; 
-            if (cmd[j] == '\0')
-				return (false);
-		}
-		i++;
-	}
-	return (true);
+        }
+        i++;
+    }
+    return (true);
 }
+
+
 
 bool	syntax_error(const char *cmd, int *status)
 {
@@ -120,6 +121,12 @@ bool	syntax_error(const char *cmd, int *status)
 	if (!check_par(cmd))
 	{
 		printf("Parse Error: bad parentheses\n");
+		*status = EXIT_GENERAL_ERROR;
+		return (true);
+	}
+    if (!check_sep(cmd))
+	{
+		printf("Parse Error: bad delimiter\n");
 		*status = EXIT_GENERAL_ERROR;
 		return (true);
 	}
