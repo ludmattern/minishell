@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/08 16:47:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/09 11:41:08 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,11 @@ t_env		*find_env_var(t_env *env, const char *name);
 void		ft_addenv_or_update(t_env **env, const char *name, const char *value);
 void		ft_removeenv(t_env **env, const char *name);
 int			add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local);
+void		update_input(t_g_data *g_data);
+void		handle_sigint(int sig);
+void		handle_sigquit(int sig);
+void		handle_sigint_heredoc(int sig);
+void		signals_init(void);
+void		ft_clear_memory(t_g_data *g_data);
 
 #endif
