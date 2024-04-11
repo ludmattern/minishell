@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 16:45:30 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:31:36 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 {
 	int	status;
 
-	status = apply_command_redirections(data, node->io_list);
+	status = apply_command_redirections(data, node->io_list, piped);
 	if (status == EXIT_SUCCESS)
 		status = execute_non_forked_builtins(data, node);
 	if (piped)
@@ -142,13 +142,13 @@ int	update_last_arg(t_data *data, t_node *node)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_command_child(t_data *data, t_node *node)
+int	handle_command_child(t_data *data, t_node *node, bool piped)
 {
 	int	status;
 
 	signal(SIGINT, proc_handle_sigint);
 	signal(SIGQUIT, proc_handle_sigquit);
-	status = apply_command_redirections(data, node->io_list);
+	status = apply_command_redirections(data, node->io_list, piped);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);
 	else
@@ -177,7 +177,7 @@ int	handling_command(t_data *data, t_node *node, bool piped)
     signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
-		return (handle_command_child(data, node));
+		return (handle_command_child(data, node, piped));
 	else if (pid > 0)
 	{
 		exit_status = wait_for_child(pid, data);
