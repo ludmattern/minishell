@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 14:11:41 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:10:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,41 +74,48 @@ bool check_par(const char *cmd)
     return (par_count == 0);
 }
 
-bool check_sep(const char *cmd) 
+bool check_sep(const char *cmd)
 {
-    int i = 0;
-    bool squotes = false, dquotes = false;
+	int		i;
+	bool	squotes;
+	bool	dquotes;
+	char	current;
 
-    while (cmd[i] == ' ')
-        i++;
-    if (cmd[i] == '|' || cmd[i] == '&')
-        return (false);
-    while (cmd[i])
-    {
-        if (cmd[i] == '\'' && !dquotes) 
-            squotes = !squotes;
-        else if (cmd[i] == '"' && !squotes)  
-            dquotes = !dquotes;
-        if (!squotes && !dquotes)
-        {
-            if ((cmd[i] == '|' || cmd[i] == '&') || (cmd[i] == '>' || cmd[i] == '<'))
-            {
-                if (cmd[i] == cmd[i + 1]) 
-                    i++;
-                i++;
-                while (cmd[i] == ' ')
-                    i++;
-                if (cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')) 
-                    return (false);
-            }
-        }
-        i++;
-    }
-    return (true);
+	i = 0;
+	squotes = false;
+	dquotes = false;
+	while (cmd[i] == ' ')
+		i++;
+	if (cmd[i] == '|' || cmd[i] == '&')
+		return (false);
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'' && !dquotes) 
+			squotes = !squotes;
+		else if (cmd[i] == '"' && !squotes)
+			dquotes = !dquotes;
+		if (!squotes && !dquotes && (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<'))
+		{
+			current = cmd[i];
+			if ((cmd[i] == cmd[i + 1]) && (current == '|' || current == '&'))
+				i++;
+			i++;
+			while (current != '|' && cmd[i] == ' ')
+				i++;
+			if (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')
+			{
+				if (!(current == '>' && cmd[i] == '>'))
+					return (false);
+				if (cmd[i + 1] == '\0')
+					return (false);
+			}
+			if (cmd[i] == '\0')
+				return (false);
+		}
+		i++;
+	}
+	return (true);
 }
-
-
-
 
 bool	syntax_error(const char *cmd, int *status)
 {
@@ -132,7 +139,7 @@ bool	syntax_error(const char *cmd, int *status)
 	}
     if (!check_sep(cmd))
 	{
-		ft_eprintf(MS"syntax error near unexpected sep\n");
+		ft_eprintf(MS"syntax error near unexpected token\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
