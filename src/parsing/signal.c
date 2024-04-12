@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:36:12 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 19:55:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:36:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../inc/exec.h"
+
+void handle_sigint_herdoc(int sig) 
+{
+	(void)sig;
+	g_heredoc_sigint = 2;
+	write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+}
 
 void handle_sigint(int sig) 
 {

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/10 17:43:04 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 11:54:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
 void	proc_handle_sigint(int sig);
 void	proc_handle_sigquit(int sig);
+void handle_sigint_herdoc(int sig);
 
 void	launch_parsing(t_g_data *g_data);
 void	launch_lexing(t_g_data *g_data);

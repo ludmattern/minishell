@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 20:00:52 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:24:28 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@ int	main(int argc, char **argv, char **envp)
 				{
 					launch_lexing(&g_data);
 					launch_expand(&g_data);
-					launch_parsing(&g_data);
-					launch_execution(&g_data);
+					if (g_heredoc_sigint == 2)
+					{
+						g_heredoc_sigint = 0;
+						signals_init();
+					}
+					else
+					{
+						launch_parsing(&g_data);
+						launch_execution(&g_data);
+					}
+					t = 1;
 				}
-				t = 1;
 			}
 			update_history(&g_data, t);
 		}
@@ -55,7 +63,6 @@ int	main(int argc, char **argv, char **envp)
 }
 
 
-//LEAKS DANS LE CAS DE > dans le lexing
 //Rajouter des syntaxe error;
 //signaux heredoc
 
