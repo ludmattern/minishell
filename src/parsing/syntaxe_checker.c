@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 14:11:41 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 14:22:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool check_sep(const char *cmd)
                 i++;
                 while (cmd[i] == ' ')
                     i++;
-                if (cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')) 
+                if ((cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&') || (cmd[i] == '>' || cmd[i] == '<'))) 
                     return (false);
             }
         }
@@ -106,9 +106,6 @@ bool check_sep(const char *cmd)
     }
     return (true);
 }
-
-
-
 
 bool	syntax_error(const char *cmd, int *status)
 {

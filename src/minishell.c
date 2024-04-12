@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/12 13:24:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:43:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	main(int argc, char **argv, char **envp)
 					launch_expand(&g_data);
 					if (g_heredoc_sigint == 2)
 					{
-						g_heredoc_sigint = 0;
 						signals_init();
+						g_heredoc_sigint = 0;
 					}
 					else
 					{

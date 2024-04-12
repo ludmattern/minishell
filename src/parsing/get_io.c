@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 14:03:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:02:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	signal(SIGINT, handle_sigint_herdoc);
 	while (g_heredoc_sigint == 0)
 	{
-		
+		printf("av");
 		line = get_next_line(STDIN_FILENO);
+		printf("ap");
 		if (line == NULL || match_delimiter(line, delimiter))
 		{
 			free(line);
