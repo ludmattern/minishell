@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 19:56:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:54:01 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data
 void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 {
 	t_token *fir;
+	char *tmp;
 	fir = lexed;
     while (lexed != NULL)
     {
@@ -195,7 +196,12 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 			if (redirection_outside_quotes(lexed->value)) 
 			{
 				lexed->io_list = parse_io_from_command(lexed->value, last_exit_status, lexed->g_data);
-				lexed->value = del_redir(lexed->value, 0, 0, g_data);
+				if (g_heredoc_sigint == 2)
+					return ;
+				tmp = ft_strdup(lexed->value);
+				free(lexed->value);
+				lexed->value = del_redir(tmp, 0, 0, g_data);
+				free(tmp);
 				//printf("\n%s\n", node->args);
 			}
 			lexed->expanded = expander(lexed->value, last_exit_status, lexed->g_data);
@@ -210,4 +216,6 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 void	launch_expand(t_g_data *g_data)
 {
     expe(g_data->lexed, g_data->last_exit_status, g_data);
+	if (g_heredoc_sigint == 2)
+			return ;
 }

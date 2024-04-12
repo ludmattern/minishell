@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 19:59:11 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:03:27 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	char	*result = NULL;
 	size_t	total_size = 0;
 
-	while (1)
+	signal(SIGINT, handle_sigint_herdoc);
+	while (g_heredoc_sigint == 0)
 	{
+		
 		line = get_next_line(STDIN_FILENO);
 		if (line == NULL || match_delimiter(line, delimiter))
 		{
@@ -62,6 +64,12 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 			return (EXIT_GENERAL_ERROR);
 		}
 	}
+	if (g_heredoc_sigint == 2)
+	{
+		get_next_line(-1);
+		return (EXIT_FAILURE);
+	}
+	signals_init();
 	*out_buffer = result;
 	get_next_line(-1);
 	return (EXIT_SUCCESS);
@@ -122,6 +130,8 @@ t_io_node *create_io_node_from_string(t_io_type type, char *value, int last_exit
 	if (io->type == IO_HEREDOC)
 	{
 		read_heredoc_into_string(value, &io->value);
+		if (g_heredoc_sigint == 2)
+			return (NULL);
 	}
 	else
 		io->value = ft_strdup(value);
@@ -211,7 +221,7 @@ char *extract_with_quote(char **cursor,  t_g_data *data)
 }
 
 
-static void add_new_io_node(t_io_node **head, t_io_node **tail, \
+void add_new_io_node(t_io_node **head, t_io_node **tail, \
 							t_io_type type, char **cursor, int last_exit_status, t_g_data *data)
 {
 	char c = ' ';
@@ -241,6 +251,8 @@ static void add_new_io_node(t_io_node **head, t_io_node **tail, \
 			fail_exit_shell(data);
 	}
 	t_io_node *new_io = create_io_node_from_string(type, filename, last_exit_status, data);
+	if (g_heredoc_sigint == 2)
+		return ;
 	free(filename);
 	if (!*head)
 		*head = *tail = new_io;
@@ -270,9 +282,13 @@ t_io_node *parse_io_from_command(char *cmd, int last_exit_status, t_g_data *data
 			t_io_type type;
 			set_io_type(&type, &cursor);
 			add_new_io_node(&head, &tail, type, &cursor, last_exit_status, data);
+			if (g_heredoc_sigint == 2)
+				return (NULL);
 		}
-		
+		if (cursor >= cmd + ft_strlen(cmd)) 
+			break ;	
 		cursor++;
 	}
+	
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 16:44:15 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:41:16 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	update_input(t_g_data *g_data)
 	prompt = ft_strjoin(prompt, reset); 
 */
 	char *prompt;
+	
 	prompt = " $> ";//version sans prompt pimpe pour le tester
 	
 	g_data->in_put = readline(prompt);

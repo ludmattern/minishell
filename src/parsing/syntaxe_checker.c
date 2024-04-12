@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 18:58:10 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:26:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,33 @@ bool check_par(const char *cmd)
 
 bool check_sep(const char *cmd) 
 {
-    int	i;
-    bool squotes = false;
-    bool dquotes = false;
+    int i = 0;
+    bool squotes = false, dquotes = false;
 
-    i = 0;
     while (cmd[i])
     {
         if (cmd[i] == '\'' && !dquotes) 
             squotes = !squotes;
         else if (cmd[i] == '"' && !squotes)  
             dquotes = !dquotes;
-        if (!squotes && !dquotes && (cmd[i] == '|' || cmd[i] == '&'))
+        if (!squotes && !dquotes)
         {
-            if (cmd[i + 1] == cmd[i])
+            if ((cmd[i] == '|' || cmd[i] == '&') || (cmd[i] == '>' || cmd[i] == '<'))
+            {
+                if (cmd[i] == cmd[i + 1]) 
+                    i++;
                 i++;
-            i++;
-            while (cmd[i] == ' ')
-                i++;
-            if (cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&')) 
-                return (false);
+                while (cmd[i] == ' ')
+                    i++;
+                if (cmd[i] == '\0' || (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')) 
+                    return (false);
+            }
         }
         i++;
     }
     return (true);
 }
+
 
 
 
