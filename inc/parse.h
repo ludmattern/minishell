@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 11:54:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:49:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_token		*lex_me(char *in_put);
 t_node	*build_ast(t_token **current, int last_exit_status, t_g_data *g_data);
 char	**expander(char *arg, int last_exit_status, t_g_data *data);
 char		*get_command_path(char *cmd);
+t_envsize get_mal_size(char *tkn, int start, int env_length, int i, t_env *mini_env, t_g_data *data);
 char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data);
+char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes);
 char *skip_quote(char *tkn, char q, t_g_data *data);
 char	**get_tkn_tab(char *arg, int size, int i, int k, t_g_data *data);
 char		*replace_substring(const char *original, \
@@ -47,6 +49,7 @@ void		print_ast(t_node *node, int depth);
 void		print_exp(char **tab, char *arg);
 bool		syntax_error(const char *cmd, int *status);
 void		free_tree(t_node *node);
+char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data, bool dquotes);
 char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data);
 void		free_mini_env(t_env *mini_env);
 void	launch_expand(t_g_data *g_data);
