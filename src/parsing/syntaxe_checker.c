@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 13:26:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 14:11:41 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ bool check_sep(const char *cmd)
     int i = 0;
     bool squotes = false, dquotes = false;
 
+    while (cmd[i] == ' ')
+        i++;
+    if (cmd[i] == '|' || cmd[i] == '&')
+        return (false);
     while (cmd[i])
     {
         if (cmd[i] == '\'' && !dquotes) 
@@ -110,25 +114,25 @@ bool	syntax_error(const char *cmd, int *status)
 {
 	if (!check_dquotes(cmd))
 	{
-		ft_eprintf("Parse Error: bad quotes\n");
+		ft_eprintf(MS"Parse Error: bad quotes\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_squotes(cmd))
 	{
-		ft_eprintf("Parse Error: bad quotes\n");
+		ft_eprintf(MS"Parse Error: bad quotes\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_par(cmd))
 	{
-		ft_eprintf("Parse Error: bad parentheses\n");
+		ft_eprintf(MS"Parse Error: bad parentheses\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
     if (!check_sep(cmd))
 	{
-		ft_eprintf(MS"syntax error near unexpected [token]\n");
+		ft_eprintf(MS"syntax error near unexpected sep\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
