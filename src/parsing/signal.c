@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:36:12 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 12:36:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/12 14:09:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	proc_handle_sigquit(int sig)
 void	signals_init(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }
