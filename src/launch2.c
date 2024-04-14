@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 15:15:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 16:18:32 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ void	ft_clear_memory(t_g_data *g_data)
 
 
 void	update_input(t_g_data *g_data)
-{/*
-	char *prompt;
-	char *prompt2;
+{
+	/*char *prompt;
 	const char *green = "\033[1;36m";
 	const char *blue = "\033[1;35m";
 	const char *reset = "\033[0m"; 
@@ -65,8 +64,8 @@ void	update_input(t_g_data *g_data)
 	free(colored_path);
 	prompt = ft_strjoin(colored_prompt, " 🤖 $> ");
 	free(colored_prompt);
-	prompt = ft_strjoin(prompt, reset); 
-*/
+	prompt = ft_strjoin(prompt, reset); */
+
 	char *prompt;
 	
 	prompt = " $> ";//version sans prompt pimpe pour le tester

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:42:11 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 16:00:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_echo(char **args)
 
 	i = 1;
 	option = false;
-	if (args[1] && ft_strncmp(args[1], "-n", ft_strlen(args[1])) == 0)
+	if (args[1] && ft_strncmp(args[1], "-n", 3) == 0)
 	{
 		option = true;
 		i++;

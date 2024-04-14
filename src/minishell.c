@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 14:34:04 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 16:17:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	main(int argc, char **argv, char **envp)
 					}
 					t = 1;
 				}
+				else
+					g_data.last_exit_status = 0;
 			}
 			update_history(&g_data, t);
 		}
@@ -67,4 +69,7 @@ int	main(int argc, char **argv, char **envp)
 
 
 //la syntaxe bloaue certain cas comme le heredoc 
+// # Should skip the empty argument, and print hello after spaces
+// echo - "" "  " hello
 
+// input apres echo -n bizarre (history)
