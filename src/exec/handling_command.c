@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 17:31:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 17:24:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 {
 	int	status;
 
-	status = apply_command_redirections(data, node->io_list, piped);
+	status = apply_command_redirections(node->io_list, piped);
 	if (status == EXIT_SUCCESS)
 		status = execute_non_forked_builtins(data, node);
 	if (piped)
@@ -148,7 +148,7 @@ int	handle_command_child(t_data *data, t_node *node, bool piped)
 
 	signal(SIGINT, proc_handle_sigint);
 	signal(SIGQUIT, proc_handle_sigquit);
-	status = apply_command_redirections(data, node->io_list, piped);
+	status = apply_command_redirections(node->io_list, piped);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);
 	else

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 17:40:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 17:23:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,10 @@ int	redirect_heredoc(t_data *data, const char *delimiter)
 /*
 Applies the redirections in the io_list to the current process.
 */
-int	apply_command_redirections(t_data *data, t_io_node *io_list, bool piped)
+int	apply_command_redirections(t_io_node *io_list, bool piped)
 {
 	t_io_node	*current;
 	int			status;
-	(void)data;
 	status = EXIT_SUCCESS;
 	current = io_list;
 	while (current != NULL)
@@ -160,8 +159,6 @@ int	apply_command_redirections(t_data *data, t_io_node *io_list, bool piped)
 			status = redirect_output(current->expanded_value[0]);
 		else if (current->type == IO_APPEND)
 			status = redirect_append(current->expanded_value[0]);
-		// else if (current->type == IO_HEREDOC)
-		// 	status = redirect_heredoc(data, current->value);
 		else if (current->type == IO_HEREDOC)
 			status = redirect_heredoc_value_to_pipe(current->expanded_value[0], piped);
 		if (status != EXIT_SUCCESS)
