@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/12 16:34:24 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 14:48:53 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@
 # include <limits.h>
 
 #define MS "minishell: "
-
-extern int g_heredoc_sigint;
-
 typedef enum e_ast_direction
 {
 	AST_LEFT,
@@ -82,7 +79,7 @@ typedef struct s_token
 	struct s_token			*first;
 	char					*value;
 	char					**expanded;
-	
+	bool					is_add_local;
 	t_io_node				*io_list;
 	struct s_token			*next;
 	struct s_token			*prev;

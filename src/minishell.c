@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/12 15:43:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 14:34:04 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ int	main(int argc, char **argv, char **envp)
 }
 
 
-//Rajouter des syntaxe error;
 //signaux heredoc
 
 
-
+//la syntaxe bloaue certain cas comme le heredoc 
 

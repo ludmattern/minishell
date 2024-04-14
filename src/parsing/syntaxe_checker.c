@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 16:35:29 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 14:44:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,11 @@ bool	syntax_error(const char *cmd, int *status)
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
-    if (!check_sep(cmd))
+    /*if (!check_sep(cmd))
 	{
 		ft_eprintf(MS"syntax error near unexpected token\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
-	}
+	}*/
 	return (false);
 }

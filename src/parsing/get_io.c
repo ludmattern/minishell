@@ -6,12 +6,25 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 16:02:58 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 14:59:53 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
+
+void signals_setup_heredoc(void)
+{
+    signal(SIGINT, handle_sigint_herdoc);
+    signal(SIGQUIT, SIG_IGN);
+}
+
+
+void signals_restore(void) 
+{
+    signals_init(); 
+}
+
 
 int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 {
@@ -19,12 +32,10 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	char	*result = NULL;
 	size_t	total_size = 0;
 
-	signal(SIGINT, handle_sigint_herdoc);
+	signals_setup_heredoc();
 	while (g_heredoc_sigint == 0)
 	{
-		printf("av");
 		line = get_next_line(STDIN_FILENO);
-		printf("ap");
 		if (line == NULL || match_delimiter(line, delimiter))
 		{
 			free(line);
