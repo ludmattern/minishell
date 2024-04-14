@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/12 15:49:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:37:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	proc_handle_sigint(int sig);
 void	proc_handle_sigquit(int sig);
 void handle_sigint_herdoc(int sig);
 
+bool check_local(char *arg);
 void	launch_parsing(t_g_data *g_data);
 void	launch_lexing(t_g_data *g_data);
 void	launch_execution(t_g_data *g_data);
