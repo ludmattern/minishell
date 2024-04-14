@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:56:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 15:35:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ bool	has_updated(t_env *current, char *name, char *value, bool is_local)
 			free(current->value);
 			current->value = value;
 		}
-		return (current->is_local = is_local, true);
+		if (current->is_local == false)
+			return (true);
+		else
+			return (current->is_local = is_local, true);
 	}
 	return (false);
 }
