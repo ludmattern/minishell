@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 14:48:53 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 17:52:54 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_token
 	char					*value;
 	char					**expanded;
 	bool					is_add_local;
+	bool					is_empty;
 	t_io_node				*io_list;
 	struct s_token			*next;
 	struct s_token			*prev;
@@ -141,6 +142,7 @@ typedef struct s_node
 	char				*command_path;
 	char				**expanded_args;
 	bool				is_add_local;
+	bool				is_empty;
 	struct s_node		*left;
 	struct s_node		*right;
 }						t_node;
