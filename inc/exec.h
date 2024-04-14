@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 17:24:18 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 18:28:57 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			run_execution(t_data *data);
 /*
 applying redirections
 */
-int			apply_command_redirections(t_io_node *io_list, bool piped);
+int			apply_command_redirections(t_io_node *io_list, bool piped, bool is_empty);
 
 /*
 handling heredoc

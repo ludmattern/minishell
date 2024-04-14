@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 17:52:39 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 18:36:38 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data
 	else 
 		node->is_add_local = false;
 	if (g_data->lexed->is_empty == true)
-	{
 		node->is_empty = true;
-		printf("true\n");
-	}
 	else 
 		node->is_empty = false;
 	//node->is_add_local = check_local(node->command_path);
@@ -221,10 +218,12 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 			if (!lexed->value[0] && lexed->io_list != NULL)
 			{
 				lexed->is_empty = true;
+				lexed->expanded[0] = ft_strdup("EMPTY");
+				lexed->expanded[1] = NULL;
 			}
 			
 
-			lexed->expanded = ft_cleaner(lexed->expanded, g_data);
+			//lexed->expanded = ft_cleaner(lexed->expanded, g_data);
 		}
 		//printredir(lexed->io_list);
         lexed = lexed->next;

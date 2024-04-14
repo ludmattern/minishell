@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 17:24:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 18:29:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ bool	is_non_forked_builtins(t_node *node)
 	const char	*str;
 
 	str = (const char *)node->expanded_args[0];
+	if (node->is_empty)
+		return (true);
 	if (node->is_add_local == true)
 		return (true);
 	else if (ft_strncmp(str, "/", ft_strlen(str) == 0))
@@ -120,7 +122,9 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 {
 	int	status;
 
-	status = apply_command_redirections(node->io_list, piped);
+	status = apply_command_redirections(node->io_list, piped, node->is_empty);
+	if (node->is_empty)
+		return (status);
 	if (status == EXIT_SUCCESS)
 		status = execute_non_forked_builtins(data, node);
 	if (piped)
@@ -148,7 +152,7 @@ int	handle_command_child(t_data *data, t_node *node, bool piped)
 
 	signal(SIGINT, proc_handle_sigint);
 	signal(SIGQUIT, proc_handle_sigquit);
-	status = apply_command_redirections(node->io_list, piped);
+	status = apply_command_redirections(node->io_list, piped, node->is_empty);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);
 	else
@@ -172,7 +176,12 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 	if (update_last_arg(data, node))
 		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
-		return (launch_non_forked_builtins(data, node, piped));
+	{
+		exit_status = launch_non_forked_builtins(data, node, piped);
+		if (node->is_empty)
+			restore_original_fds(data);
+		return (exit_status);
+	}
 	signal(SIGINT, SIG_IGN);
     signal(SIGQUIT, SIG_IGN);
 	pid = fork();
