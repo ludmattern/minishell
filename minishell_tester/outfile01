@@ -1,3 +1,4 @@
+as
 bash_outfiles
 bash.supp
 bonus
@@ -5,6 +6,7 @@ bonus_bonus
 builtins
 extras
 local.supp
+lol
 loop.out
 manual_tests
 mini_outfiles

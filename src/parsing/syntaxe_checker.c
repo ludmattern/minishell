@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 14:44:00 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 11:36:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,48 +74,77 @@ bool check_par(const char *cmd)
     return (par_count == 0);
 }
 
-bool check_sep(const char *cmd)
-{
-	int		i;
-	bool	squotes;
-	bool	dquotes;
-	char	current;
 
-	i = 0;
-	squotes = false;
-	dquotes = false;
-	while (cmd[i] == ' ')
-		i++;
-	if (cmd[i] == '|' || cmd[i] == '&')
-		return (false);
-	while (cmd[i])
+
+bool check_redir(const char *cmd) 
+{
+    bool in_quotes = false;
+    int i = 0;
+ 	int j = 0;
+    while (cmd[i] != '\0') 
 	{
-		if (cmd[i] == '\'' && !dquotes) 
-			squotes = !squotes;
-		else if (cmd[i] == '"' && !squotes)
-			dquotes = !dquotes;
-		if (!squotes && !dquotes && (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<'))
+        if (cmd[i] == '\'' || cmd[i] == '"') 
 		{
-			current = cmd[i];
-			if ((cmd[i] == cmd[i + 1]) && (current == '|' || current == '&'))
-				i++;
-			i++;
-			while (current != '|' && cmd[i] == ' ')
-				i++;
-			if (cmd[i] == '|' || cmd[i] == '&' || cmd[i] == '>' || cmd[i] == '<')
+            if (!in_quotes || (in_quotes && cmd[i-1] != '\\'))
+                in_quotes = !in_quotes;
+        }
+        if (!in_quotes) 
+		{
+            if (cmd[i] == '>' || cmd[i] == '<') 
 			{
-				if (!(current == '>' && cmd[i] == '>'))
-					return (false);
-				if (cmd[i + 1] == '\0')
-					return (false);
-			}
-			if (cmd[i] == '\0')
-				return (false);
-		}
-		i++;
-	}
-	return (true);
+                j = i + 1;
+                while (cmd[j] == ' ') 
+					j++;  
+                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&') 
+				{
+                    return (false);  
+                }
+            }
+            if (cmd[i] == '|' || cmd[i] == '&') 
+			{
+				if (cmd[i + 1] == '|' || cmd[i + 1] == '&') 
+					i++;
+                j = i + 1;
+                while (cmd[j] == ' ') 
+					j++;
+                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&') 
+				{
+                    return (false);
+                }
+            }
+        }
+        i++;
+    }
+    return (true);
 }
+
+bool check_first(const char *cmd) 
+{
+    bool in_quotes = false;
+    int i = 0;
+	
+ 	
+    while (cmd[i] != '\0') 
+	{
+        if (cmd[i] == '\'' || cmd[i] == '"') 
+		{
+            if (!in_quotes || (in_quotes && cmd[i-1] != '\\'))
+                in_quotes = !in_quotes;
+        }
+        if (!in_quotes) 
+		{
+            while (cmd[i] == ' ') 
+					i++;
+			if(cmd[i] == '|' || cmd[i] == '&')
+				return (false);
+			else
+				return (true);
+        }
+        i++;
+    }
+    return (true);
+}
+
 
 bool	syntax_error(const char *cmd, int *status)
 {
@@ -137,11 +166,17 @@ bool	syntax_error(const char *cmd, int *status)
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
-    /*if (!check_sep(cmd))
+	if (!check_redir(cmd))
 	{
-		ft_eprintf(MS"syntax error near unexpected token\n");
+		ft_eprintf(MS"Parse Error: bad token\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
-	}*/
+	}
+	if (!check_first(cmd))
+	{
+		ft_eprintf(MS"Parse Error: bad token\n");
+		*status = EXIT_SYNTAX_ERROR;
+		return (true);
+	}
 	return (false);
 }
