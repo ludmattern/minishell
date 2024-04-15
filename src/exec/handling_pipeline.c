@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 16:43:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:40:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	int	status;
 
 	signal(SIGINT, proc_handle_sigint);
-    signal(SIGQUIT, proc_handle_sigquit);
+    signal(SIGQUIT, SIG_IGN);
 	status = EXIT_SUCCESS;
 	if (direction == AST_LEFT)
 		status = dup2(pipefd[1], STDOUT_FILENO);
@@ -49,7 +49,7 @@ int	handling_pipeline(t_data *data, t_node *node)
 	int status;
 
 	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (create_pipe(pipefd) != EXIT_SUCCESS)
 		return (EXIT_PIPE_FAILURE);
 	pid_left = fork();
