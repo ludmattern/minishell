@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 17:57:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:23:29 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	free_parsing(t_node *ast, t_token *lex)
 void	ft_clear_memory(t_g_data *g_data)
 {
 	free_mini_env(g_data->mini_env);
+	free(g_data->in_put);
+	free(g_data->in_putsave);
 }
 
 

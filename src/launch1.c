@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 17:45:46 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:23:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	launch_parsing(t_g_data *g_data)
 
 void	launch_execution(t_g_data *g_data)
 {
+	g_data->data->g_data = g_data;
 	g_data->last_exit_status = run_execution(g_data->data);
 	g_data->mini_env = g_data->data->mini_env;
 	free_data_structure(&g_data->data);
@@ -53,6 +54,7 @@ void	update_history(t_g_data *g_data, int t)
 		free(g_data->in_put);
 		free(g_data->in_putsave);
 		g_data->in_putsave = NULL;
+		free(g_data->in_putsave);
 		g_data->in_put = NULL;
 	}
 	
