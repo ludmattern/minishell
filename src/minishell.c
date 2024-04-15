@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 18:07:28 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 19:13:48 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,4 @@ int	main(int argc, char **argv, char **envp)
 //la syntaxe bloaue certain cas comme le heredoc 
 // # Should skip the empty argument, and print hello after spaces
 // echo - "" "  " hello
-
 // input apres echo -n bizarre (history)

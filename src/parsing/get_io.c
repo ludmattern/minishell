@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 14:59:53 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:08:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void signals_restore(void)
 
 int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 {
-	char	*line;
+	char	*line = NULL;
 	char	*result = NULL;
 	size_t	total_size = 0;
 
@@ -53,12 +53,14 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 		}
 		else
 		{
-			char *new_result = ft_realloc(result, ft_strlen(line), total_size + ft_strlen(line) + 1);
+			char *new_result = NULL;
+			new_result = ft_realloc(result, total_size, total_size + ft_strlen(line) + 1);
 			if (!new_result)
 			{
 				perror("Reallocation failed");
 				free(line);
 				free(result);
+				result = NULL;
 				return (EXIT_GENERAL_ERROR);
 			}
 			result = new_result;

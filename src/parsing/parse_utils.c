@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 18:36:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/14 18:45:40 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,13 +214,17 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 				//printf("\n%s\n", node->args);
 			}
 			lexed->is_add_local = check_local(lexed->value);
-			lexed->expanded = expander(lexed->value, last_exit_status, lexed->g_data);
+			
+				
 			if (!lexed->value[0] && lexed->io_list != NULL)
 			{
 				lexed->is_empty = true;
+				lexed->expanded = malloc(sizeof(char *) * 2);
 				lexed->expanded[0] = ft_strdup("EMPTY");
 				lexed->expanded[1] = NULL;
 			}
+			else
+				lexed->expanded = expander(lexed->value, last_exit_status, lexed->g_data);
 			
 
 			//lexed->expanded = ft_cleaner(lexed->expanded, g_data);
