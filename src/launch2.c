@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:23:29 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:39:32 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	update_input(t_g_data *g_data)
 		free(g_data->in_putsave);
 		write(STDOUT_FILENO, "exit\n", 5);  
 		ft_clear_memory(g_data);
+		close_standard_fds();
 		exit(EXIT_SUCCESS);
 	}
 }

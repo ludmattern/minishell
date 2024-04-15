@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 13:22:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:26:59 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	setup_heredoc_si();
 	while (g_heredoc_sigint == 0)
 	{
-		line = get_next_line(STDIN_FILENO);
+		//line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
+		if (line)
+		{
+			line = ft_strjoin(line, "\n");
+		}
 		if (line == NULL || match_delimiter(line, delimiter))
 		{
 			free(line);
@@ -88,12 +93,12 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	}
 	if (g_heredoc_sigint == 2)
 	{
-		get_next_line(-1);
+		//get_next_line(-1);
 		return (EXIT_FAILURE);
 	}
 	signals_init();
 	*out_buffer = result;
-	get_next_line(-1);
+	//get_next_line(-1);
 	return (EXIT_SUCCESS);
 }
 
