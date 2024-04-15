@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 19:13:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:15:35 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-
-//signaux heredoc
-
-
-//la syntaxe bloaue certain cas comme le heredoc 
 // # Should skip the empty argument, and print hello after spaces
 // echo - "" "  " hello
-// input apres echo -n bizarre (history)
+// input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
