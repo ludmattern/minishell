@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 19:13:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:11:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-
 //signaux heredoc
 
 
@@ -72,3 +71,4 @@ int	main(int argc, char **argv, char **envp)
 // # Should skip the empty argument, and print hello after spaces
 // echo - "" "  " hello
 // input apres echo -n bizarre (history)
+//gerer les tabs et les espaces sans rien et au milieu des commandes

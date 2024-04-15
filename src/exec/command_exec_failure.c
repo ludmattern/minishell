@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:55:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:10:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_permission_denied(const char *context)
 		return (EXIT_INVALID_COMMAND);
 	}
 	else
-		ft_eprintf(MS"%s: command not found\n", context);
+		ft_eprintf("%s: command not found\n", context);
 	return (EXIT_COMMAND_NOT_FOUND);
 }
 
@@ -35,7 +35,7 @@ int	handle_command_not_found(const char *context)
 	if (ft_strchr(context, '/'))
 		ft_eprintf(MS"%s: No such file or directory\n", context);
 	else
-		ft_eprintf(MS"%s: command not found\n", context);
+		ft_eprintf("%s: command not found\n", context);
 	return (EXIT_COMMAND_NOT_FOUND);
 }
 
@@ -59,7 +59,7 @@ void	command_exec_failure(t_data *data, const char *context, int error_code)
 			ft_eprintf(MS"%s: Is a directory\n", context);
 		}
 		else
-			ft_eprintf(MS"%s: command not found\n", context);
+			ft_eprintf("%s: command not found\n", context);
 	}
 	else
 		ft_eprintf(MS"%s: %s\n", context, strerror(errno));
