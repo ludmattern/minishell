@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/15 18:09:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:38:56 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ int	ft_exit(char **args, t_data **data)
 	ft_clear_memory((*data)->g_data);
 	free_data_structure(data);
 	printf("exit\n");
+	close_standard_fds();
 	exit(EXIT_SUCCESS);
 }
