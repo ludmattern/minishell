@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:55:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:43:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_cd(char **args, t_env **env)
 	else
 		path = args[1];
 	if (chdir(path) != 0)
-		return (perror(MS"cd: "), EXIT_FAILURE);
+		return(ft_eprintf(MS"cd: %s: %s\n", path, strerror(errno)), EXIT_FAILURE);
 	cd_update_env(oldpwd, env);
 	return (EXIT_SUCCESS);
 }

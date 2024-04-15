@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/15 15:21:00 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:06:40 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,14 +157,15 @@ typedef struct s_node
 
 typedef struct s_data
 {
-	t_node			*ast;
-	int				last_exit_status;
-	int				stdin;
-	int				stdout;
-	char			**env;
-	t_env			*mini_env;
-	bool			signint_child;
-	struct termios	initial_terminal_attributes;
+	t_node					*ast;
+	int						last_exit_status;
+	int						stdin;
+	int						stdout;
+	char					**env;
+	t_env					*mini_env;
+	bool					signint_child;
+	struct termios			initial_terminal_attributes;
+	struct s_global_data	*g_data;
 }					t_data;
 
 

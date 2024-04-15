@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:52:42 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:09:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ int	ft_exit(char **args, t_data **data)
 			exit(EXIT_SYNTAX_ERROR);
 		}
 		free_data_structure(data);
+		printf("exit\n");
 		exit((int)(status % 256 + 256) % 256);
 	}
 	else if (args[1] && args[2])
 		return (printf("exit\n"),
 			ft_eprintf(MS"exit: too many arguments\n"), EXIT_GENERAL_ERROR);
-	free_mini_env((*data)->mini_env);
+	ft_clear_memory((*data)->g_data);
 	free_data_structure(data);
 	printf("exit\n");
 	exit(EXIT_SUCCESS);
