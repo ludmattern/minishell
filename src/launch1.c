@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 19:56:22 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:45:46 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	update_history(t_g_data *g_data, int t)
 	{
 		add_history(g_data->in_put);
 		free(g_data->in_put);
+		free(g_data->in_putsave);
+		g_data->in_putsave = NULL;
 		g_data->in_put = NULL;
 	}
 	
