@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/15 17:58:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:27:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,4 @@ int	main(int argc, char **argv, char **envp)
 // echo - "" "  " hello
 // input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
 //cat CTRL+C ajouter /n
-//car CTRL+\ ne doit rien faire
-// interpreter echo "'$USER'"
+//car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas

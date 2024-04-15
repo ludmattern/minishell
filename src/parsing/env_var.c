@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:24:01 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:34:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,7 @@ char *replace_env_vars(t_g_data *data)
 		{
             dquotes = !dquotes;
         } 
-        if (res[i] == '\'')
+        if (res[i] == '\'' && !dquotes)
 		{
             squotes = !squotes;
         } 
