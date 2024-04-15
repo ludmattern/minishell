@@ -6,15 +6,12 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 15:37:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:14:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-/*
-Frees the io_node and its content.
-*/
 void	free_io_node(t_io_node *io_node)
 {
 	t_io_node	*current;

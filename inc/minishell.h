@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 17:52:54 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:21:00 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,14 @@ typedef enum e_node_type
 	N_INIT
 }	t_node_type;
 
-
+typedef struct s_path
+{
+	char	**paths;
+	char	*full_cmd_path;
+	char	*cmd_path;
+	char	*path_env;
+	char	*temp;
+}					t_path;
 
 typedef struct s_env
 {

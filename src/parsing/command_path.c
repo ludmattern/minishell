@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 17:56:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/03 14:40:46 by lmattern         ###   ########.fr       */
+/*   Created: 2024/04/15 15:43:50 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/15 15:48:39 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,105 @@ void	free_path(char **paths)
 		free(paths[j]);
 		j++;
 	}
-	
+	free(paths);
 }
 
-char *get_command_path(char *cmd)
+char	*prepare_temp_path(char *cmd, t_g_data *g_data)
 {
-	char **paths;
-	char *full_cmd_path;
-	char *cmd_path;
-	char *path_env;
-	char *temp;
-	int i;
+	char	*temp;
+
+	temp = ft_strdup(cmd);
+	if (!temp)
+		fail_exit_shell(g_data);
+	return (temp);
+}
+
+char	**get_path_splits(char *path_env)
+{
+	if (path_env == NULL)
+		return (NULL);
+	return (ft_split(path_env, ':'));
+}
+
+char	*build_and_verify_path(char **paths, char *temp, t_g_data *g_data)
+{
+	int		i;
+	char	*cmd_path;
+	char	*full_cmd_path;
 
 	i = 0;
-	temp = ft_strdup(cmd);
-	path_env = getenv("PATH");
-	if (path_env == NULL) 
-	return (temp);
-	paths = ft_split(path_env, ':');
-	if (paths == NULL) 
-	return (temp);
 	while (paths[i] != NULL)
-{
-			cmd_path = ft_strjoin(paths[i], "/");
-			if (cmd_path == NULL) 
-		break;
-			full_cmd_path = ft_strjoin(cmd_path, temp);
-			free(cmd_path);
-			if (full_cmd_path == NULL)
-		break;
-			if (access(full_cmd_path, X_OK) == 0)
-					return (free(temp), free_path(paths), free(paths), full_cmd_path);
-	else 
-					free(full_cmd_path);
-			i++;
+	{
+		cmd_path = ft_strjoin(paths[i], "/");
+		if (!cmd_path)
+			break ;
+		full_cmd_path = ft_strjoin(cmd_path, temp);
+		free(cmd_path);
+		if (!full_cmd_path)
+			fail_exit_shell(g_data);
+		if (access(full_cmd_path, X_OK) == 0)
+		{
+			free(temp);
+			free_path(paths);
+			return (full_cmd_path);
+		}
+		free(full_cmd_path);
+		i++;
 	}
-	return (free_path(paths), free(paths), temp);
+	return (NULL);
 }
 
-								
+char	*get_command_path(char *cmd, t_g_data *g_data)
+{
+	char	*temp;
+	char	*path_env;
+	char	**paths;
+	char	*result;
+
+	temp = prepare_temp_path(cmd, g_data);
+	path_env = getenv("PATH");
+	paths = get_path_splits(path_env);
+	if (!paths)
+		return (temp);
+	result = build_and_verify_path(paths, temp, g_data);
+	if (result != NULL)
+		return (result);
+	free_path(paths);
+	return (temp);
+}
+
+/*
+char	*get_command_path(char *cmd, int i, t_g_data *g_data)
+{
+	t_path	p;
+
+	i = 0;
+	p.temp = ft_strdup(cmd);
+	if (!p.temp)
+		fail_exit_shell(g_data);
+	p.path_env = getenv("PATH");
+	if (p.path_env == NULL)
+		return (p.temp);
+	p.paths = ft_split(p.path_env, ':');
+	if (p.paths == NULL)
+		return (p.temp);
+	while (p.paths[i] != NULL)
+	{
+		p.cmd_path = ft_strjoin(p.paths[i], "/");
+		if (p.cmd_path == NULL)
+			break ;
+		p.full_cmd_path = ft_strjoin(p.cmd_path, p.temp);
+		if (!p.full_cmd_path)
+			fail_exit_shell(g_data);
+		free(p.cmd_path);
+		if (p.full_cmd_path == NULL)
+			break ;
+		if (access(p.full_cmd_path, X_OK) == 0)
+			return (free(p.temp), free_path(p.paths), \
+			free(p.paths), p.full_cmd_path);
+		else
+			free(p.full_cmd_path);
+		i++;
+	}
+	return (free_path(p.paths), free(p.paths), p.temp);
+}*/

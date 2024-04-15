@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 16:06:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:19:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ bool check_redir(const char *cmd, char **token)
 		{
             if (cmd[i] == '>' || cmd[i] == '<') 
 			{
+				if (cmd[i + 1] == '>' || cmd[i + 1] == '<') 
+					i++;
 				if (cmd[i + 1] == '>' || cmd[i + 1] == '<')
 					i++;
                 j = i + 1;
-                while (cmd[j] == ' ') 
-					j++;  
-                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&' || cmd[j] == '<' || cmd[j] == '>') 
+                while (cmd[j] == ' ')
+					j++;
+                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&' || cmd[j] == '<' || cmd[j] == '>' || cmd[j] == '<' || cmd[j] == '>') 
 				{
 					if (cmd[j] == '\0')
 						*token = ft_strdup("newline");

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 18:45:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:35:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data
 	node->io_list = tkn->io_list;
 	node->expanded_args = tkn->expanded;
 	if (node->expanded_args[0] != NULL)
-		node->command_path = get_command_path(node->expanded_args[0]);
+		node->command_path = get_command_path(node->expanded_args[0], g_data);
 	if (g_data->lexed->is_add_local == true)
 		node->is_add_local = true;
 	else 
