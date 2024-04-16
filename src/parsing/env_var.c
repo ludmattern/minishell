@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 15:49:54 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:13:52 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,8 +263,8 @@ char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes)
     int env_length;
     char *env_val = NULL;
 	t_envsize s;
-	memset(&s, 0, sizeof(t_envsize));
 	
+	memset(&s, 0, sizeof(t_envsize));
 	s = get_mal_size2(tkn, 0, 0, 0, data->mini_env, data, dquotes);
 	if (s.size == 1)
 		return (NULL);
@@ -272,7 +272,6 @@ char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes)
     if (!res)
         fail_exit_shell(data);
     ft_bzero(res, s.size);
-
     while (tkn[i]) 
 	{
         if (tkn[i] == '$' && tkn[i + 1] && tkn[i + 1] != ' ' && tkn[i + 1] != '$' && tkn[i + 1] != '"')
@@ -351,7 +350,9 @@ char *replace_env_vars(t_g_data *data)
             free(res);
             res = new;
 			new = NULL;
+			i--;
         }
+	
         i++;
     }
     return (res);
