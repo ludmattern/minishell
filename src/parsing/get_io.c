@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 11:16:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:25:38 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void signals_restore(void)
 {
     signals_init(); 
 }
+
 void setup_heredoc_si(void) 
 {
     struct sigaction sa;
+
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = handle_sigint_herdoc;
     sa.sa_flags = 0; 

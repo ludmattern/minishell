@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:10:24 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/08 15:37:25 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:50:28 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ t_node	*build_ast(t_token **current, int last_exit_status, t_g_data *g_data)
 	root = NULL;
 	while (*current != NULL)
 	{
-		if ((*current)->type == 9)
+		if ((*current)->type == T_LPAR)
 		{
 			*current = (*current)->next;
 			root = build_ast(current, last_exit_status, g_data);
 			if (!root)
 				return (NULL);
 		}
-		else if ((*current)->type == 10)
+		else if ((*current)->type == T_RPAR)
 			return (*current = (*current)->next, root);
 		else if ((*current)->type == T_AND || (*current)->type == \
 			T_OR || (*current)->type == T_PIPE)
