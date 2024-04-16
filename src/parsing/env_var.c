@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:34:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 11:15:47 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,7 @@ char *replace_env_vars(t_g_data *data)
 		{
             status_str = ft_itoa(data->last_exit_status);
             if (!status_str) fail_exit_shell(data); 
-            new = replace_substring(res, i, 2, status_str, data);
+            new = replace_substring(res, i, status_str, data);
             free(res);
             res = new;
 			new = NULL;

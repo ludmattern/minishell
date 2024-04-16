@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:58:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/09 11:21:52 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/16 11:36:50 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ char	*quote_token(char *arg, int *i, t_g_data *data)
 	return (token);
 }
 
-char	*space_token(char *arg, int *i, t_g_data *data)
+char	*space_token(char *arg, int *i)
 {
 	int		start;
 	char	*token;
 	bool	dquote;
 	bool	squote;
-	
+
 	dquote = false;
 	squote = false;
 	start = *i;
@@ -48,48 +48,88 @@ char	*space_token(char *arg, int *i, t_g_data *data)
 		else if (arg[*i] == '\'')
 			squote = !squote;
 		if (!squote && !dquote && arg[*i] == ' ')
-			break;
+			break ;
 		(*i)++;
 	}
 	token = ft_strndup(arg + start, *i - start);
 	if (!token)
-		fail_exit_shell(data);
+		return (NULL);
 	return (token);
 }
 
-void	skip_spaces(char *arg, int *i)
+char	**realloc_tab(char **tab, int current_size, int new_size)
 {
-	while (arg[*i] == ' ')
-		(*i)++;
+	return (ft_realloc(tab, sizeof(*tab) * \
+		current_size, sizeof(*tab) * new_size));
 }
 
-char	**realloc_tab(char **tab, int current_size, int new_size) 
+char	**fill_token_array(char *arg, char **tab, int *size, int i)
 {
-    return (ft_realloc(tab, sizeof(*tab) * current_size, sizeof(*tab) * new_size));
-}
-
-char	**get_tkn_tab(char *arg, int size, int i, int k, t_g_data *data) 
-{
-	char	**tab;
-	char	**final_tab;
 	char	**new_tab;
+	int		k;
+
+	k = 0;
+	while (arg[i])
+	{
+		skip_spaces(arg, &i);
+		if (!arg[i])
+			break ;
+		if (k >= *size - 1)
+		{
+			*size += 1;
+			new_tab = realloc_tab(tab, k, *size);
+			if (!new_tab)
+				return (NULL);
+			tab = new_tab;
+		}
+		tab[k++] = space_token(arg, &i);
+		if (!tab)
+			return (NULL);
+	}
+	tab[k] = NULL;
+	return (tab);
+}
+
+char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
+{
+	char	**final_tab;
+	char	**tab;
 
 	tab = malloc(size * sizeof(char *));
 	if (!tab)
 		fail_exit_shell(data);
-	while (arg[i]) 
+	tab = fill_token_array(arg, tab, &size, i);
+	if (!tab)
+		fail_exit_shell(data);
+	final_tab = realloc_tab(tab, size, size);
+	if (!final_tab)
+		fail_exit_shell(data);
+	return (final_tab);
+}
+
+/*
+char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
+{
+	char	**tab;
+	char	**final_tab;
+	char	**new_tab;
+	int		k;
+
+	k = 0;
+	tab = malloc(size * sizeof(char *));
+	if (!tab)
+		fail_exit_shell(data);
+	while (arg[i])
 	{
 		skip_spaces(arg, &i);
 		if (!arg[i])
-			break;
+			break ;
 		if (k >= size - 1) 
 		{ 
 			size += 1;
 			new_tab = realloc_tab(tab, k, size);
 			if (!new_tab)
 				fail_exit_shell(data);
-			if (!new_tab)
-				return (NULL);
 			tab = new_tab;
 		}
 		tab[k++] = space_token(arg, &i, data);
@@ -100,5 +140,4 @@ char	**get_tkn_tab(char *arg, int size, int i, int k, t_g_data *data)
 	final_tab[k] = NULL; 
 	return (final_tab);
 }
-
-
+*/

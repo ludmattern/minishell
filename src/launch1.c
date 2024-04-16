@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:27:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:41:49 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	launch_lexing(t_g_data *g_data)
 {
-	g_data->lexed = lex_me(g_data->in_put);
+	g_data->lexed = lex_me(g_data->in_put, 0);
 	if (g_data->exit_fail == -1)
 		lex_mallox_error(g_data->lexed);
 	g_data->save = g_data->lexed;
@@ -24,9 +24,16 @@ void	launch_lexing(t_g_data *g_data)
 
 void	launch_parsing(t_g_data *g_data)
 {
-	g_data->data->ast = build_ast(&g_data->lexed->first, g_data->data->last_exit_status, g_data);
+	g_data->lexed->last = g_data->lexed->first;
+	while (g_data->lexed->last->next != NULL)
+	{
+		//printf("%s\n",g_data->lexed->last->value );
+		g_data->lexed->last = g_data->lexed->last->next;
+	}
+	g_data->data->ast = build_ast(&g_data->lexed->last, g_data->data->last_exit_status, g_data);
 	// if (!data->ast)
 	// 	free_parsing(data->ast, lexed);
+	
 	free_lexed(g_data->save);
 }
 

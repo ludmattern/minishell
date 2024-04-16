@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/14 14:25:30 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 11:19:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**expander(char *arg, int last_exit_status, t_g_data *data)
 
 	expanded = NULL;
 	(void)last_exit_status;
-	expanded = get_tkn_tab(arg, 1, 0, 0, data);
+	expanded = get_tkn_tab(arg, 1, 0, data);
 	//print_exp(expanded, arg);
 	expand_tkn_tab(expanded, last_exit_status, data);
     
