@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:26 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 11:15:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 15:49:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ t_envsize get_mal_size2(char *tkn, int start, int env_length, int i, t_env *mini
 	char *env_val;
 	t_envsize s = {0};
 	s.size = 1; 
-		
+
 	while (tkn[i]) 
 	{
 		if (tkn[i] == '$' && tkn[i + 1] && tkn[i + 1] != ' ' && tkn[i + 1] != '$' && tkn[i + 1] != '"')
@@ -266,6 +266,8 @@ char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes)
 	memset(&s, 0, sizeof(t_envsize));
 	
 	s = get_mal_size2(tkn, 0, 0, 0, data->mini_env, data, dquotes);
+	if (s.size == 1)
+		return (NULL);
     res = malloc(s.size);
     if (!res)
         fail_exit_shell(data);
@@ -303,10 +305,9 @@ char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes)
     return (res);
 }
 
-
 char *replace_env_vars(t_g_data *data)
 {
-	char *res;
+	char *res = NULL;
     size_t i = 0;
     bool squotes = false;
     bool dquotes = false;
@@ -315,7 +316,6 @@ char *replace_env_vars(t_g_data *data)
 		fail_exit_shell(data);
     char *status_str;
 	char *new;
-
 
     while (res && res[i] != '\0') 
 	{
@@ -343,6 +343,11 @@ char *replace_env_vars(t_g_data *data)
 		else if (!squotes && res[i] == '$' && res[i + 1] != '\0' && res[i + 1] != ' ' && res[i + 1] != '"')
 		{
             new = get_env_var2(res, 0, 0, 0, data, dquotes);
+			if (new == NULL)
+			{
+            	free(res);
+				return (strdup(""));
+			}
             free(res);
             res = new;
 			new = NULL;
@@ -351,7 +356,6 @@ char *replace_env_vars(t_g_data *data)
     }
     return (res);
 }
-
 
 /*
 char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/16 14:55:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 15:41:56 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 				free(g_data.in_put);
 				g_data.in_put = NULL;
 				g_data.in_put = replace_env_vars(&g_data);
+				t = 1;
 				if (g_data.in_put[0])
 				{
 					launch_lexing(&g_data);
@@ -55,7 +56,10 @@ int	main(int argc, char **argv, char **envp)
 					t = 1;
 				}
 				else
+				{
 					g_data.last_exit_status = 0;
+					free(g_data.data);
+				}
 			}
 			update_history(&g_data, t);
 		}
