@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:36:12 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:43:15 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:19:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void handle_sigint_herdoc(int sig)
 	(void)sig;
 	g_heredoc_sigint = 2;
 	write(1, "\n", 1);
-	rl_done = 1;
+	//rl_done = 1;
 	rl_redisplay();
 	
 }
