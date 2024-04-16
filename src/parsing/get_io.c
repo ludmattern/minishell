@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 16:21:53 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:12:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ void signals_restore(void)
 void setup_heredoc_si(void) 
 {
     struct sigaction sa;
-
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = handle_sigint_herdoc;
     sa.sa_flags = 0; 
-    sigemptyset(&sa.sa_mask);
+    //sigemptyset(&sa.sa_mask);
     sigaction(SIGINT, &sa, NULL);
 }
 
@@ -45,12 +44,7 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	setup_heredoc_si();
 	while (g_heredoc_sigint == 0)
 	{
-		//line = get_next_line(STDIN_FILENO);
-		line = readline("> ");
-		if (line)
-		{
-			line = ft_strjoin(line, "\n");
-		}
+		line = get_next_line(STDIN_FILENO);
 		if (line == NULL || match_delimiter(line, delimiter))
 		{
 			free(line);
@@ -95,12 +89,12 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	}
 	if (g_heredoc_sigint == 2)
 	{
-		//get_next_line(-1);
+		get_next_line(-1);
 		return (EXIT_FAILURE);
 	}
 	signals_init();
 	*out_buffer = result;
-	//get_next_line(-1);
+	get_next_line(-1);
 	return (EXIT_SUCCESS);
 }
 
