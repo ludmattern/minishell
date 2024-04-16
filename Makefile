@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
+#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/15 18:17:32 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/16 13:39:25 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_va
 					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
 					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
 					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
-					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/signal.c
+					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/signal.c $(PARSEDIR)/clean2.c \
+					$(PARSEDIR)/lexing_utils.c $(PARSEDIR)/launch_expand.c
 
 OBJDIR			:=	./.obj
 

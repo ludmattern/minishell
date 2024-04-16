@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
+/*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 11:08:12 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/16 13:32:22 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/16 13:36:22 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-void	free_data(t_data *data)
+void	imoremore_quote(char *arg, int *i, char c)
 {
-	if (data == NULL)
-		return ;
-	free_tree(data->ast);
+	(*i)++;
+	while (arg[*i] != c)
+		(*i)++;
 }
 
-void	free_forked_data_structure(t_data **data)
+void	imore(int size, int *i)
 {
-	free_forked_data(*data);
-	free(*data);
+	int	k;
+
+	k = -1;
+	while (++k < size)
+		(*i)++;
 }
 
-void	free_data_structure(t_data **data)
+void	skip_space(char *input, int *index)
 {
-	free_data(*data);
-	free(*data);
-}
-
-void	fail_exit_shell(t_g_data *g_data)
-{
-	ft_clear_memory(g_data);
-	printf("Fatal error: failed to allocate memory.\n");
-	exit(EXIT_FAILURE);
+	while (input[*index] == ' ')
+		(*index)++;
 }

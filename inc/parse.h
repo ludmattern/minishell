@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 15:35:51 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:36:47 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <signal.h>
 # include <limits.h>
 
-t_token		*lex_me(char *in_put);
+t_token		*lex_me(char *in_put, int i);
 t_node	*build_ast(t_token **current, int last_exit_status, t_g_data *g_data);
 char	**expander(char *arg, int last_exit_status, t_g_data *data);
 char		*get_command_path(char *cmd, t_g_data *g_data);
@@ -33,9 +33,9 @@ t_envsize get_mal_size(char *tkn, int start, int env_length, int i, t_env *mini_
 char *get_env_var(char *tkn, int i, int k, int j, t_g_data *data);
 char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes);
 char *skip_quote(char *tkn, char q, t_g_data *data);
-char	**get_tkn_tab(char *arg, int size, int i, int k, t_g_data *data);
+char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data);
 char		*replace_substring(const char *original, \
-	int start, int length, const char *replace, t_g_data *data);
+	int start, const char *replace, t_g_data *data);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 void		imore(int size, int *i);
 t_io_node *parse_io_from_command(char *cmd, int last_exit_status, t_g_data *data);
@@ -58,7 +58,12 @@ void	ft_clear_memory(t_g_data *g_data);
 void expand_input(t_g_data *data);
 char *replace_env_vars(t_g_data *data);
 void	print_start(void);
+void	skip_spaces(char *arg, int *i);
+void	free_forked_data(t_data *data);
 
+void	imore(int size, int *i);
+void	imoremore_quote(char *arg, int *i, char c);
+void	skip_space(char *input, int *index);
 void	signals_init(void);
 void	handle_sigint_heredoc(int sig);
 void	handle_sigquit(int sig);
@@ -67,7 +72,7 @@ void	proc_handle_sigint(int sig);
 void	proc_handle_sigquit(int sig);
 void handle_sigint_herdoc(int sig);
 
-bool check_local(char *arg);
+bool	check_local(char *arg);
 void	launch_parsing(t_g_data *g_data);
 void	launch_lexing(t_g_data *g_data);
 void	launch_execution(t_g_data *g_data);

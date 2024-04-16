@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:13:47 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 19:28:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 11:16:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	setup_heredoc_si();
 	while (g_heredoc_sigint == 0)
 	{
-		//line = get_next_line(STDIN_FILENO);
-		line = readline("> ");
+		line = get_next_line(STDIN_FILENO);
+		//line = readline("> ");
 		if (line)
 		{
 			line = ft_strjoin(line, "\n");
@@ -93,12 +93,12 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	}
 	if (g_heredoc_sigint == 2)
 	{
-		//get_next_line(-1);
+		get_next_line(-1);
 		return (EXIT_FAILURE);
 	}
 	signals_init();
 	*out_buffer = result;
-	//get_next_line(-1);
+	get_next_line(-1);
 	return (EXIT_SUCCESS);
 }
 
@@ -125,7 +125,7 @@ char **replace_input_vars(t_g_data *data, char *input)
 		{
             status_str = ft_itoa(data->last_exit_status);
             if (!status_str) fail_exit_shell(data); 
-            new = replace_substring(res[0], i, 2, status_str, data);
+            new = replace_substring(res[0], i, status_str, data);
             free(res[0]);
             res[0] = new;
 			new = NULL;

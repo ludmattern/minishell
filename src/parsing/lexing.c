@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/10 16:13:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:36:40 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,12 @@ int	fill_value(t_token *lex, int num)
 	return (0);
 }
 
-void	imore(int size, int *i)
-{
-	int	k;
-
-	k = -1;
-	while (++k < size)
-		(*i)++;
-}
-
-
 int	fill_type(t_token *lex, int num, int *i, int size)
 {
 	imore(size, i);
+	if (num == 5)
 		lex->type = T_PIPE;
-	if (num == 6)
+	else if (num == 6)
 		lex->type = T_AND;
 	else if (num == 7)
 		lex->type = T_OR;
@@ -60,25 +51,16 @@ int	fill_type(t_token *lex, int num, int *i, int size)
 	return (0);
 }
 
-void	imoremore_quote(char *arg, int *i, char c)
-{
-	(*i)++; 
-    while (arg[*i] != c)
-		(*i)++;
-}
-
-int	fill_t_word(t_token *lex, int *i, char *in_put)
+int	fill_t_word(t_token *lex, int *i, int j, char *in_put)
 {
 	int		start;
 	int		end;
 	int		wl;
-	int		j;
 
-	while (in_put[*i] == ' ')
-		(*i)++;
+	skip_space(in_put, i);
 	start = *i;
-	while (in_put[*i] != '|'&& \
-		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '('\
+	while (in_put[*i] != '|' && !(in_put[*i] == '&' \
+		&& in_put[*i + 1] == '&') && in_put[*i] != '('\
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
 	{
 		if (in_put[*i] == '"' || in_put[*i] == '\'')
@@ -90,9 +72,8 @@ int	fill_t_word(t_token *lex, int *i, char *in_put)
 	wl = end - start + 1;
 	lex->value = malloc(wl + 1);
 	if (!lex->value)
-        return (-1);
-	j = -1;
-	while (++j < wl)       
+		return (-1);
+	while (++j < wl)
 		lex->value[j] = in_put[start + j];
 	lex->value[wl] = '\0';
 	lex->type = T_WORD;
@@ -107,12 +88,12 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 		fill_type(lex, 9, i, 1);
 	else if (in_put[*i] == ')')
 		fill_type(lex, 10, i, 1);
-	else if (in_put[*i] != '|'&& \
+	else if (in_put[*i] != '|' && \
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '(' \
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
 	{
-		if (fill_t_word(lex, i, in_put) == -1)
-        	return (-1); 
+		if (fill_t_word(lex, i, -1, in_put) == -1)
+			return (-1);
 	}
 	else if (in_put[*i] == '|' && in_put[*i + 1] != '|')
 		fill_type(lex, 5, i, 1);
@@ -123,14 +104,12 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 	return (0);
 }
 
-t_token	*lex_me(char *in_put)
+t_token	*lex_me(char *in_put, int i)
 {
-	int		i;
 	t_token	*head;
 	t_token	*lex;
 	t_token	*new_token;
 
-	i = 0;
 	new_token = NULL;
 	head = NULL;
 	lex = NULL;
@@ -148,7 +127,7 @@ t_token	*lex_me(char *in_put)
 			head = new_token;
 		lex = new_token;
 		if (init_filling(lex, &i, in_put) == -1)
-			return (head->error = -1, head); 
+			return (head->error = -1, head);
 	}
 	return (head);
 }

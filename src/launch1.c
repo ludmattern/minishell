@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 18:27:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:34:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	launch_lexing(t_g_data *g_data)
 {
-	g_data->lexed = lex_me(g_data->in_put);
+	g_data->lexed = lex_me(g_data->in_put, 0);
 	if (g_data->exit_fail == -1)
 		lex_mallox_error(g_data->lexed);
 	g_data->save = g_data->lexed;
