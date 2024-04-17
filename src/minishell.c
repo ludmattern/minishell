@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/16 15:41:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:38:57 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 				g_data.in_putsave = ft_strdup(g_data.in_put);
 				free(g_data.in_put);
 				g_data.in_put = NULL;
-				g_data.in_put = replace_env_vars(&g_data);
+				g_data.in_put = replace_env_vars(&g_data, 0);
 				t = 1;
 				if (g_data.in_put[0])
 				{

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/16 14:31:12 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/17 15:20:26 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef enum e_token_type
 	T_RPAR
 }	t_token_type;
 
+
 typedef enum e_io_type
 {
 	IO_IN,
@@ -71,8 +72,14 @@ typedef struct s_io_node
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
 }						t_io_node;
-
-
+typedef struct s_io_bundle
+{
+	t_io_type type;
+	t_io_node *head;
+	t_io_node *tail;
+	char current_quote;
+	char *cursor;
+}					t_io_bundle;
 typedef struct s_token
 {
 	t_token_type			type;
@@ -169,6 +176,27 @@ typedef struct s_data
 	struct s_global_data	*g_data;
 }					t_data;
 
+typedef struct s_env_context
+{
+    char *res;
+	char *status_str;
+	char *new;
+    size_t *i;
+    bool dquotes;
+    bool squotes;
+    struct s_global_data *data;
+}			t_env_context;
+
+typedef struct s_env_context_her
+{
+    char **res;
+	char *status_str;
+	char *new;
+    size_t *i;
+    bool dquotes;
+    bool squotes;
+    struct s_global_data *data;
+}			t_env_context_her;
 
 typedef struct s_global_data
 {

@@ -3,49 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   syntaxe_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 16:19:04 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:03:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-bool check_squotes(const char *cmd) 
+bool	check_squotes(const char *cmd)
 {
-    bool squote = false;
-    bool dquote = false;
-    int i = 0;
+	bool	squote;
+	bool	dquote;
+	int		i;
 
-    while (cmd[i])
+	squote = false;
+	dquote = false;
+	i = 0;
+	while (cmd[i])
 	{
-        if (cmd[i] == '"' && !squote)
-            dquote = !dquote; 
-        else if (cmd[i] == '\'' && !dquote)
-            squote = !squote; 
-        i++;
-    }
-    return (!squote); 
+		if (cmd[i] == '"' && !squote)
+			dquote = !dquote;
+		else if (cmd[i] == '\'' && !dquote)
+			squote = !squote;
+		i++;
+	}
+	return (!squote);
 }
 
-bool check_dquotes(const char *cmd)
+bool	check_dquotes(const char *cmd)
 {
-    bool squote = false;
-    bool dquote = false;
-    int i = 0;
+	bool	squote;
+	bool	dquote;
+	int		i;
 
-    while (cmd[i]) {
-        if (cmd[i] == '\'' && !dquote)
-            squote = !squote;
-        else if (cmd[i] == '"' && !squote)
-            dquote = !dquote;
-        i++;
-    }
-    return (!dquote);
+	squote = false;
+	dquote = false;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'' && !dquote)
+			squote = !squote;
+		else if (cmd[i] == '"' && !squote)
+			dquote = !dquote;
+		i++;
+	}
+	return (!dquote);
 }
 
-bool check_par(const char *cmd, char **token)
+bool	check_par(const char *cmd, char **token)
 {
 	int i = 0;
 	int par_count = 0;
@@ -75,12 +82,12 @@ bool check_par(const char *cmd, char **token)
 			{
 				par_count--;
 				if (empty_par)
-					break ;
+					break;
 			}
 			else if (!ft_isspace(cmd[i]))
 				empty_par = false;
 			if (par_count < 0)
-				break ;
+				break;
 		}
 		i++;
 	}
@@ -91,30 +98,30 @@ bool check_par(const char *cmd, char **token)
 	return (true);
 }
 
-bool check_redir(const char *cmd, char **token) 
+bool check_redir(const char *cmd, char **token)
 {
-    bool in_quotes = false;
-    int i = 0;
- 	int j = 0;
-    while (cmd[i] != '\0') 
+	bool in_quotes = false;
+	int i = 0;
+	int j = 0;
+	while (cmd[i] != '\0')
 	{
-        if (cmd[i] == '\'' || cmd[i] == '"') 
+		if (cmd[i] == '\'' || cmd[i] == '"')
 		{
-            if (!in_quotes || (in_quotes && cmd[i-1] != '\\'))
-                in_quotes = !in_quotes;
-        }
-        if (!in_quotes) 
+			if (!in_quotes || (in_quotes && cmd[i - 1] != '\\'))
+				in_quotes = !in_quotes;
+		}
+		if (!in_quotes)
 		{
-            if (cmd[i] == '>' || cmd[i] == '<') 
+			if (cmd[i] == '>' || cmd[i] == '<')
 			{
-				if (cmd[i + 1] == '>' || cmd[i + 1] == '<') 
+				if (cmd[i + 1] == '>' || cmd[i + 1] == '<')
 					i++;
 				if (cmd[i + 1] == '>' || cmd[i + 1] == '<')
 					i++;
-                j = i + 1;
-                while (cmd[j] == ' ')
+				j = i + 1;
+				while (cmd[j] == ' ')
 					j++;
-                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&' || cmd[j] == '<' || cmd[j] == '>' || cmd[j] == '<' || cmd[j] == '>') 
+				if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&' || cmd[j] == '<' || cmd[j] == '>' || cmd[j] == '<' || cmd[j] == '>')
 				{
 					if (cmd[j] == '\0')
 						*token = ft_strdup("newline");
@@ -122,7 +129,8 @@ bool check_redir(const char *cmd, char **token)
 					{
 						*token = malloc(sizeof(char) * 3);
 						if (!*token)
-						{   perror("malloc");
+						{
+							perror("malloc");
 							return (false);
 						}
 						(*token)[0] = (char)cmd[j];
@@ -139,15 +147,15 @@ bool check_redir(const char *cmd, char **token)
 					}
 					return (false);
 				}
-            }
-            if (cmd[i] == '|' || cmd[i] == '&') 
+			}
+			if (cmd[i] == '|' || cmd[i] == '&')
 			{
-				if (cmd[i + 1] == '|' || cmd[i + 1] == '&') 
+				if (cmd[i + 1] == '|' || cmd[i + 1] == '&')
 					i++;
-                j = i + 1;
-                while (cmd[j] == ' ') 
+				j = i + 1;
+				while (cmd[j] == ' ')
 					j++;
-                if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&') 
+				if (cmd[j] == '\0' || cmd[j] == '|' || cmd[j] == '&')
 				{
 					if (cmd[j] == '\0')
 						*token = ft_strdup("newline");
@@ -155,7 +163,8 @@ bool check_redir(const char *cmd, char **token)
 					{
 						*token = malloc(sizeof(char) * 3);
 						if (!*token)
-						{   perror("malloc");
+						{
+							perror("malloc");
 							return (false);
 						}
 						(*token)[0] = (char)cmd[j];
@@ -171,36 +180,36 @@ bool check_redir(const char *cmd, char **token)
 						}
 					}
 					return (false);
-                }
-            }
-        }
-        i++;
-    }
-    return (true);
+				}
+			}
+		}
+		i++;
+	}
+	return (true);
 }
 
-bool check_first(const char *cmd, char **token) 
+bool check_first(const char *cmd, char **token)
 {
 	bool in_quotes = false;
 	int i = 0;
-	
-	
-	while (cmd[i] != '\0') 
+
+	while (cmd[i] != '\0')
 	{
-		if (cmd[i] == '\'' || cmd[i] == '"') 
+		if (cmd[i] == '\'' || cmd[i] == '"')
 		{
-			if (!in_quotes || (in_quotes && cmd[i-1] != '\\'))
+			if (!in_quotes || (in_quotes && cmd[i - 1] != '\\'))
 				in_quotes = !in_quotes;
 		}
-		if (!in_quotes) 
+		if (!in_quotes)
 		{
-			while (cmd[i] == ' ') 
-					i++;
-			if(cmd[i] == '|' || cmd[i] == '&')
+			while (cmd[i] == ' ')
+				i++;
+			if (cmd[i] == '|' || cmd[i] == '&')
 			{
 				*token = malloc(sizeof(char) * 3);
 				if (!*token)
-				{   perror("malloc");
+				{
+					perror("malloc");
 					return (false);
 				}
 				(*token)[0] = (char)cmd[i];
@@ -222,55 +231,4 @@ bool check_first(const char *cmd, char **token)
 		i++;
 	}
 	return (true);
-}
-
-bool check_input(const char *cmd)
-{
-	int i = 0;
-	while (cmd[i] && ft_isspace(cmd[i]))
-		i++;
-	if (!cmd[i])
-		return (false);
-	return (true);
-}
-
-bool	syntax_error(const char *cmd, int *status)
-{
-    char *token = NULL;
-	if (!check_input(cmd))
-		return (true);
-	if (!check_dquotes(cmd))
-	{
-		ft_eprintf(MS"Parse Error: bad quotes\n");
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
-	if (!check_squotes(cmd))
-	{
-		ft_eprintf(MS"Parse Error: bad quotes\n");
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
-	if (!check_par(cmd, &token))
-	{
-		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
-        free(token);
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
-	if (!check_first(cmd, &token))
-	{
-		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
-        free(token);
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
-	if (!check_redir(cmd, &token))
-	{
-		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
-		free(token);
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
-	return (false);
 }
