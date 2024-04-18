@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:48:59 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 15:09:17 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 11:54:11 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ void	init_env_ctx(t_env_context *ctx, t_g_data *data)
 	if (!ctx->res)
 		fail_exit_shell(data);
 	ctx->i = 0;
+	ctx->new = NULL;
+	ctx->status_str = NULL;
 }
 
 void	update_quote_flags(char c, t_env_context *ctx)
 {
 	if (c == '"' && ctx->squotes == false)
 		ctx->dquotes = !ctx->dquotes;
-	else if (c == '\'' && !ctx->dquotes == false)
+	else if (c == '\'' && ctx->dquotes == false)
 		ctx->squotes = !ctx->squotes;
 }
 
