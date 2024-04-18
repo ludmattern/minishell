@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 18:00:16 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:34:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 #include "../inc/exec.h"
 
 int g_heredoc_sigint = 0;
+
+char	*init_input(void)
+{
+	static char buffer[1024];
+	buffer[0] = 0;
+	char *host = NULL;
+	char *tmp;
+	char *tmp2;
+	char *usr;
+
+	usr = getenv("USER");
+	tmp = getenv("SESSION_MANAGER");
+	if (tmp)
+	{
+		tmp2 = ft_strnstr(tmp, "local/", 6);
+		if (tmp2)
+			host = ft_strndup(tmp2 + 6, 6);
+	}
+	ft_sprintf(buffer, "%s@%s:", usr, host);
+	free(host);
+	return (buffer);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -25,10 +47,11 @@ int	main(int argc, char **argv, char **envp)
 	signals_init();
 	g_data.exit_fail = 0;
 	g_data = initialize_environnement(envp);
+	g_data.pre_input = init_input();
 	while (1)
 	{
 		t = 0;
-		update_input(&g_data);
+		update_input(&g_data, g_data.pre_input);
 		if (g_data.in_put[0])
 		{
 			if (!syntax_error(g_data.in_put, &g_data.last_exit_status))
