@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 15:01:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:50:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	int	status;
 
 	signal(SIGINT, proc_handle_sigint);
-    signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	status = EXIT_SUCCESS;
 	if (direction == AST_LEFT)
 		status = dup2(pipefd[1], STDOUT_FILENO);
@@ -46,7 +46,7 @@ int	handling_pipeline(t_data *data, t_node *node)
 	int		pipefd[2];
 	pid_t	pid_left;
 	pid_t	pid_right;
-	int status;
+	int		status;
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -64,6 +64,6 @@ int	handling_pipeline(t_data *data, t_node *node)
 		handling_pipeline_child(data, node->right, pipefd, AST_RIGHT);
 	close_pipe_fds(pipefd);
 	status = wait_for_pipeline_children(pid_left, pid_right);
-	signals_init(); 
+	signals_init();
 	return (status);
 }

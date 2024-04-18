@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 15:05:22 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:54:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	transform_env_to_array(t_env *mini_env, char ***env)
 
 	env_size = ft_env_size(mini_env);
 	if (env_size == 0)
-	{
-		*env = NULL;
-		return ;
-	}
+		return (*env = NULL, (void)0);
 	*env = ft_calloc(env_size + 1, sizeof(char *));
 	i = 0;
 	while (mini_env)
@@ -49,12 +46,11 @@ void	transform_env_to_array(t_env *mini_env, char ***env)
 			if (mini_env->value)
 			{
 				temp = ft_strjoin(mini_env->name, "=");
-				(*env)[i] = ft_strjoin(temp, mini_env->value);
+				(*env)[i++] = ft_strjoin(temp, mini_env->value);
 				free(temp);
 			}
 			else
-				(*env)[i] = ft_strdup(mini_env->name);
-			i++;
+				(*env)[i++] = ft_strdup(mini_env->name);
 		}
 		mini_env = mini_env->next;
 	}
@@ -182,17 +178,14 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 			restore_original_fds(data);
 		return (exit_status);
 	}
-	signal(SIGINT, SIG_IGN);
-    signal(SIGQUIT, SIG_IGN);
+	signals_ignore();
 	pid = fork();
 	if (pid == 0)
 		return (handle_command_child(data, node, piped));
 	else if (pid > 0)
 	{
 		exit_status = wait_for_child(pid, data);
-		signals_init();
-		return (exit_status);
-
+		return (signals_init(), exit_status);
 	}
 	else
 		return (fork_creation_failure("fork"));

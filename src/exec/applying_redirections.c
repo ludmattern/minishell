@@ -3,52 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/15 18:37:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:19:36 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 #include "../../inc/parse.h"
 
-int redirect_heredoc_value_to_pipe(const char *heredoc_input, bool piped) {
-    int pipefd[2];
-    if (pipe(pipefd) == -1) {
-        perror("pipe error");
-        return EXIT_GENERAL_ERROR;
-    }
-
-    write(pipefd[1], heredoc_input, strlen(heredoc_input));
-    close(pipefd[1]); // Close the write-end immediately after writing
-
-    if (!piped) {
-        if (dup2(pipefd[0], STDIN_FILENO) == -1) {
-            perror("dup2 error");
-            close(pipefd[0]);
-            return EXIT_DUP2_FAILURE;
-        }
-    } else {
-        int stdin_copy = dup(STDIN_FILENO);  // Backup the current STDIN
-        if (stdin_copy == -1) {
-            perror("dup error");
-            close(pipefd[0]);
-            return EXIT_FAILURE;
-        }
-
-        if (dup2(pipefd[0], STDIN_FILENO) == -1) {
-            perror("dup2 error");
-            close(pipefd[0]);
-            close(stdin_copy);
-            return EXIT_DUP2_FAILURE;
-        }
-    }
-    close(pipefd[0]);
-    return EXIT_SUCCESS;
+int	heredoc_dup2_creation_failure(int pipefd[2])
+{
+	perror(MS"dup2 error");
+	close_pipe_fds(pipefd);
+	return (EXIT_DUP2_FAILURE);
 }
 
+int	redirect_heredoc_pipe(const char *heredoc_input, bool piped)
+{
+	int	pipefd[2];
+	int	stdin_copy;
 
+	if (pipe(pipefd) == -1)
+		return (perror("pipe error"), EXIT_PIPE_FAILURE);
+	write(pipefd[1], heredoc_input, ft_strlen(heredoc_input));
+	if (!piped)
+	{
+		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+			return (heredoc_dup2_creation_failure(pipefd));
+	}
+	else
+	{
+		stdin_copy = dup(STDIN_FILENO);
+		if (stdin_copy == -1)
+			return (heredoc_dup2_creation_failure(pipefd));
+		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+			return (close(stdin_copy), heredoc_dup2_creation_failure(pipefd));
+	}
+	close_pipe_fds(pipefd);
+	return (EXIT_SUCCESS);
+}
 
 /*
 Redirects the input to the given file.
@@ -147,6 +142,7 @@ int	apply_command_redirections(t_io_node *io_list, bool piped, bool is_empty)
 {
 	t_io_node	*current;
 	int			status;
+
 	status = EXIT_SUCCESS;
 	current = io_list;
 	while (current != NULL)
@@ -158,7 +154,7 @@ int	apply_command_redirections(t_io_node *io_list, bool piped, bool is_empty)
 		else if (current->type == IO_APPEND)
 			status = redirect_append(current->expanded_value[0]);
 		else if (current->type == IO_HEREDOC && !is_empty)
-			status = redirect_heredoc_value_to_pipe(current->expanded_value[0], piped);
+			status = redirect_heredoc_pipe(current->expanded_value[0], piped);
 		if (status != EXIT_SUCCESS)
 			return (status);
 		current = current->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/15 18:37:16 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:55:37 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ int	heredoc_parent_process(pid_t pid, int pipefd[2])
 	close(pipefd[0]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 12)
-	{
-        return (EXIT_SUCCESS);
-	}
+		return (EXIT_SUCCESS);
 	else if (WIFEXITED(status) && WEXITSTATUS(status) != EXIT_SUCCESS)
 		return (heredoc_redirection_failure("heredoc", EXIT_GENERAL_ERROR));
 	return (status);
