@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 12:40:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:21:38 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,14 @@ last_exit_status, t_g_data *g_data)
 	node->expanded_args = tkn->expanded;
 	if (node->expanded_args[0] != NULL)
 		node->command_path = get_command_path(node->expanded_args[0], g_data);
-	if (g_data->lexed->is_add_local == true)
+	if (tkn->is_add_local == true)
 		node->is_add_local = true;
 	else
 		node->is_add_local = false;
-	if (g_data->lexed->is_empty == true)
+	if (tkn->is_empty == true)
+	{
 		node->is_empty = true;
+	}
 	else
 		node->is_empty = false;
 	node->type = N_CMD;
