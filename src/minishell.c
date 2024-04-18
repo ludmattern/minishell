@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 17:35:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:58:02 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 				g_data.in_put = NULL;
 				g_data.in_put = replace_env_vars(&g_data, 0);
 				t = 1;
-				if (g_data.in_put[0])
+				if (g_data.in_put[0] != -1 || g_data.in_put[1] != 0)
 				{
 					launch_lexing(&g_data);
 					launch_expand(&g_data);
