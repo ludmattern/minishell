@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:04:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 18:26:32 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:31:04 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,27 @@ void	setup_heredoc_si(void)
 int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 {
 	char	*line;
+	char	*tmp;
 	char	*result;
 	size_t	total_size;
 	char	*new_result;
 
 	line = NULL;
 	result = NULL;
+	tmp = NULL;
 	total_size = 0;
 	setup_heredoc_si();
 	while (g_heredoc_sigint == 0)
 	{
-		line = readline("> ");
-		if (line == NULL || match_delimiter(line, delimiter))
+		tmp = readline("> ");
+		if (tmp == NULL || match_delimiter(tmp, delimiter))
 		{
 			free(line);
 			break ;
 		}
+		line = ft_strjoin(tmp, "\n");
+		free(tmp);
+		tmp = NULL;
 		if (result == NULL)
 		{
 			result = strdup(line);

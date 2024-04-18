@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/09 13:59:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:52:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,25 @@ void	initialize_shell_variables(t_env **mini_env)
 	free(tmp);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_addenv_or_update(mini_env, "PWD", cwd);
+	else
+		ft_addenv_or_update(mini_env, "PWD", "");
 	env_entry = find_env_var(*mini_env, "OLDPWD");
-	if (!env_entry)
+	if (env_entry && env_entry->value)
+		ft_addenv_or_update(mini_env, "OLDPWD", env_entry->value);
+	else
 		ft_addenv_or_update(mini_env, "OLDPWD", "");
 }
 
 t_env	*ft_env_last(t_env *lst)
 {
-	if (!lst)
+	t_env	*tmp;
+
+	tmp = lst;
+	if (!tmp)
 		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	ft_env_add_back(t_env **lst, t_env *new)
@@ -95,10 +102,11 @@ t_env	*ft_env_new_entrie(char *name, char *value, bool is_local)
 	new_env_entrie->name = name;
 	new_env_entrie->value = value;
 	new_env_entrie->is_local = is_local;
+	new_env_entrie->next = NULL;
 	return (new_env_entrie);
 }
 
-t_env	*ft_create_env_entry(const char *env_str)
+t_env	*ft_create_env_entry(char *env_str)
 {
 	char	*equal_pos;
 	char	*name;
@@ -145,13 +153,8 @@ t_env	*create_mini_env(char **envp)
 	return (minishell_env);
 }
 
-t_g_data	initialize_environnement(char **envp)
+void	initialize_environnement(t_g_data **g_data, char **envp)
 {
-	t_g_data	g_data;
-
-	memset(&g_data, 0, sizeof(t_g_data));
-	g_data.last_exit_status = EXIT_SUCCESS;
-	g_data.mini_env = create_mini_env(envp);
-	initialize_shell_variables(&g_data.mini_env);
-	return (g_data);
+	(*g_data)->mini_env = create_mini_env(envp);
+	//initialize_shell_variables(&(*g_data)->mini_env);
 }

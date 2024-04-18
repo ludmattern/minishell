@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 21:32:05 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:18:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	char *pre_input2;
 	char *cwd = NULL;
 	char *tmp = NULL;
+	char *home = NULL;
 	/*g_data->path = getcwd(NULL, 0);
 	char *user = getenv("USER");
 	char *z = extract_hostname_from_env();
@@ -82,9 +83,12 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	tmp = getcwd(NULL, 0);
 	if (tmp)
 	{
-		if (ft_strnstr(tmp, getenv("HOME"), ft_strlen(getenv("HOME"))))
+		home = getenv("HOME");
+		if (!home)
+			home = "";
+		if (ft_strnstr(tmp, home, ft_strlen(home)))
 		{
-			cwd = ft_strjoin("~", tmp + ft_strlen(getenv("HOME")));
+			cwd = ft_strjoin("~", tmp + ft_strlen(home));
 			free(tmp);
 		}
 		else
@@ -94,7 +98,10 @@ void	update_input(t_g_data *g_data, char *pre_input)
 		cwd = ft_strdup("");
 	pre_input2 = ft_strjoin(cwd, "$ ");
 	free(cwd);
-	prompt = ft_strjoin(pre_input, pre_input2);
+	if (pre_input && pre_input[0])
+		prompt = ft_strjoin(pre_input, pre_input2);
+	else
+		prompt = ft_strdup(pre_input2);
 	free(pre_input2);
 	
 	g_data->in_put = readline(prompt);
