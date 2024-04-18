@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/18 15:14:33 by fprevot          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/18 11:57:28 by lmattern         ###   ########.fr       */
->>>>>>> 03ea34dd55d081f9700219713be8f77fdc570cd0
+/*   Updated: 2024/04/18 17:30:01 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +51,13 @@ int	main(int argc, char **argv, char **envp)
 					else
 					{
 						launch_parsing(&g_data);
-						// print_ast(g_data.data->ast, 0);
 						launch_execution(&g_data);
 					}
 					t = 1;
 				}
 				else
 				{
-					g_data.last_exit_status = 0;
+					//g_data.last_exit_status = 0;
 					free(g_data.data);
 				}
 			}
@@ -74,11 +69,3 @@ int	main(int argc, char **argv, char **envp)
 }
 
 // # Should skip the empty argument, and print hello after spaces
-// echo - "" "  " hello
-// input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
-//cat CTRL+C ajouter /n
-//car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas
-
-
-//  $> $ASiugsdf \ asdfasdf // entree
-// [1]    130149 segmentation fault (core dumped)  ./minishell
