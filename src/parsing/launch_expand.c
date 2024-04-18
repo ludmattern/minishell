@@ -55,7 +55,7 @@ void	process_redirections_and_filenames(t_token \
 
 void	handle_expanded_token(t_token *token, int last_exit_status)
 {
-	if (!token->value[0] && token->io_list != NULL)
+	if (token->value[0] == -1 && !token->value[1])
 	{
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
@@ -63,8 +63,11 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 		token->expanded[1] = NULL;
 	}
 	else
+	{
+		token->is_empty = false;
 		token->expanded = expander(token->value, \
 		last_exit_status, token->g_data);
+	}
 }
 
 void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
@@ -89,6 +92,7 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 
 void	launch_expand(t_g_data *g_data)
 {
+	//printlex(g_data->lexed);
 	expe(g_data->lexed, g_data->last_exit_status, g_data);
 	if (g_heredoc_sigint == 2)
 		return ;

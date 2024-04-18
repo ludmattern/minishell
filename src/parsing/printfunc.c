@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printfunc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:30:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/11 13:17:06 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:02:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void print_ast(t_node* node, int depth)
 			printf("OR\n");
 			break;
 		case N_CMD:
-			printf("CMD: %s\n", node->args); 
+			printf("CMD: %s\n", node->expanded_args[0]); 
 			break;
 		default:
 			printf("UNKNOWN\n");

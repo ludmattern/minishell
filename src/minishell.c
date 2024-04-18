@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/17 13:38:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:14:33 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 					else
 					{
 						launch_parsing(&g_data);
+						// print_ast(g_data.data->ast, 0);
 						launch_execution(&g_data);
 					}
 					t = 1;
@@ -73,3 +74,7 @@ int	main(int argc, char **argv, char **envp)
 // input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
 //cat CTRL+C ajouter /n
 //car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas
+
+
+//  $> $ASiugsdf \ asdfasdf // entree
+// [1]    130149 segmentation fault (core dumped)  ./minishell
