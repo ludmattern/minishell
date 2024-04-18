@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 16:28:24 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:54:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	update_data(t_g_data *g_data);
 void	free_parsing(t_node *ast, t_token *lex);
 void	lex_mallox_error(t_token *lex);
 void	free_lexed(t_token *lexed);
+void	signals_ignore(void);
 
 
 #endif

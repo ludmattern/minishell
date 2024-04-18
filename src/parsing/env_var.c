@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:30:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 14:53:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:21:50 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,12 @@ t_envsize get_mal_size2(char *tkn, int start, int env_length, int i, t_env *mini
 			ft_strncpy(s.env, tkn + start, env_length);
 			s.env[env_length] = '\0';
 			env_val = ft_get_env3(s.env, mini_env, data, dquotes);
+			if (!env_val)
+			{
+				env_val = malloc(2 * sizeof(char));
+				env_val[0] = -1;
+				env_val[1] = '\0';
+			}
 			if (env_val) 
 				s.size += ft_strlen(env_val);
 			free(s.env);

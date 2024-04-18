@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 15:26:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:15:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_forked_data_structure(t_data **data)
 
 void	free_data_structure(t_data **data)
 {
+	if (*data == NULL)
+		return ;
 	free_data(*data);
 	free(*data);
 }
