@@ -6,18 +6,14 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:10:24 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 14:54:20 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:44:42 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-
-
-
-
-
-t_node	*is_op(t_token **current, t_node *root, int last_exit_status, t_g_data *g_data)
+t_node	*is_op(t_token **current, t_node *root, int \
+last_exit_status, t_g_data *g_data)
 {
 	t_node	*nroot;
 
@@ -49,8 +45,7 @@ t_node	*build_ast(t_token **current, int last_exit_status, t_g_data *g_data)
 		}
 		else if ((*current)->type == T_LPAR)
 			return (*current = (*current)->prev, root);
-		else if ((*current)->type == T_AND || (*current)->type == \
-			T_OR || (*current)->type == T_PIPE)
+		else if ((*current)->type == T_AND || (*current)->type == T_OR || (*current)->type == T_PIPE)
 			return (is_op(current, root, last_exit_status, g_data));
 		else if ((*current)->type == T_WORD)
 		{

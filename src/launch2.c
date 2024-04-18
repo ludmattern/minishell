@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/15 19:28:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:32:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,18 @@ void	update_input(t_g_data *g_data)
 	prompt = ft_strjoin(prompt, reset); 
 */
 	char *prompt;
+	/*g_data->path = getcwd(NULL, 0);
+	char *user = getenv("USER");
+	char *z = extract_hostname_from_env();
+	prompt = ft_strjoin(user, "@");
+	prompt = ft_strjoin(prompt, z);
+	prompt = ft_strjoin(prompt, g_data->path);
+	prompt = ft_strjoin(prompt, "$");*/
 	prompt = " $> ";//version sans prompt pimpe pour le tester
 	
 	g_data->in_put = readline(prompt);
+	//free(user);
+	//free(z);
 	free(g_data->join);
 	free(g_data->path);
 	if (!g_data->in_put) 

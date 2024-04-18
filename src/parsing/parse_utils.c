@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 14:24:30 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:40:43 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node) * 1);
-	if(!new)
+	if (!new)
 		fail_exit_shell(g_data);
 	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
-	if(!new->args)
+	if (!new->args)
 		fail_exit_shell(g_data);
 	new->type = N_INIT;
 	return (new);
@@ -41,15 +41,17 @@ t_node	*create_operator_node(t_token *tkn, t_g_data *g_data)
 	return (node);
 }
 
-size_t ft_arrlen(char **arr)
+size_t	ft_arrlen(char **arr)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	while (arr[i] != NULL)
 		i++;
 	return (i);
 }
-
-char **ft_cleaner(char **args,  t_g_data *g_data)
+/*
+char	**ft_cleaner(char **args,  t_g_data *g_data)
 {
 	int i = 0;
 	int j = 0;
@@ -59,20 +61,16 @@ char **ft_cleaner(char **args,  t_g_data *g_data)
 		fail_exit_shell(g_data);
 	while (args[i] != NULL)
 	{
-		//printf("arg = %s\n", args[i]);
 		if (args[i][0] != '\0' )
 		{
 			if (i == 0)
 			{
-				//printf("if\n");
 				k = 0;
 				while (args[i] && args[i][k] != '\0')
 					k++;
 				if (args[0][k - 1] != '=')
 					result[j++] = ft_strdup(args[i]);
 			}
-			
-	
 			else
 				result[j++] = ft_strdup(args[i]);
 			if(!result)
@@ -84,11 +82,13 @@ char **ft_cleaner(char **args,  t_g_data *g_data)
 	i = 0;
 	ft_free_double_array(args);
 	return (result);
-}
+}*/
 
-bool check_local(char *arg)
+bool	check_local(char *arg)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (arg && arg[i] && arg[i] != ' ')
 	{
 		if (arg[i] == '=' && arg[i + 1] != ' ' && arg[i - 1] != ' ')
@@ -98,11 +98,10 @@ bool check_local(char *arg)
 	return (false);
 }
 
-
-
-t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data)
+t_node	*create_command_node(t_token *tkn, int \
+last_exit_status, t_g_data *g_data)
 {
-	t_node *node;
+	t_node	*node;
 
 	(void)last_exit_status;
 	node = create_empty_node(tkn, g_data);
@@ -112,16 +111,12 @@ t_node *create_command_node(t_token *tkn, int last_exit_status, t_g_data *g_data
 		node->command_path = get_command_path(node->expanded_args[0], g_data);
 	if (g_data->lexed->is_add_local == true)
 		node->is_add_local = true;
-	else 
+	else
 		node->is_add_local = false;
 	if (g_data->lexed->is_empty == true)
 		node->is_empty = true;
-	else 
+	else
 		node->is_empty = false;
-	//node->is_add_local = check_local(node->command_path);
-	
-	//print_exp(node->expanded_args, node->args);
-	//printredir(node->io_list);
 	node->type = N_CMD;
 	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 11:36:00 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:33:05 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,45 @@ char	*replace_substring(const char *original, \
 	ft_strcat(new, replace);
 	ft_strcat(new, original + start + length);
 	return (new);
+}
+
+char	find_first(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '\'')
+			return ('\'');
+		else if (arg[i] == '"')
+			return ('"');
+		i++;
+	}
+	return ('\0');
+}
+
+void	expand_input(t_g_data *data)
+{
+	int		j;
+	char	*input;
+	int		lst;
+	char	*temp;
+
+	j = 0;
+	input = data->in_put;
+	lst = data->last_exit_status;
+	while (input[j])
+	{
+		if (find_first(input) == '"')
+			temp = expand_double_quote(input, lst, data);
+		else if (find_first(input) == '\'')
+			temp = expand_simple_quote(input, data);
+		else
+			temp = expand_without_quote(input, lst, 0, data);
+		if (temp != input)
+			free(input);
+		input = temp;
+		j++;
+	}
 }
