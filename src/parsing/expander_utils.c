@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 15:37:53 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:56:36 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	skip_spaces(char *arg, int *i)
 {
-	while (arg[*i] == ' ' || arg[*i] == -1)
+	while (arg[*i] == ' ' || arg[*i] == '	' || arg[*i] == -1)
 		(*i)++;
 }
 

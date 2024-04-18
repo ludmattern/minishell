@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 11:36:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:00:29 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*space_token(char *arg, int *i)
 			dquote = !dquote;
 		else if (arg[*i] == '\'')
 			squote = !squote;
-		if (!squote && !dquote && arg[*i] == ' ')
+		if (!squote && !dquote && (ft_isspace(arg[*i]) == true))
 			break ;
 		(*i)++;
 	}

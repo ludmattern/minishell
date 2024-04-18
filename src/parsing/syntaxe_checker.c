@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:53:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 13:03:17 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:37:39 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ bool check_redir(const char *cmd, char **token)
 		{
 			if (cmd[i] == '>' || cmd[i] == '<')
 			{
-				if (cmd[i + 1] == '>' || cmd[i + 1] == '<')
-					i++;
 				if (cmd[i + 1] == '>' || cmd[i + 1] == '<')
 					i++;
 				j = i + 1;

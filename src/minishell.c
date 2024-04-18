@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 17:58:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:00:16 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 					else
 					{
 						launch_parsing(&g_data);
-						// print_ast(g_data.data->ast, 0);
 						launch_execution(&g_data);
 					}
 					t = 1;
