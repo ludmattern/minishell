@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/16 15:41:56 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:56:37 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,14 @@ int	main(int argc, char **argv, char **envp)
 // input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
 //cat CTRL+C ajouter /n
 //car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas
+//  $> echo $a44
+
+//  $> echo $44e
+
+//  $> echo $.44e
+// .44e
+//  $> echo $4/4e
+// /4e
+//  $> echo $4[4e
+// [4e
+//  $> echo $4333334e
