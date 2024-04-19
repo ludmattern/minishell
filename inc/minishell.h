@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 17:18:15 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/19 18:19:28 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-#define MS "minishell: "
+
+# define MS "minishell: "
+
+extern int	g_heredoc_sigint;
 
 typedef enum e_ast_direction
 {

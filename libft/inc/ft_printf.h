@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:09:08 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 20:59:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:23:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int		print_int_eprintf(int nbr);
 /*
 ft_sprintf
 */
-int	    print_num_sprintf(unsigned int num, char fmt, char *buffer);
-int	    print_char_sprintf(char c, char *buffer);
-int	    print_string_sprintf(char *str, char *buffer);
-int	    print_pointer_sprintf(void *ptr, char *str, int len, char *buffer);
-int     print_int_sprintf(int nbr, char *buffer);
-int     ft_sprintf(char *buffer, const char *format, ...);
+int		print_num_sprintf(unsigned int num, char fmt, char *buffer);
+int		print_char_sprintf(char c, char *buffer);
+int		print_string_sprintf(char *str, char *buffer);
+int		print_pointer_sprintf(void *ptr, char *str, int len, char *buffer);
+int		print_int_sprintf(int nbr, char *buffer);
+int		ft_sprintf(char *buffer, const char *format, ...);
 
 #endif

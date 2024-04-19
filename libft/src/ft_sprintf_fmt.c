@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:12:36 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 21:00:50 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:26:42 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	print_char_sprintf(char c, char *buffer)
 
 int	print_string_sprintf(char *str, char *buffer)
 {
-	int i = 0;
+	int	i;
 
 	if (!str)
 		str = "(null)";

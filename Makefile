@@ -6,12 +6,17 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 17:25:27 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/19 18:09:40 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.PHONY: all, clean, run, valgrind, valenv, FORCE, fclean, re, normal_spinner, \
+stop_normal_spinner, bash, bash_spinner, stop_bash_spinner, zsh, zsh_spinner, \
+stop_zsh_spinner
+
 CC				:=	cc
 NAME			:=	minishell
+NAME2			:=	minishell_zsh
 CFLAGS			:=	-Wextra -Wall -Werror
 LIBFT			:=	./libft
 HEADERS			:=	-I ./inc
@@ -54,18 +59,35 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/ft_pwd.c \
 					$(EXECDIR)/ft_env.c \
 					$(EXECDIR)/ft_cd.c
-
-PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_var.c \
-					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
-					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
-					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
-					$(PARSEDIR)/checker_syntax_quote.c $(PARSEDIR)/signal.c $(PARSEDIR)/clean2.c \
-					$(PARSEDIR)/lexing_utils.c $(PARSEDIR)/launch_expand.c $(PARSEDIR)/del_redir.c \
-					$(PARSEDIR)/launch_syntaxe_check.c $(PARSEDIR)/get_env_var.c \
-					$(PARSEDIR)/heredoc_env_var.c $(PARSEDIR)/add_io.c $(PARSEDIR)/io_utils.c \
-					$(PARSEDIR)/env_var2.c $(PARSEDIR)/env_var_size.c $(PARSEDIR)/signal2.c \
-					$(PARSEDIR)/heredeocc.c $(PARSEDIR)/check_syntaxe_par.c \
-					$(PARSEDIR)/check_syntaxe_first.c $(PARSEDIR)/check_syntax_redir.c
+PARSE_SRCS		:=	$(PARSEDIR)/clean.c \
+					$(PARSEDIR)/parse.c \
+					$(PARSEDIR)/get_io.c \
+					$(PARSEDIR)/signal.c \
+					$(PARSEDIR)/lexing.c \
+					$(PARSEDIR)/clean2.c \
+					$(PARSEDIR)/add_io.c \
+					$(PARSEDIR)/signal2.c \
+					$(PARSEDIR)/env_var.c \
+					$(PARSEDIR)/env_var2.c \
+					$(PARSEDIR)/expander.c \
+					$(PARSEDIR)/io_utils.c \
+					$(PARSEDIR)/printfunc.c \
+					$(PARSEDIR)/del_redir.c \
+					$(PARSEDIR)/heredeocc.c \
+					$(PARSEDIR)/get_env_var.c \
+					$(PARSEDIR)/parse_utils.c \
+					$(PARSEDIR)/lexing_utils.c \
+					$(PARSEDIR)/env_var_size.c \
+					$(PARSEDIR)/command_path.c \
+					$(PARSEDIR)/get_token_tab.c \
+					$(PARSEDIR)/launch_expand.c \
+					$(PARSEDIR)/expander_utils.c \
+					$(PARSEDIR)/heredoc_env_var.c \
+					$(PARSEDIR)/check_syntaxe_par.c \
+					$(PARSEDIR)/check_syntax_redir.c \
+					$(PARSEDIR)/check_syntaxe_first.c \
+					$(PARSEDIR)/launch_syntaxe_check.c \
+					$(PARSEDIR)/checker_syntax_quote.c
 
 OBJDIR			:=	./.obj
 
@@ -75,14 +97,13 @@ PARSE_OBJS		:=	$(PARSE_SRCS:$(PARSEDIR)/%.c=$(OBJDIR)/%.o)
 
 OBJS			:=	$(MAIN_OBJ) $(EXEC_OBJS) $(PARSE_OBJS)
 
-all : SYSTEM = BASH
-all : normal_spinner $(LIBFT) $(NAME) stop_normal_spinner
+all  : normal_spinner $(LIBFT) $(NAME) stop_normal_spinner
 
-bash : SYSTEM = BASH
-bash: bash_spinner $(LIBFT) $(NAME) stop_bash_spinner
+bash : bash_spinner $(LIBFT) $(NAME) stop_bash_spinner
+	@./$(NAME)
 
-zsh : SYSTEM = ZSH
-zsh: zsh_spinner $(LIBFT) $(NAME) stop_zsh_spinner
+zsh : zsh_spinner $(LIBFT) $(NAME) stop_zsh_spinner
+	@./$(NAME)
 
 $(OBJDIR)/%.o: $(EXECDIR)/%.c $(DEPS) | $(OBJDIR)
 	@$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
@@ -97,7 +118,7 @@ $(LIBFT)/libft.a: FORCE
 	@make -C $(LIBFT) -s
 
 $(NAME): $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -DSYSTEM=\"$(SYSTEM)\" -lreadline -o $(NAME)
+	@$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -lreadline -o $(NAME)
 
 normal_spinner:
 	@echo "\033[32mCompiling mandatory minishell ....\c\033[0m"
@@ -140,7 +161,6 @@ stop_bash_spinner:
 	@sleep 0.1; 
 	@echo "\033[1;32m\nReady to go ! 🚀\033[0m"
 
-
 zsh_spinner:
 	@echo "\033[1;32mCompiling minizshell ....\c\033[0m"
 	@while :; do \
@@ -155,19 +175,26 @@ stop_zsh_spinner:
 	@rm -f spinner_pid.txt
 	@echo "\nCompilation of minizsh sucessful."
 	@sleep 0.1; 
-	@echo "\033[32m                                                                    "
+	@echo "\033[32m                                                            \
+	        "
 	@sleep 0.1; 
-	@echo "\033[32m ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
+	@echo "\033[32m ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     \
+	██╗     "
 	@sleep 0.1; 
-	@echo "\033[32m ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
+	@echo "\033[32m ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     \
+	██║     "
 	@sleep 0.1; 
-	@echo "\033[32m ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
+	@echo "\033[32m ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     \
+	██║     "
 	@sleep 0.1; 
-	@echo "\033[32m ██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+	@echo "\033[32m ██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     \
+	██║     "
 	@sleep 0.1; 
-	@echo "\033[32m ██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
+	@echo "\033[32m ██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗\
+	███████╗"
 	@sleep 0.1;
-	@echo "\033[32m ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
+	@echo "\033[32m ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝\
+	╚══════╝"
 	@sleep 0.1;
 	@echo "\033[1;32m\nReady to take off ! 🚀\033[0m"
 
@@ -176,11 +203,15 @@ $(OBJDIR):
 
 valgrind: $(NAME)
 	clear
-	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=./mask_readline_leaks.supp ./$(NAME)
+	valgrind -s --leak-check=full --show-leak-kinds=all \
+	--track-origins=yes --trace-children=yes --track-fds=yes \
+	--suppressions=./mask_readline_leaks.supp ./$(NAME)
 
 valenv: $(NAME)
 	clear
-	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=./mask_readline_leaks.supp env -i ./$(NAME)
+	valgrind -s --leak-check=full --show-leak-kinds=all \
+	--track-origins=yes --trace-children=yes --track-fds=yes \
+	--suppressions=./mask_readline_leaks.supp env -i ./$(NAME)
 
 clean:
 	@rm -f $(OBJS)
@@ -192,5 +223,3 @@ fclean: clean
 re: fclean all
 
 FORCE:
-
-.PHONY: all, clean, run, valgrind, valenv, FORCE, fclean, re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:43:10 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 14:49:01 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/19 17:30:08 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
-
-extern int g_heredoc_sigint;
 
 char	*ft_substr_gnl(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy_gnl(char *dst, const char *src, size_t size);

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:57:39 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 13:59:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:25:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_free(void *ptr)
 {
-    if (ptr)
-    {
-        free(ptr);
-        ptr = NULL;
-    }
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }

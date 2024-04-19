@@ -6,24 +6,25 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 17:25:42 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:32:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
 
-int g_heredoc_sigint = 0;
+int	g_heredoc_sigint = 0;
 
-char	*init_input(void)
+char	*init_bash(void)
 {
-	static char buffer[1024];
-	buffer[0] = 0;
-	char *host = NULL;
-	char *tmp;
-	char *tmp2;
-	char *usr;
+	static char	buffer[1024];
+	char		*host;
+	char		*tmp;
+	char		*tmp2;
+	char		*usr;
 
+	host = NULL;
+	buffer[0] = 0;
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
 	if (usr && usr[0] && tmp && tmp[0])
@@ -37,28 +38,26 @@ char	*init_input(void)
 				return (buffer);
 			host = ft_strndup(tmp2 + 6, 6);
 		}
-		ft_sprintf(buffer, "%s@%s:", usr, host);
-		free(host);
+		return (ft_sprintf(buffer, "%s@%s:", usr, host), free(host), buffer);
 	}
 	else
-		ft_sprintf(buffer, "minishell:");
-	return (buffer);
+		return (ft_sprintf(buffer, "minishell:"), buffer);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	*g_data;
 	int			t;
+
 	(void)argv;
 	(void)argc;
-	print_start();
 	signals_init();
 	g_data = malloc(sizeof(t_g_data));
 	if (!g_data)
 		exit(EXIT_FAILURE);
 	memset(g_data, 0, sizeof(t_g_data));
 	initialize_environnement(&g_data, envp);
-	g_data->pre_input = init_input();
+	g_data->pre_input = init_bash();
 	while (1)
 	{
 		t = 0;
@@ -99,10 +98,5 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// # Should skip the empty argument, and print hello after spaces
-// echo - "" "  " hello
-// input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
 //cat CTRL+C ajouter /n
-//car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas
-
-//segafault dans le cas d'un env -i au moment de free le mini_env
+//leak en cas de CTRL+D (free le pointeur general de la structure)
