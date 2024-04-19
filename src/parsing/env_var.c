@@ -1,19 +1,19 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 16:30:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 13:24:48 by fprevot          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   env_var.c										  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/17 16:30:08 by fprevot		   #+#	#+#			 */
+/*   Updated: 2024/04/19 14:34:21 by fprevot		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
 
-void smoremore(t_envsize *s, int *i, char *env_val, int c)
+void	smoremore(t_envsize *s, int *i, char *env_val, int c)
 {
 	if (c == 1)
 	{
@@ -22,12 +22,13 @@ void smoremore(t_envsize *s, int *i, char *env_val, int c)
 	}
 	else if (c == 2)
 	{
-		if (env_val != NULL) 
+		if (env_val != NULL)
 			s->envsize = ft_strlen(env_val);
 		else
 			s->envsize = 0;
 	}
 }
+
 char	*ft_get_env(char *tmp_env, t_env *mini_env)
 {
 	t_env	*tmp;
@@ -48,16 +49,19 @@ char	*ft_get_env(char *tmp_env, t_env *mini_env)
 	return (NULL);
 }
 
+const char	*skip_s(const char *s)
+{
+	while (*s == ' ')
+		s++;
+	return (s - 1);
+}
 
-char	*ft_env_strdup(const char *s, bool dquotes)
+char	*ft_env_strdup(const char *s, bool dquotes \
+, size_t	length, size_t	index)
 {
 	char	*str;
 	char	*original;
-	size_t	length;
-	size_t	index;
 
-	length = 0;
-	index = 0;
 	while (s[index])
 	{
 		if (s[index] == ' ' && !dquotes)
@@ -76,17 +80,14 @@ char	*ft_env_strdup(const char *s, bool dquotes)
 	while (*s)
 	{
 		if (*s == ' ' && !dquotes)
-		{
-			while (*s && *s == ' ')
-				s++;
-			s--;
-		}
+			s = skip_s(s);
 		*str++ = *s++;
 	}
 	return (original);
 }
 
-char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data, bool dquotes)
+char	*ft_get_env3(char *tmp_env, t_env *mini_env, \
+t_g_data *data, bool dquotes)
 {
 	t_env	*tmp;
 	char	*env_val;
@@ -98,7 +99,7 @@ char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data, bool dquotes)
 	{
 		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len + 1) == 0)
 		{
-			env_val = ft_env_strdup(tmp->value, dquotes);
+			env_val = ft_env_strdup(tmp->value, dquotes, 0, 0);
 			if (!env_val)
 				fail_exit_shell(data);
 			return (env_val);

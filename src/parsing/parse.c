@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 16:10:24 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 12:44:42 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/19 14:53:50 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/19 14:55:01 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,49 @@ last_exit_status, t_g_data *g_data)
 	return (nroot);
 }
 
-t_node	*build_ast(t_token **current, int last_exit_status, t_g_data *g_data)
+t_node	*handle_rpar(t_token **c, int last_exit_status, t_g_data *g_data)
+{
+	t_node	*root;
+
+	*c = (*c)->prev;
+	root = build_ast(c, last_exit_status, g_data);
+	if (!root)
+		return (NULL);
+	return (root);
+}
+
+void	handle_command_node(t_token **c, t_node **root, \
+int last_exit_status, t_g_data *g_data)
+{
+	if (!(*root))
+		*root = create_command_node((*c), last_exit_status, g_data);
+	*c = (*c)->prev;
+}
+
+t_node	*build_ast(t_token **c, int last_exit_status, t_g_data *g_data)
 {
 	t_node	*root;
 
 	root = NULL;
-	while (*current != NULL)
+	while (*c != NULL)
 	{
-		if ((*current)->type == T_RPAR)
+		if ((*c)->type == T_RPAR)
 		{
-			*current = (*current)->prev;
-			root = build_ast(current, last_exit_status, g_data);
+			root = handle_rpar(c, last_exit_status, g_data);
 			if (!root)
 				return (NULL);
 		}
-		else if ((*current)->type == T_LPAR)
-			return (*current = (*current)->prev, root);
-		else if ((*current)->type == T_AND || (*current)->type == T_OR || (*current)->type == T_PIPE)
-			return (is_op(current, root, last_exit_status, g_data));
-		else if ((*current)->type == T_WORD)
+		else if ((*c)->type == T_LPAR)
+			return (*c = (*c)->prev, root);
+		else if ((*c)->type == T_AND || (*c)->type == \
+		T_OR || (*c)->type == T_PIPE)
+			return (is_op(c, root, last_exit_status, g_data));
+		else if ((*c)->type == T_WORD)
 		{
-			if (!root)
-				root = create_command_node((*current), last_exit_status, g_data);
-			*current = (*current)->prev;
+			handle_command_node(c, &root, last_exit_status, g_data);
 		}
 		else
-			*current = (*current)->prev;
+			*c = (*c)->prev;
 	}
 	return (root);
 }

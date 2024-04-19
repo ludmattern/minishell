@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 13:15:16 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:20:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data);
 char *del_redir(char *cmd, int i, int j, t_g_data *g_data);
 t_envsize get_mal_size2(char *tkn, t_env *mini_env, t_g_data *data, bool dquotes);
 char *get_env_var2(char *tkn, t_g_data *data, bool dquotes);
+const char *skip_s(const char *s);
 
-
+bool	check_par(const char *cmd, char **token, int i, int par_count);
 bool check_first(const char *cmd, char **token);
-bool check_par(const char *cmd, char **token);
 bool check_dquotes(const char *cmd);
 bool check_squotes(const char *cmd);
 bool check_redir(const char *cmd, char **token);
@@ -89,7 +89,8 @@ void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
 void	proc_handle_sigint(int sig);
 void	proc_handle_sigquit(int sig);
-void handle_sigint_herdoc(int sig);
+int	read_heredoc_into_string(const char *delimiter, char **out_buffer);
+
 
 bool	check_local(char *arg);
 void	launch_parsing(t_g_data *g_data);
@@ -103,6 +104,8 @@ void	free_parsing(t_node *ast, t_token *lex);
 void	lex_mallox_error(t_token *lex);
 void	free_lexed(t_token *lexed);
 void	signals_ignore(void);
+void	setup_heredoc_si(void);
+void	handle_sigint_herdoc(int sig);
 
 
 #endif

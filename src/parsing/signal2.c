@@ -1,47 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 11:49:46 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 14:38:30 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/19 14:38:04 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/19 15:02:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../inc/exec.h"
 
-void	handle_sigint(int sig)
+void	proc_handle_sigint(int sig)
+{
+	printf("\n");
+	(void)sig;
+	exit(2);
+}
+
+void	proc_handle_sigquit(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	exit(3);
+}
+
+void	handle_sigint_herdoc(int sig)
+{
+	(void)sig;
+	g_heredoc_sigint = 2;
+	rl_done = 1;
 	rl_redisplay();
 }
 
-void	handle_sigquit(int sig)
+void	setup_heredoc_si(void)
 {
-	(void)sig;
-	rl_redisplay();
-}
+	struct sigaction	sa;
 
-int	ft_rl_event_hook(void)
-{
-	return (0);
-}
-
-void	signals_init(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	rl_event_hook = ft_rl_event_hook;
-}
-
-void	signals_ignore(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = handle_sigint_herdoc;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
 }
