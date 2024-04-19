@@ -6,7 +6,7 @@
 #    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 13:13:12 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/19 14:20:39 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ EXEC_SRCS		:=	$(EXECDIR)/executing.c $(EXECDIR)/execution_utils.c \
 					$(EXECDIR)/ft_env.c $(EXECDIR)/ft_export_utils.c \
 					$(EXECDIR)/duplicate_env.c $(EXECDIR)/ft_exit.c \
 					$(EXECDIR)/command_exec_failure.c \
-					$(EXECDIR)/ft_add_local.c \
+					$(EXECDIR)/ft_add_local.c $(EXECDIR)/printing_env.c \
 					$(EXECDIR)/initialize_environnement.c
 
 PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_var.c \
