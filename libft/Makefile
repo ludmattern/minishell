@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/18 20:59:00 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/19 14:49:18 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,10 @@ OBJS= 	$(SRCS:.c=.o)
 all:	$(NAME)
 
 $(NAME): $(OBJS)
-			ar rcs $(NAME) $(OBJS)
+			@ar rcs $(NAME) $(OBJS)
 
 %.o: 	%.c ./inc/libft.h ./inc/get_next_line.h ./inc/ft_printf.h
-			cc $(FLAGS) -c $< -o $@
+			@cc $(FLAGS) -c $< -o $@
 
 clean:
 			rm -f $(OBJS)
