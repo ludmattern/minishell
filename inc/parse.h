@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 19:50:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:42:25 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ char	*expand_simple_quote(char *tkn, t_g_data *data);
 char	*expand_without_quote(char *tkn, int last_exit_status, size_t i, t_g_data *data);
 char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data);
 char *del_redir(char *cmd, int i, int j, t_g_data *g_data);
+t_envsize get_mal_size2(char *tkn, int start, int env_length, int i, t_env *mini_env, t_g_data *data, bool dquotes);
+char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes);
+
 
 bool check_first(const char *cmd, char **token);
 bool check_par(const char *cmd, char **token);
