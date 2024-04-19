@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/18 23:22:54 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/19 11:26:27 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,4 +97,4 @@ re: fclean all
 
 FORCE:
 
-.PHONY: all, clean, run, valgrind, FORCE, fclean, re
+.PHONY: all, clean, run, valgrind, valenv, FORCE, fclean, re

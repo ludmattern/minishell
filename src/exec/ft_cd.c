@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 21:58:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:37:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_ft_cd(char *oldpwd, bool *alloc)
 	*alloc = false;
 }
 
-bool cd_to_home(char **args, t_env **env, char **path, bool *alloc)
+bool	cd_to_home(char **args, t_env **env, char **path, bool *alloc)
 {
 	if (args[1] == NULL)
 	{
@@ -45,7 +45,7 @@ bool cd_to_home(char **args, t_env **env, char **path, bool *alloc)
 			return (false);
 		}
 	}
-	else 
+	else
 		*path = args[1];
 	return (true);
 }
@@ -67,13 +67,13 @@ int	ft_cd(char **args, t_env **env)
 		return (ft_eprintf(MS"cd: too many arguments\n"),
 			EXIT_FAILURE);
 	if (!cd_to_home(args, env, (char **)&path, &alloc))
-			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (chdir(path) != 0)
 	{
 		ft_eprintf(MS"cd: %s: %s\n", path, strerror(errno));
 		if (alloc)
 			free((char *)path);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (alloc)
 		free((char *)path);
