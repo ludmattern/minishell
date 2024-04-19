@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
+#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 16:02:02 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/19 17:25:27 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,14 @@ PARSE_OBJS		:=	$(PARSE_SRCS:$(PARSEDIR)/%.c=$(OBJDIR)/%.o)
 
 OBJS			:=	$(MAIN_OBJ) $(EXEC_OBJS) $(PARSE_OBJS)
 
-all: $(LIBFT) $(NAME)
+all : SYSTEM = BASH
+all : normal_spinner $(LIBFT) $(NAME) stop_normal_spinner
+
+bash : SYSTEM = BASH
+bash: bash_spinner $(LIBFT) $(NAME) stop_bash_spinner
+
+zsh : SYSTEM = ZSH
+zsh: zsh_spinner $(LIBFT) $(NAME) stop_zsh_spinner
 
 $(OBJDIR)/%.o: $(EXECDIR)/%.c $(DEPS) | $(OBJDIR)
 	@$(CC) $(CFLAGS) -g -o $@ -c $< $(HEADERS)
@@ -89,11 +96,11 @@ $(OBJDIR)/%.o: $(MAINDIR)/%.c $(DEPS) | $(OBJDIR)
 $(LIBFT)/libft.a: FORCE
 	@make -C $(LIBFT) -s
 
-$(NAME): spinner $(LIBFT)/libft.a $(OBJS) | $(OBJDIR) stop_spinner
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -lreadline -o $(NAME)
+$(NAME): $(LIBFT)/libft.a $(OBJS) | $(OBJDIR)
+	@$(CC) $(OBJS) $(LIBS) $(HEADERS) $(CFLAGS) -DSYSTEM=\"$(SYSTEM)\" -lreadline -o $(NAME)
 
-spinner:
-	@echo "\033[1;32mCompiling minishell ....\c\033[0m"
+normal_spinner:
+	@echo "\033[32mCompiling mandatory minishell ....\c\033[0m"
 	@while :; do \
 		for s in / - \\ \|; do \
 			printf "\b$$s"; \
@@ -101,36 +108,67 @@ spinner:
 		done; \
 	done & echo $$! > spinner_pid.txt
 
-stop_spinner:
+stop_normal_spinner:
 	@kill `cat spinner_pid.txt` 2>/dev/null || true
 	@rm -f spinner_pid.txt
-	@echo "\nCompilation of minishell sucessful."
-	@echo "\n\033[34m   ▄▄▄▄███▄▄▄▄    ▄█  ███▄▄▄▄    ▄█     ▄████████ \
-	   ▄█    █▄       ▄████████  ▄█        ▄█       "
+	@echo "\nCompilation of mandatory minishell sucessful."
+
+
+bash_spinner:
+	@echo "\033[1;32mCompiling minibash ....\c\033[0m"
+	@while :; do \
+		for s in / - \\ \|; do \
+			printf "\b$$s"; \
+			sleep 0.1; \
+		done; \
+	done & echo $$! > spinner_pid.txt
+
+stop_bash_spinner:
+	@kill `cat spinner_pid.txt` 2>/dev/null || true
+	@rm -f spinner_pid.txt
+	@echo "\nCompilation of minibash sucessful."
+	@sleep 0.1; 
+	@echo "\033[32m  __  __  _         _       _           _  _ "
+	@sleep 0.1; 
+	@echo "\033[32m |  \/  |(_) _ __  (_) ___ | |__   __  | || |"
+	@sleep 0.1; 
+	@echo "\033[32m | |\/| || || '_ \ | |/ _ /|  _ \ / _ \| || |"
+	@sleep 0.1; 
+	@echo "\033[32m | |  | || || | | || |\__ \| | | |  __/| || |"
+	@sleep 0.1; 
+	@echo "\033[32m |_|  |_||_||_| |_||_||___/|_| |_|\___||_||_|"
+	@sleep 0.1; 
+	@echo "\033[1;32m\nReady to go ! 🚀\033[0m"
+
+
+zsh_spinner:
+	@echo "\033[1;32mCompiling minizshell ....\c\033[0m"
+	@while :; do \
+		for s in / - \\ \|; do \
+			printf "\b$$s"; \
+			sleep 0.1; \
+		done; \
+	done & echo $$! > spinner_pid.txt
+
+stop_zsh_spinner:
+	@kill `cat spinner_pid.txt` 2>/dev/null || true
+	@rm -f spinner_pid.txt
+	@echo "\nCompilation of minizsh sucessful."
+	@sleep 0.1; 
+	@echo "\033[32m                                                                    "
+	@sleep 0.1; 
+	@echo "\033[32m ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
+	@sleep 0.1; 
+	@echo "\033[32m ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
+	@sleep 0.1; 
+	@echo "\033[32m ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
+	@sleep 0.1; 
+	@echo "\033[32m ██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+	@sleep 0.1; 
+	@echo "\033[32m ██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
 	@sleep 0.1;
-	@echo "\033[35m ▄██▀▀▀███▀▀▀██▄ ███  ███▀▀▀██▄ ███    ███    ███  \
-	 ███    ███     ███    ███ ███       ███       "
+	@echo "\033[32m ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
 	@sleep 0.1;
-	@echo "\033[36m ███   ███   ███ ███▌ ███   ███ ███▌   ███    █▀    \
-	███    ███     ███    █▀  ███       ███       "
-	@sleep 0.1;
-	@echo "\033[33m ███   ███   ███ ███▌ ███   ███ ███▌   ███         \
-	▄███▄▄▄▄███▄▄  ▄███▄▄▄     ███       ███       "
-	@sleep 0.1;
-	@echo "\033[34m ███   ███   ███ ███▌ ███   ███ ███▌ ▀███████████ \
-	▀▀███▀▀▀▀███▀  ▀▀███▀▀▀     ███       ███       "
-	@sleep 0.1;
-	@echo "\033[35m ███   ███   ███ ███  ███   ███ ███           ███  \
-	 ███    ███     ███    █▄  ███       ███       "
-	@sleep 0.1;
-	@echo "\033[36m ███   ███   ███ ███  ███   ███ ███     ▄█    ███  \
-	 ███    ███     ███    ███ ███▌    ▄ ███▌    ▄ "
-	@sleep 0.1;
-	@echo "\033[33m  ▀█   ███   █▀  █▀    ▀█   █▀  █▀    ▄████████▀    \
-	███    █▀      ██████████ █████▄▄██ █████▄▄██ "
-	@sleep 0.1;
-	@echo "\033[34m                                                    \
-	                               ▀▀        ▀▀   "
 	@echo "\033[1;32m\nReady to take off ! 🚀\033[0m"
 
 $(OBJDIR):

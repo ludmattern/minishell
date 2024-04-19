@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 15:58:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:25:42 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	int			t;
 	(void)argv;
 	(void)argc;
-	//print_start();
+	print_start();
 	signals_init();
 	g_data = malloc(sizeof(t_g_data));
 	if (!g_data)
