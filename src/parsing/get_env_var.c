@@ -73,7 +73,7 @@ void	process_status_var(t_env_context *ctx, int *i)
 bool	process_variable_substitution(t_env_context \
 *ctx, int *i, t_g_data *data)
 {
-	ctx->new = get_env_var2(ctx->res, 0, 0, 0, data, ctx->dquotes);
+	ctx->new = get_env_var2(ctx->res, data, ctx->dquotes);
 	if (ctx->new == NULL)
 	{
 		free(ctx->res);

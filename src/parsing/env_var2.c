@@ -5,75 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 13:32:05 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 12:41:34 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/19 13:16:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
 
-typedef struct s_var_context {
-    char *res;
-    int k;
-    t_g_data *data;
-    t_env *mini_env;
-    bool dquotes;
-} t_var_context;
-
-char *initialize_result(char *tkn, t_g_data *data, bool *dquotes) {
-    t_envsize s = get_mal_size2(tkn, 0, 0, 0, data->mini_env, data, *dquotes);
-    if (s.size == 1)
-        return NULL;
-    char *res = malloc(s.size);
-    if (!res)
-        fail_exit_shell(data);
-    ft_bzero(res, s.size);
-    return res;
-}
-
-
-void process_variable(char **tkn, int *i, int *k, char **res, t_g_data *data, bool dquotes) {
-    int start = *i;
-    int env_length, j = 0;
-    char *env_val;
-
-    while (ft_isalnum((*tkn)[*i])) (*i)++;
-    env_length = *i - start;
-    char *tmp_env = malloc(env_length + 1);
-    if (!tmp_env) fail_exit_shell(data);
-    ft_strncpy(tmp_env, *tkn + start, env_length);
-    tmp_env[env_length] = '\0';
-    env_val = ft_get_env3(tmp_env, data->mini_env, data, dquotes);
-    free(tmp_env);
-    if (!env_val) 
-    {
-        env_val = malloc(2);
-        env_val[0] = -1;
-        env_val[1] = '\0';
-    }
-    while (env_val[j])
-        (*res)[(*k)++] = env_val[j++];
-    free(env_val);
-}
-
-char *get_env_var2(char *tkn, int i, int k, int j, t_g_data *data, bool dquotes) 
+void	init_var_ctx(t_var_context *ctx, char *tkn, \
+t_g_data *data, bool dquotes)
 {
-    char *res = initialize_result(tkn, data, &dquotes);
-    if (!res) return NULL;
-    (void)j;
-    while (tkn[i] != '\0') {
-        if (tkn[i] == '$' && tkn[i + 1] && tkn[i + 1] != ' ' && tkn[i + 1] != '$' && tkn[i + 1] != '"')
-        {
-            i++;
-            process_variable(&tkn, &i, &k, &res, data, dquotes);
-        } 
-        else 
-        {
-            res[k++] = tkn[i];
-        }
-        i++;
-    }
-    res[k] = '\0';
-    return res;
+	ctx->i = 0;
+	ctx->k = 0;
+	ctx->j = 0;
+	ctx->s = get_mal_size2(tkn, data->mini_env, data, dquotes);
+	if (ctx->s.size == 1)
+		ctx->res = NULL;
+	else
+	{
+		ctx->res = malloc(ctx->s.size);
+		if (!ctx->res)
+			fail_exit_shell(data);
+		ft_bzero(ctx->res, ctx->s.size);
+	}
+}
+
+void	process_variable(t_var_context *ctx, char *tkn, \
+t_g_data *data, bool dquotes)
+{
+	ctx->start = ctx->i;
+	while (ft_isalnum(tkn[ctx->i]))
+		ctx->i++;
+	ctx->env_length = ctx->i - ctx->start;
+	ctx->tmp_env = malloc(ctx->env_length + 1);
+	if (!ctx->tmp_env)
+		fail_exit_shell(data);
+	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
+	ctx->tmp_env[ctx->env_length] = '\0';
+	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, dquotes);
+	free(ctx->tmp_env);
+	if (!ctx->env_val)
+	{
+		ctx->env_val = malloc(2);
+		ctx->env_val[0] = -1;
+		ctx->env_val[1] = '\0';
+	}
+	ctx->j = 0;
+	while (ctx->env_val[ctx->j])
+		ctx->res[ctx->k++] = ctx->env_val[ctx->j++];
+	free(ctx->env_val);
+	ctx->env_val = NULL;
+}
+
+char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
+{
+	t_var_context	ctx;
+
+	init_var_ctx(&ctx, tkn, data, dquotes);
+	if (!ctx.res)
+		return (NULL);
+	while (tkn[ctx.i])
+	{
+		if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
+		&& tkn[ctx.i + 1] != ' ' && tkn[ctx.i + 1] \
+		!= '$' && tkn[ctx.i + 1] != '"')
+		{
+			ctx.i++;
+			process_variable(&ctx, tkn, data, dquotes);
+		}
+		else
+			ctx.res[ctx.k++] = tkn[ctx.i++];
+	}
+	ctx.res[ctx.k] = '\0';
+	return (ctx.res);
 }

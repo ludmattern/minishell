@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 21:21:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:37:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_io_node
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
 }						t_io_node;
+
 typedef struct s_io_bundle
 {
 	t_io_type type;
@@ -104,6 +105,8 @@ typedef struct s_envsize
 	char	*env_val;
 	char	*res;
 }		t_envsize;
+
+
 
 typedef struct s_tkntab
 {
@@ -212,5 +215,27 @@ typedef struct s_global_data
 	char			*pre_input;
 	struct s_data	*data;
 }					t_g_data;
+
+typedef struct s_var_context 
+{
+	int i;
+	int k;
+	int j;
+	int start;
+	char *tmp_env;
+	char *res;
+	int env_length;
+	char *env_val;
+	t_envsize s;
+}	t_var_context;
+
+typedef struct s_var_size_context 
+{
+	int start;
+	int env_length;
+	int i;
+	char *env_val;
+	t_envsize s;
+}	t_var_size_context ;
 
 #endif
