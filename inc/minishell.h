@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 13:37:23 by fprevot          ###   ########.fr       */
+/*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
+/*   Updated: 2024/04/19 17:18:15 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-
 #define MS "minishell: "
+
 typedef enum e_ast_direction
 {
 	AST_LEFT,
@@ -54,7 +54,6 @@ typedef enum e_token_type
 	T_RPAR
 }	t_token_type;
 
-
 typedef enum e_io_type
 {
 	IO_IN,
@@ -75,12 +74,12 @@ typedef struct s_io_node
 
 typedef struct s_io_bundle
 {
-	t_io_type type;
-	t_io_node *head;
-	t_io_node *tail;
-	char current_quote;
-	char *cursor;
-}					t_io_bundle;
+	t_io_type	type;
+	t_io_node	*head;
+	t_io_node	*tail;
+	char		current_quote;
+	char		*cursor;
+}				t_io_bundle;
 typedef struct s_token
 {
 	t_token_type			type;
@@ -105,8 +104,6 @@ typedef struct s_envsize
 	char	*env_val;
 	char	*res;
 }		t_envsize;
-
-
 
 typedef struct s_tkntab
 {
@@ -151,7 +148,6 @@ typedef struct s_init_vars
 	char	*pwd_cmd;
 }				t_init_vars;
 
-
 typedef struct s_node
 {
 	t_node_type			type;
@@ -164,7 +160,6 @@ typedef struct s_node
 	struct s_node		*left;
 	struct s_node		*right;
 }						t_node;
-
 
 typedef struct s_data
 {
@@ -181,30 +176,30 @@ typedef struct s_data
 
 typedef struct s_env_context
 {
-    char *res;
-	char *status_str;
-	char *new;
-    size_t *i;
-    bool dquotes;
-    bool squotes;
-    struct s_global_data *data;
+	char					*res;
+	char					*status_str;
+	char					*new;
+	size_t					*i;
+	bool					dquotes;
+	bool					squotes;
+	struct s_global_data	*data;
 }			t_env_context;
 
 typedef struct s_env_context_her
 {
-    char **res;
-	char *status_str;
-	char *new;
-    size_t *i;
-    bool dquotes;
-    bool squotes;
-    struct s_global_data *data;
+	char					**res;
+	char					*status_str;
+	char					*new;
+	size_t					*i;
+	bool					dquotes;
+	bool					squotes;
+	struct s_global_data	*data;
 }			t_env_context_her;
 
 typedef struct s_global_data
 {
 	int				last_exit_status;
-	int 			exit_fail;
+	int				exit_fail;
 	char			*in_put;
 	char			*in_putsave;
 	t_env			*mini_env;
@@ -216,26 +211,26 @@ typedef struct s_global_data
 	struct s_data	*data;
 }					t_g_data;
 
-typedef struct s_var_context 
+typedef struct s_var_context
 {
-	int i;
-	int k;
-	int j;
-	int start;
-	char *tmp_env;
-	char *res;
-	int env_length;
-	char *env_val;
-	t_envsize s;
+	int			i;
+	int			k;
+	int			j;
+	int			start;
+	char		*tmp_env;
+	char		*res;
+	int			env_length;
+	char		*env_val;
+	t_envsize	s;
 }	t_var_context;
 
-typedef struct s_var_size_context 
+typedef struct s_var_size_context
 {
-	int start;
-	int env_length;
-	int i;
-	char *env_val;
-	t_envsize s;
-}	t_var_size_context ;
+	int			start;
+	int			env_length;
+	int			i;
+	char		*env_val;
+	t_envsize	s;
+}	t_var_size_context;
 
 #endif
