@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 11:43:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:55:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_mini_env(t_env *mini_env)
 	{
 		tmp = mini_env;
 		mini_env = mini_env->next;
-		free(tmp->name);
+		ft_free(tmp->name);
 		if (tmp->value)
 			free(tmp->value);
 		free(tmp);
@@ -46,10 +46,9 @@ void	initialize_shell_variables(t_env **mini_env)
 	long	shell_lvl;
 
 	env_entry = find_env_var(*mini_env, "SHLVL");
+	shell_lvl = 1;
 	if (env_entry && env_entry->value)
 		shell_lvl = ft_atoi(env_entry->value) + 1;
-	else
-		shell_lvl = 1;
 	tmp = ft_itoa((int)shell_lvl);
 	ft_addenv_or_update(mini_env, "SHLVL", tmp);
 	free(tmp);
@@ -59,7 +58,11 @@ void	initialize_shell_variables(t_env **mini_env)
 		ft_addenv_or_update(mini_env, "PWD", "");
 	env_entry = find_env_var(*mini_env, "OLDPWD");
 	if (env_entry && env_entry->value)
-		ft_addenv_or_update(mini_env, "OLDPWD", env_entry->value);
+	{
+		tmp = ft_strdup(env_entry->value);
+		ft_addenv_or_update(mini_env, "OLDPWD", tmp);
+		free(tmp);
+	}
 	else
 		ft_addenv_or_update(mini_env, "OLDPWD", "");
 }

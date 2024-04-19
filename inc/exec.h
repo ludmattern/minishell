@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 23:51:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:04:31 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ void		execute_command(t_data *data, t_node *node) __attribute__((noreturn));
 void		restore_original_fds(t_data *data);
 
 /*
+handling environnment
+*/
+char		**duplicate_envp(char **envp);
+char		**copy_env(char **env, int size);
+void		ft_sort_and_print_env(char **env, size_t size);
+bool		ft_isvalid_identifier(const char *name);
+int			ft_add_local(char *arg, t_env **mini_env);
+bool		display_sorted_env(t_env *mini_env, char ***env_array);
+bool		validate_export_argument(const char *arg);
+size_t		ft_export_env_size(t_env *lst);
+
+/*
 builtins
 */
 int			checking_forked_builtins(t_data *data, t_node *node);
@@ -81,15 +93,6 @@ int			ft_env(char **args, t_env *mini_env);
 int			ft_unset_vars(char **names, t_env **mini_env);
 int			ft_unset(char *name, t_env **mini_env);
 int			ft_exit(char **args, t_data **data);
-
-/*
-handling environnment
-*/
-char		**duplicate_envp(char **envp);
-char		**copy_env(char **env, int size);
-void		ft_sort_and_print_env(char **env, size_t size);
-bool		ft_isvalid_identifier(const char *name);
-int			ft_add_local(char *arg, t_env **mini_env);
 
 /*
 handling errors
@@ -127,7 +130,6 @@ int			add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local
 void		update_input(t_g_data *g_data, char *pre_input);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
-void		handle_sigint_heredoc(int sig);
 void		signals_init(void);
 void		ft_clear_memory(t_g_data *g_data);
 
