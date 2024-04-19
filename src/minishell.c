@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 17:37:15 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:58:25 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 				g_data.in_put = NULL;
 				g_data.in_put = replace_env_vars(&g_data, 0);
 				t = 1;
-				if (g_data.in_put[0])
+				if (g_data.in_put[0] != -1 || g_data.in_put[1] != '\0')
 				{
 					launch_lexing(&g_data);
 					launch_expand(&g_data);
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 				{
 					//g_data.last_exit_status = 0;
 					free(g_data.data);
+				}
 			}
 			update_history(&g_data, t);
 		}
