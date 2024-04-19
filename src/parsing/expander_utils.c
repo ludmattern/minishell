@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 16:56:36 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/19 12:55:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*skip_quote(char *tkn, char q, t_g_data *data)
 		fail_exit_shell(data);
 	while (tkn[i] != '\0')
 	{
-		if (tkn[i] != q)
+		if (tkn[i] != q && tkn[i] != -1)
 			res[j++] = tkn[i];
 		i++;
 	}

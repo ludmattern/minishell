@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 15:57:38 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/19 15:59:03 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,28 +55,15 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/ft_env.c \
 					$(EXECDIR)/ft_cd.c
 
-PARSE_SRCS		:=	$(PARSEDIR)/launch_syntaxe_check.c \
-					$(PARSEDIR)/heredoc_env_var.c \
-					$(PARSEDIR)/syntaxe_checker.c \
-					$(PARSEDIR)/expander_utils.c \
-					$(PARSEDIR)/get_token_tab.c \
-					$(PARSEDIR)/launch_expand.c \
-					$(PARSEDIR)/lexing_utils.c \
-					$(PARSEDIR)/command_path.c \
-					$(PARSEDIR)/get_env_var.c \
-					$(PARSEDIR)/parse_utils.c \
-					$(PARSEDIR)/printfunc.c \
-					$(PARSEDIR)/del_redir.c \
-					$(PARSEDIR)/expander.c \
-					$(PARSEDIR)/io_utils.c \
-					$(PARSEDIR)/env_var.c \
-					$(PARSEDIR)/lexing.c \
-					$(PARSEDIR)/signal.c \
-					$(PARSEDIR)/get_io.c \
-					$(PARSEDIR)/clean2.c \
-					$(PARSEDIR)/add_io.c \
-					$(PARSEDIR)/clean.c \
-					$(PARSEDIR)/parse.c
+PARSE_SRCS		:=	$(PARSEDIR)/clean.c $(PARSEDIR)/command_path.c $(PARSEDIR)/env_var.c \
+					$(PARSEDIR)/expander_utils.c $(PARSEDIR)/expander.c $(PARSEDIR)/get_io.c \
+					$(PARSEDIR)/get_token_tab.c $(PARSEDIR)/lexing.c \
+					$(PARSEDIR)/parse_utils.c $(PARSEDIR)/parse.c $(PARSEDIR)/printfunc.c \
+					$(PARSEDIR)/syntaxe_checker.c $(PARSEDIR)/signal.c $(PARSEDIR)/clean2.c \
+					$(PARSEDIR)/lexing_utils.c $(PARSEDIR)/launch_expand.c $(PARSEDIR)/del_redir.c \
+					$(PARSEDIR)/launch_syntaxe_check.c $(PARSEDIR)/get_env_var.c \
+					$(PARSEDIR)/heredoc_env_var.c $(PARSEDIR)/add_io.c $(PARSEDIR)/io_utils.c \
+					$(PARSEDIR)/env_var2.c $(PARSEDIR)/env_var_size.c
 
 OBJDIR			:=	./.obj
 
