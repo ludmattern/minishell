@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 23:52:03 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:10:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,5 @@ t_env	*create_mini_env(char **envp)
 void	initialize_environnement(t_g_data **g_data, char **envp)
 {
 	(*g_data)->mini_env = create_mini_env(envp);
-	//initialize_shell_variables(&(*g_data)->mini_env);
+	initialize_shell_variables(&(*g_data)->mini_env);
 }

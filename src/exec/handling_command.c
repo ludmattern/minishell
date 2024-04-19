@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 16:54:53 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:07:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	update_last_arg(t_data *data, t_node *node)
 	last_arg = ft_strdup(node->expanded_args[nb_args - 1]);
 	if (!last_arg)
 		return (EXIT_GENERAL_ERROR);
-	if (add_or_update_env(&data->mini_env, "_", last_arg, true))
+	if (add_or_update_env(&data->mini_env, ft_strdup("_"), last_arg, true))
 		return (ft_free(last_arg), EXIT_GENERAL_ERROR);
 	return (EXIT_SUCCESS);
 }
