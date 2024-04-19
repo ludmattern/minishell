@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 16:54:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:50:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	launch_parsing(t_g_data *g_data);
 void	launch_lexing(t_g_data *g_data);
 void	launch_execution(t_g_data *g_data);
 void	update_history(t_g_data *g_data, int t);
-void	update_input(t_g_data *g_data);
+void	update_input(t_g_data *g_data, char *pre_input);
 void	ft_clear_memory(t_g_data *g_data);
 void	update_data(t_g_data *g_data);
 void	free_parsing(t_node *ast, t_token *lex);

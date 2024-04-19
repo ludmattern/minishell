@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 13:34:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:50:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,21 @@
 /*
 Finds the index of the environment variable with the specified name.
 */
-t_env	*find_env_var(t_env *env, const char *name)
+t_env	*find_env_var(t_env *env, char *name)
 {
-	while (env)
+	t_env *tmp;
+
+	tmp = env;
+	while (tmp)
 	{
-		if (strcmp(env->name, name) == 0)
-			return (env);
-		env = env->next;
+		if (strcmp(tmp->name, name) == 0)
+			return (tmp);
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-void	ft_addenv_or_update(t_env **env, const char *name, const char *value)
+void	ft_addenv_or_update(t_env **env, char *name, char *value)
 {
 	t_env	*var;
 	t_env	*new_var;
@@ -45,7 +48,7 @@ void	ft_addenv_or_update(t_env **env, const char *name, const char *value)
 	}
 }
 
-void	ft_removeenv(t_env **env, const char *name)
+void	ft_removeenv(t_env **env, char *name)
 {
 	t_env	*current;
 	t_env	*prev;

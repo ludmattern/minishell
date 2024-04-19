@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 17:24:06 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:54:23 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ int	exiting_exit(int status, t_data **data, bool g_data)
 	if (g_data)
 		ft_clear_memory((*data)->g_data);
 	printf("exit\n");
+	free((*data)->g_data);
 	if (data && *data)
 		free_data_structure(data);
+	close_standard_fds();
 	exit(status);
 	return (status);
 }
@@ -86,6 +88,5 @@ int	ft_exit(char **args, t_data **data)
 	}
 	else if (args[1] && args[2])
 		return (ft_eprintf(MS"exit: too many arguments\n"), EXIT_GENERAL_ERROR);
-	close_standard_fds();
 	return (exiting_exit(EXIT_SUCCESS, data, true));
 }

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:49:46 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 16:54:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:23:50 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,16 @@ void	proc_handle_sigquit(int sig)
 	exit(3);
 }
 
+int	ft_rl_event_hook(void)
+{
+	return (0);
+}
+
 void	signals_init(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	rl_event_hook = ft_rl_event_hook;
 }
 
 void	signals_ignore(void)

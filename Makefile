@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
+#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/17 16:14:25 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/18 23:22:54 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,10 @@ $(OBJDIR):
 valgrind: $(NAME)
 	clear
 	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=./mask_readline_leaks.supp ./$(NAME)
+
+valenv: $(NAME)
+	clear
+	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=./mask_readline_leaks.supp env -i ./$(NAME)
 
 clean:
 	rm -f $(OBJS)

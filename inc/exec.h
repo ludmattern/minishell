@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/14 18:28:57 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:51:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,15 @@ void		initialize_shell_variables(t_env **mini_env);
 t_env		*ft_env_last(t_env *lst);
 void		ft_env_add_back(t_env **lst, t_env *new);
 t_env		*ft_env_new_entrie(char *name, char *value, bool is_local);
-t_env		*ft_create_env_entry(const char *env_str);
+t_env		*ft_create_env_entry(char *env_str);
 t_env		*create_mini_env(char **envp);
-t_g_data	initialize_environnement(char **envp);
+void		initialize_environnement(t_g_data **g_data, char **envp);
 char		*ft_get_env(char *tmp_env, t_env *mini_env);
-t_env		*find_env_var(t_env *env, const char *name);
-void		ft_addenv_or_update(t_env **env, const char *name, const char *value);
-void		ft_removeenv(t_env **env, const char *name);
+t_env		*find_env_var(t_env *env, char *name);
+void		ft_addenv_or_update(t_env **env, char *name, char *value);
+void		ft_removeenv(t_env **env, char *name);
 int			add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local);
-void		update_input(t_g_data *g_data);
+void		update_input(t_g_data *g_data, char *pre_input);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		handle_sigint_heredoc(int sig);

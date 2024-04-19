@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 17:15:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:20:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_data(t_data *data)
 void	free_forked_data_structure(t_data **data)
 {
 	free_forked_data(*data);
+	free((*data)->g_data);
 	free(*data);
 }
 
@@ -36,6 +37,7 @@ void	free_data_structure(t_data **data)
 void	fail_exit_shell(t_g_data *g_data)
 {
 	ft_clear_memory(g_data);
+	free(g_data);
 	printf("Fatal error: failed to allocate memory.\n");
 	exit(EXIT_FAILURE);
 }
