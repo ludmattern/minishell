@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 19:12:20 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:08:50 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ void	launch_parsing(t_g_data *g_data)
 {
 	g_data->lexed->last = g_data->lexed->first;
 	while (g_data->lexed->last->next != NULL)
-	{
-		//printf("%s\n",g_data->lexed->last->value );
 		g_data->lexed->last = g_data->lexed->last->next;
-	}
-	g_data->data->ast = build_ast(&g_data->lexed->last, g_data->data->last_exit_status, g_data);
-	// if (!data->ast)
-	// 	free_parsing(data->ast, lexed);
-	
+	g_data->data->ast = build_ast(&g_data->lexed->last, \
+	g_data->data->last_exit_status, g_data);
 	free_lexed(g_data->save);
 }
 
@@ -63,14 +58,11 @@ void	update_history(t_g_data *g_data, int t)
 		g_data->in_putsave = NULL;
 		g_data->in_put = NULL;
 	}
-	
 }
 
 void	update_data(t_g_data *g_data)
 {
 	g_data->data = malloc(sizeof(t_data));
-	//if (!data)
-	//	return (printf("MALLOC ERROR"));
 	ft_bzero(g_data->data, sizeof(t_data));
 	g_data->data->mini_env = g_data->mini_env;
 	g_data->data->last_exit_status = g_data->last_exit_status;
