@@ -6,7 +6,7 @@
 #    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 12:33:33 by fprevot          ###   ########.fr        #
+#    Updated: 2024/04/19 12:45:07 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,4 +98,4 @@ re: fclean all
 
 FORCE:
 
-.PHONY: all, clean, run, valgrind, FORCE, fclean, re
+.PHONY: all, clean, run, valgrind, valenv, FORCE, fclean, re

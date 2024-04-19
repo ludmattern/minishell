@@ -91,7 +91,8 @@ char	*replace_env_vars(t_g_data *data, int i)
 {
 	t_env_context	ctx;
 
-	init_env_ctx(&ctx, data, ctx.res[i], 1);
+	memset(&ctx, 0, sizeof(t_env_context));
+	init_env_ctx(&ctx, data, 0, 1);
 	while (ctx.res && ctx.res[i] != '\0')
 	{
 		init_env_ctx(&ctx, data, ctx.res[i], 2);
