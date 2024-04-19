@@ -92,7 +92,6 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 
 void	launch_expand(t_g_data *g_data)
 {
-	//printlex(g_data->lexed);
 	expe(g_data->lexed, g_data->last_exit_status, g_data);
 	if (g_heredoc_sigint == 2)
 		return ;

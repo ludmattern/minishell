@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:01:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 16:36:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:19:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	syntax2(const char *cmd, int *status)
 	char	*token;
 
 	token = NULL;
-	if (!check_par(cmd, &token))
+	if (!check_par(cmd, &token, 0, 0))
 	{
 		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
 		free(token);
