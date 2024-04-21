@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:12:22 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:15:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	update_input(t_g_data *g_data, char *pre_input)
 		free(g_data->in_putsave);
 		write(STDOUT_FILENO, "exit\n", 5);  
 		ft_clear_memory(g_data);
+		free(g_data);
 		close_standard_fds();
 		exit(EXIT_SUCCESS);
 	}

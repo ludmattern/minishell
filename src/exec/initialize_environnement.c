@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_environnement.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 15:28:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:18:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
