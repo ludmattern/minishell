@@ -6,24 +6,25 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 14:55:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:03:18 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
 
-int g_heredoc_sigint = 0;
+int	g_heredoc_sigint = 0;
 
-char	*init_input(void)
+char	*init_bash(void)
 {
-	static char buffer[1024];
-	buffer[0] = 0;
-	char *host = NULL;
-	char *tmp;
-	char *tmp2;
-	char *usr;
+	static char	buffer[1024];
+	char		*host;
+	char		*tmp;
+	char		*tmp2;
+	char		*usr;
 
+	host = NULL;
+	buffer[0] = 0;
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
 	
@@ -38,31 +39,22 @@ char	*init_input(void)
 				return (buffer);
 			host = ft_strndup(tmp2 + 6, 6);
 		}
-		ft_sprintf(buffer, "%s@%s:", usr, host);
-		free(host);
+		return (ft_sprintf(buffer, "%s@%s:", usr, host), free(host), buffer);
 	}
 	else
-		ft_sprintf(buffer, "minishell:");
-	return (buffer);
+		return (ft_sprintf(buffer, "minishell:"), buffer);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	*g_data;
-	int			t;
+
 	(void)argv;
 	(void)argc;
-	//print_start();
-	signals_init();
-	g_data = malloc(sizeof(t_g_data));
-	if (!g_data)
-		exit(EXIT_FAILURE);
-	memset(g_data, 0, sizeof(t_g_data));
 	initialize_environnement(&g_data, envp);
-	g_data->pre_input = init_input();
 	while (1)
 	{
-		t = 0;
+		g_data->t = 0;
 		update_input(g_data, g_data->pre_input);
 		if (g_data->in_put[0])
 		{
@@ -73,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 				free(g_data->in_put);
 				g_data->in_put = NULL;
 				g_data->in_put = replace_env_vars(g_data, 0);
-				t = 1;
+				g_data->t = 1;
 				if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 				{
 					launch_lexing(g_data);
@@ -88,22 +80,16 @@ int	main(int argc, char **argv, char **envp)
 						launch_parsing(g_data);
 						launch_execution(g_data);
 					}
-					t = 1;
 				}
 				else
 					free(g_data->data);
 			}
-			update_history(g_data, t);
+			update_history(g_data);
 		}
 	}
 	ft_clear_memory(g_data);
 	return (0);
 }
 
-// # Should skip the empty argument, and print hello after spaces
-// echo - "" "  " hello
-// input apres echo -n bizarre (history) //cest a cause du malloc de readline qui fait la taille du prompt et donc cela saute le reste
 //cat CTRL+C ajouter /n
-//car CTRL+\ ne doit rien faire dans le cas ou jai des child ca mrche pas
-
-//segafault dans le cas d'un env -i au moment de free le mini_env
+//leak en cas de CTRL+D (free le pointeur general de la structure)

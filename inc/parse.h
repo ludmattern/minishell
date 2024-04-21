@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 17:14:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 14:57:55 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool		check_local(char *arg);
 void		launch_parsing(t_g_data *g_data);
 void		launch_lexing(t_g_data *g_data);
 void		launch_execution(t_g_data *g_data);
-void		update_history(t_g_data *g_data, int t);
+void		update_history(t_g_data *g_data);
 void		update_input(t_g_data *g_data, char *pre_input);
 void		ft_clear_memory(t_g_data *g_data);
 void		update_data(t_g_data *g_data);

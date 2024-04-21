@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:12:36 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 21:05:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:24:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ static int	process_format(const char **format, va_list *args, char *buffer)
 	else if (**format == '%')
 		result = print_char_sprintf('%', buffer);
 	else
-	{
-		(*format)--;
-		return (0);
-	}
+		return ((*format)--, 0);
 	if (result == -1)
 		return (-1);
 	return (result);
