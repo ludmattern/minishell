@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:10:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:41:14 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,6 @@ void	execute_command(t_data *data, t_node *node)
 	command_exec_failure(data, node->expanded_args[0], EXIT_GENERAL_ERROR);
 }
 
-int	update_last_arg(t_data *data, t_node *node)
-{
-	char	*last_arg;
-	char	*tmp;
-	size_t	nb_args;
-
-	nb_args = ft_double_array_len(node->expanded_args);
-	last_arg = ft_strdup(node->expanded_args[nb_args - 1]);
-	if (!last_arg)
-		return (EXIT_GENERAL_ERROR);
-	tmp = NULL;
-	tmp = ft_strdup("_");
-	if (!tmp)
-		return (ft_free(last_arg), EXIT_GENERAL_ERROR);
-	if (add_or_update_env(&data->mini_env, tmp, last_arg, true))
-		return (free(tmp), ft_free(last_arg), EXIT_GENERAL_ERROR);
-	return (EXIT_SUCCESS);
-}
-
 int	handle_command_child(t_data *data, t_node *node, bool piped)
 {
 	int	status;
@@ -108,8 +89,6 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 
 	if (node->expanded_args[0] == NULL)
 		return (EXIT_SUCCESS);
-	if (update_last_arg(data, node))
-		return (EXIT_FAILURE);
 	if (is_non_forked_builtins(node))
 	{
 		exit_status = launch_non_forked_builtins(data, node, piped);

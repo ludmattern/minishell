@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:10:46 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:09:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ size_t		ft_env_size(t_env *lst);
 void		ft_env_add_back(t_env **lst, t_env *new);
 t_env		*ft_env_new_entrie(char *name, char *value, bool is_local);
 t_env		*ft_create_env_entry(char *env_str);
-t_env		*create_mini_env(char **envp);
-void		initialize_shell_variables(t_env **mini_env);
+t_env		*create_mini_env(char **envp, t_g_data **g_data);
+bool		initialize_shell_variables(t_env **mini_env);
 void		init_minishell(t_g_data **g_data, char **env, char **av, int ac);
 char		*ft_get_env(char *tmp_env, t_env *mini_env);
 t_env		*find_env_var(t_env *env, char *name);
-void		ft_addenv_or_update(t_env **env, char *name, char *value);
+bool		ft_addenv_or_update(t_env **env, char *name, char *value);
 void		ft_removeenv(t_env **env, char *name);
 int			add_or_update_env(t_env **mini_env, char *name, char *value,
 				bool is_local);
@@ -145,5 +145,6 @@ misc
 */
 void		update_input(t_g_data *g_data, char *pre_input);
 char		*init_bash(void);
+void		main_clean_exit(t_g_data *g_data);
 
 #endif

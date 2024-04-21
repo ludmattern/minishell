@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 14:04:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:01:29 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,37 +69,57 @@ Finds the index of the environment variable with the specified name.
 t_env	*find_env_var(t_env *env, char *name)
 {
 	t_env	*tmp;
+	size_t	len;
 
 	tmp = env;
 	while (tmp)
 	{
-		if (strcmp(tmp->name, name) == 0)
+		len = ft_strlen(tmp->name) + 1;
+		if (ft_strncmp(tmp->name, name, len) == 0)
 			return (tmp);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-void	ft_addenv_or_update(t_env **env, char *name, char *value)
+bool	ft_addenv_or_update(t_env **env, char *name, char *value)
 {
 	t_env	*var;
 	t_env	*new_var;
+	char	*name2;
+	char	*value2;
 
+	value2 = NULL;
 	var = find_env_var(*env, name);
 	if (var)
 	{
 		ft_free(var->value);
 		if (value && *value)
+		{
 			var->value = ft_strdup(value);
+			if (!var->value)
+				return (false);
+		}
 		else
 			var->value = NULL;
 	}
 	else
 	{
-		new_var = ft_env_new_entrie(strdup(name), ft_strdup(value), false);
-		if (new_var)
-			ft_env_add_back(env, new_var);
+		name2 = ft_strdup(name);
+		if (!name2)
+			return (false);
+		if (value && *value)
+		{
+			value2 = ft_strdup(value);
+			if (!value2)
+				return (ft_free(name2), false);
+		}
+		new_var = ft_env_new_entrie(name2, value2, false);
+		if (!new_var)
+			return (ft_free(name2), ft_free(value2), false);
+		ft_env_add_back(env, new_var);
 	}
+	return (true);
 }
 
 void	ft_removeenv(t_env **env, char *name)

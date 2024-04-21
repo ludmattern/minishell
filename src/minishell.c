@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:16:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:09:07 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*init_bash(void)
 	buffer[0] = 0;
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
-	
 	if (usr && usr[0] && tmp && tmp[0])
 	{
 		if (ft_strlen(tmp) < 6)
@@ -38,6 +37,8 @@ char	*init_bash(void)
 			if (ft_strlen(tmp2 + 6) < 6)
 				return (buffer);
 			host = ft_strndup(tmp2 + 6, 6);
+			if (!host)
+				return (NULL);
 		}
 		return (ft_sprintf(buffer, "%s@%s:", usr, host), free(host), buffer);
 	}
@@ -72,22 +73,37 @@ void	handle_user_input(t_g_data *g_data)
 		free(g_data->data);
 }
 
+void	main_clean_exit(t_g_data *g_data)
+{
+	free_mini_env(g_data->mini_env);
+	free(g_data);
+	close_standard_fds();
+	exit(EXIT_GENERAL_ERROR);
+}
+
 void	init_minishell(t_g_data **g_data, char **env, char **av, int ac)
 {
 	(void)av;
 	if (ac != 1)
 	{
 		ft_putstr_fd("minishell: no arguments needed\n", STDERR_FILENO);
+		close_standard_fds();
 		exit(EXIT_GENERAL_ERROR);
 	}
 	signals_init();
 	*g_data = malloc(sizeof(t_g_data));
 	if (!*g_data)
-		exit(EXIT_FAILURE);
+	{
+		close_standard_fds();
+		exit(EXIT_GENERAL_ERROR);
+	}
 	memset(*g_data, 0, sizeof(t_g_data));
-	(*g_data)->mini_env = create_mini_env(env);
-	initialize_shell_variables(&(*g_data)->mini_env);
+	(*g_data)->mini_env = create_mini_env(env, g_data);
+	if (!initialize_shell_variables(&(*g_data)->mini_env))
+		main_clean_exit(*g_data);
 	(*g_data)->pre_input = init_bash();
+	if (!(*g_data)->pre_input)
+		main_clean_exit(*g_data);
 	(*g_data)->t = 0;
 }
 
