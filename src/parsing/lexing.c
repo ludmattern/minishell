@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 13:36:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:08:42 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,15 @@ int	fill_t_word(t_token *lex, int *i, int j, char *in_put)
 
 int	init_filling(t_token *lex, int *i, char *in_put)
 {
+	int	t;
+
+	t = 0;
 	while (in_put && in_put[*i] == ' ')
 		(*i)++;
 	if (in_put[*i] == '(')
-		fill_type(lex, 9, i, 1);
+		t = fill_type(lex, 9, i, 1);
 	else if (in_put[*i] == ')')
-		fill_type(lex, 10, i, 1);
+		t = fill_type(lex, 10, i, 1);
 	else if (in_put[*i] != '|' && \
 		!(in_put[*i] == '&' && in_put[*i + 1] == '&') && in_put[*i] != '(' \
 		&& in_put[*i] != ')' && in_put[*i] != '\0')
@@ -96,11 +99,13 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 			return (-1);
 	}
 	else if (in_put[*i] == '|' && in_put[*i + 1] != '|')
-		fill_type(lex, 5, i, 1);
+		t = fill_type(lex, 5, i, 1);
 	else if (in_put[*i] == '&' && in_put[*i + 1] == '&')
-		fill_type(lex, 6, i, 2);
+		t = fill_type(lex, 6, i, 2);
 	else if (in_put[*i] == '|' && in_put[*i + 1] == '|')
-		fill_type(lex, 7, i, 2);
+		t = fill_type(lex, 7, i, 2);
+	if (t == -1)
+		return (-1);
 	return (0);
 }
 
