@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 14:56:20 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:28:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,4 @@ t_env	*create_mini_env(char **envp)
 		ft_env_add_back(&minishell_env, tmp);
 	}
 	return (minishell_env);
-}
-
-void	initialize_environnement(t_g_data **g_data, char **envp)
-{
-	(*g_data)->t = 0;
-	signals_init();
-	*g_data = malloc(sizeof(t_g_data));
-	if (!*g_data)
-		exit(EXIT_FAILURE);
-	memset(*g_data, 0, sizeof(t_g_data));
-	(*g_data)->mini_env = create_mini_env(envp);
-	initialize_shell_variables(&(*g_data)->mini_env);
-	(*g_data)->pre_input = init_bash();
 }

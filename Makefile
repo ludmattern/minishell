@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/21 14:27:41 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/21 15:33:38 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/handling_pipeline_utils.c \
 					$(EXECDIR)/applying_redirections.c \
 					$(EXECDIR)/command_exec_failure.c \
+					$(EXECDIR)/handling_builtins.c \
 					$(EXECDIR)/handling_pipeline.c \
 					$(EXECDIR)/handling_command.c \
 					$(EXECDIR)/ft_export_utils.c \

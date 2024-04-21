@@ -6,11 +6,21 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/16 15:29:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:27:22 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
+
+/*
+Prints an error message and exit the child process.
+*/
+int	heredoc_dup2_creation_failure(int pipefd[2])
+{
+	perror(MS"dup2 error");
+	close_pipe_fds(pipefd);
+	return (EXIT_DUP2_FAILURE);
+}
 
 /*
 Prints an error message and exit the child process.

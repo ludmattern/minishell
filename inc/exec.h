@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 14:54:42 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:10:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			heredoc_child_process(t_data *data, int pipefd[2],
 int			heredoc_parent_process(pid_t pid, int pipefd[2]);
 int			read_heredoc_and_write_to_pipe(const char *stop, int write_fd);
 bool		match_delimiter(const char *line, const char *stop);
+int			heredoc_dup2_creation_failure(int pipefd[2]);
 
 /*
 handling nodes
@@ -82,12 +83,13 @@ size_t		ft_export_env_size(t_env *lst);
 void		env_err(t_env *mini_env, char *name, char *value);
 void		free_mini_env(t_env *mini_env);
 t_env		*ft_env_last(t_env *lst);
+size_t		ft_env_size(t_env *lst);
 void		ft_env_add_back(t_env **lst, t_env *new);
 t_env		*ft_env_new_entrie(char *name, char *value, bool is_local);
 t_env		*ft_create_env_entry(char *env_str);
 t_env		*create_mini_env(char **envp);
 void		initialize_shell_variables(t_env **mini_env);
-void		initialize_environnement(t_g_data **g_data, char **envp);
+void		init_minishell(t_g_data **g_data, char **env, char **av, int ac);
 char		*ft_get_env(char *tmp_env, t_env *mini_env);
 t_env		*find_env_var(t_env *env, char *name);
 void		ft_addenv_or_update(t_env **env, char *name, char *value);
@@ -107,6 +109,8 @@ int			ft_env(char **args, t_env *mini_env);
 int			ft_unset_vars(char **names, t_env **mini_env);
 int			ft_unset(char *name, t_env **mini_env);
 int			ft_exit(char **args, t_data **data);
+int			launch_non_forked_builtins(t_data *data, t_node *node, bool piped);
+bool		is_non_forked_builtins(t_node *node);
 
 /*
 handling errors

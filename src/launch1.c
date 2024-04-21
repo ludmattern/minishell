@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 15:01:45 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:10:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,9 @@ void	update_data(t_g_data *g_data)
 	ft_bzero(g_data->data, sizeof(t_data));
 	g_data->data->mini_env = g_data->mini_env;
 	g_data->data->last_exit_status = g_data->last_exit_status;
+	g_data->in_putsave = ft_strdup(g_data->in_put);
+	free(g_data->in_put);
+	g_data->in_put = NULL;
+	g_data->in_put = replace_env_vars(g_data, 0);
+	g_data->t = 1;
 }

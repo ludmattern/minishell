@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 16:16:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:29:31 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 #include "../../inc/parse.h"
-
-int	heredoc_dup2_creation_failure(int pipefd[2])
-{
-	perror(MS"dup2 error");
-	close_pipe_fds(pipefd);
-	return (EXIT_DUP2_FAILURE);
-}
 
 int	redirect_heredoc_pipe(const char *heredoc_input, bool piped)
 {
@@ -108,31 +101,6 @@ int	redirect_append(const char *filename)
 		return (EXIT_DUP2_FAILURE);
 	}
 	return (EXIT_SUCCESS);
-}
-
-/*
-Redirects the input to a heredoc.
-*/
-int	redirect_heredoc(t_data *data, const char *delimiter)
-{
-	int		pipefd[2];
-	pid_t	pid;
-
-	if (pipe(pipefd) < 0)
-		return (command_redirection_failure("pipe", EXIT_PIPE_FAILURE));
-	pid = fork();
-	if (pid < 0)
-	{
-		close_pipe_fds(pipefd);
-		close_standard_fds();
-		return (command_redirection_failure("fork", EXIT_FORK_FAILURE));
-	}
-	else if (pid == 0)
-		return (heredoc_child_process(data, pipefd, delimiter));
-	else
-	{
-		return (heredoc_parent_process(pid, pipefd));
-	}
 }
 
 /*
