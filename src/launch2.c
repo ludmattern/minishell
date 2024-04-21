@@ -6,13 +6,12 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:14:46 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:15:58 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
 #include "../inc/exec.h"
-
 
 void	free_lexed(t_token *lexed)
 {
@@ -51,34 +50,15 @@ void	ft_clear_memory(t_g_data *g_data)
 	free(g_data->in_putsave);
 }
 
-
-
 void	update_input(t_g_data *g_data, char *pre_input)
-{/*
-	char *prompt;
-	const char *green = "\033[1;36m";
-	const char *blue = "\033[1;35m";
-	const char *reset = "\033[0m"; 
-	g_data->path = getcwd(NULL, 0);
-	char *colored_path = ft_strjoin(green, g_data->path);
-	char *colored_prompt = ft_strjoin(colored_path, blue);
-	free(colored_path);
-	prompt = ft_strjoin(colored_prompt, " 🤖 $> ");
-	free(colored_prompt);
-	prompt = ft_strjoin(prompt, reset); 
-*/
+{
 	char *prompt;
 	char *pre_input2;
 	char *cwd = NULL;
 	char *tmp = NULL;
 	char *home = NULL;
-	/*g_data->path = getcwd(NULL, 0);
-	char *user = getenv("USER");
-	char *z = extract_hostname_from_env();
-	prompt = ft_strjoin(user, "@");
-	prompt = ft_strjoin(prompt, z);
-	prompt = ft_strjoin(prompt, g_data->path);
-	prompt = ft_strjoin(prompt, "$");*/
+
+	g_data->t = 0;
 	tmp = getcwd(NULL, 0);
 	if (tmp)
 	{
@@ -105,8 +85,6 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	
 	g_data->in_put = readline(prompt);
 	free(prompt);
-	//free(user);
-	//free(z);
 	free(g_data->join);
 	free(g_data->path);
 	if (!g_data->in_put) 
