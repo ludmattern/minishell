@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 15:22:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:15:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*init_bash(void)
 	buffer[0] = 0;
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
+	
 	if (usr && usr[0] && tmp && tmp[0])
 	{
 		if (ft_strlen(tmp) < 6)
