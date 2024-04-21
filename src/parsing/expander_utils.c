@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 12:55:20 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 17:47:54 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ char	*skip_quote(char *tkn, char q, t_g_data *data)
 
 	i = 0;
 	j = 0;
+	(void)data;
 	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
 	if (!res)
-		fail_exit_shell(data);
+		return (NULL);
 	while (tkn[i] != '\0')
 	{
 		if (tkn[i] != q && tkn[i] != -1)
@@ -39,8 +40,8 @@ char	*skip_quote(char *tkn, char q, t_g_data *data)
 	return (res);
 }
 
-char	*replace_substring(const char *original, \
-	int start, const char *replace, t_g_data *data)
+char	*replace_substring(char *original, \
+	int start, char *replace, t_g_data *data)
 {
 	int		original_len;
 	int		replace_len;
@@ -54,7 +55,11 @@ char	*replace_substring(const char *original, \
 	new_len = original_len - length + replace_len;
 	new = malloc(new_len + 1);
 	if (!new)
+	{
+		free(replace);
+		free(original);
 		fail_exit_shell(data);
+	}
 	ft_strncpy(new, original, start);
 	new[start] = '\0';
 	ft_strcat(new, replace);
@@ -77,7 +82,7 @@ char	find_first(char *arg)
 	}
 	return ('\0');
 }
-
+/*
 void	expand_input(t_g_data *data)
 {
 	int		j;
@@ -102,3 +107,4 @@ void	expand_input(t_g_data *data)
 		j++;
 	}
 }
+*/

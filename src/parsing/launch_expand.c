@@ -60,6 +60,8 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
 		token->expanded[0] = ft_strdup("EMPTY");
+		if (!token->expanded[0])
+			fail_exit_shell(token->g_data);
 		token->expanded[1] = NULL;
 	}
 	else

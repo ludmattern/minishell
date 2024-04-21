@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:16:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 17:53:33 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,4 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //cat CTRL+C ajouter /n
-//leak en cas de CTRL+D (free le pointeur general de la structure)
+//leaks echo "" dans l4exec

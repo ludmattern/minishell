@@ -61,7 +61,10 @@ void	process_status_var(t_env_context *ctx, int *i)
 {
 	ctx->status_str = ft_itoa(ctx->data->last_exit_status);
 	if (!ctx->status_str)
+	{
+		free(ctx->res);
 		fail_exit_shell(ctx->data);
+	}
 	ctx->new = replace_substring(ctx->res, *i, ctx->status_str, ctx->data);
 	free(ctx->res);
 	ctx->res = ctx->new;

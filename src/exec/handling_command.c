@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:10:17 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:29:22 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	update_last_arg(t_data *data, t_node *node)
 	size_t	nb_args;
 
 	nb_args = ft_double_array_len(node->expanded_args);
+	if (!node->expanded_args[nb_args - 1] || !node->expanded_args[nb_args - 1][0])
+		return (EXIT_SUCCESS);
 	last_arg = ft_strdup(node->expanded_args[nb_args - 1]);
 	if (!last_arg)
 		return (EXIT_GENERAL_ERROR);
