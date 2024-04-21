@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 15:58:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:55:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*init_input(void)
 
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
+	
 	if (usr && usr[0] && tmp && tmp[0])
 	{
 		if (ft_strlen(tmp) < 6)
