@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 17:08:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:01:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,16 @@ void	launch_execution(t_g_data *g_data)
 	free_data_structure(&g_data->data);
 }
 
-void	update_history(t_g_data *g_data, int t)
+void	update_history(t_g_data *g_data)
 {
-	if (t == 1)
-	{
+	if (g_data->t == 1)
 		add_history(g_data->in_putsave);
-		free(g_data->in_putsave);
-		g_data->in_putsave = NULL;
-		free(g_data->in_put);
-		g_data->in_put = NULL;
-	}
 	else
-	{
 		add_history(g_data->in_put);
-		free(g_data->in_put);
-		free(g_data->in_putsave);
-		g_data->in_putsave = NULL;
-		g_data->in_put = NULL;
-	}
+	free(g_data->in_put);
+	free(g_data->in_putsave);
+	g_data->in_putsave = NULL;
+	g_data->in_put = NULL;
 }
 
 void	update_data(t_g_data *g_data)

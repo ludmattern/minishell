@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 18:32:46 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:59:48 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,13 @@ char	*init_bash(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_g_data	*g_data;
-	int			t;
 
 	(void)argv;
 	(void)argc;
-	signals_init();
-	g_data = malloc(sizeof(t_g_data));
-	if (!g_data)
-		exit(EXIT_FAILURE);
-	memset(g_data, 0, sizeof(t_g_data));
 	initialize_environnement(&g_data, envp);
-	g_data->pre_input = init_bash();
 	while (1)
 	{
-		t = 0;
+		g_data->t = 0;
 		update_input(g_data, g_data->pre_input);
 		if (g_data->in_put[0])
 		{
@@ -71,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 				free(g_data->in_put);
 				g_data->in_put = NULL;
 				g_data->in_put = replace_env_vars(g_data, 0);
-				t = 1;
+				g_data->t = 1;
 				if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 				{
 					launch_lexing(g_data);
@@ -86,12 +79,11 @@ int	main(int argc, char **argv, char **envp)
 						launch_parsing(g_data);
 						launch_execution(g_data);
 					}
-					t = 1;
 				}
 				else
 					free(g_data->data);
 			}
-			update_history(g_data, t);
+			update_history(g_data);
 		}
 	}
 	ft_clear_memory(g_data);

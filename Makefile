@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/19 18:09:40 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/21 14:27:41 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/ft_pwd.c \
 					$(EXECDIR)/ft_env.c \
 					$(EXECDIR)/ft_cd.c
+
 PARSE_SRCS		:=	$(PARSEDIR)/clean.c \
 					$(PARSEDIR)/parse.c \
 					$(PARSEDIR)/get_io.c \
@@ -133,7 +134,6 @@ stop_normal_spinner:
 	@kill `cat spinner_pid.txt` 2>/dev/null || true
 	@rm -f spinner_pid.txt
 	@echo "\nCompilation of mandatory minishell sucessful."
-
 
 bash_spinner:
 	@echo "\033[1;32mCompiling minibash ....\c\033[0m"
