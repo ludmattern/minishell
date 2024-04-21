@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:16:11 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:16:57 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	handle_user_input(t_g_data *g_data)
 	if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 	{
 		launch_lexing(g_data);
+		if (g_data->lexed->error == -1)
+		{
+			free_lexed(g_data->lexed);
+			fail_exit_shell(g_data);
+		}
 		launch_expand(g_data);
 		if (g_heredoc_sigint == 2)
 		{

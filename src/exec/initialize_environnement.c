@@ -6,11 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/21 15:13:23 by fprevot          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/21 15:28:13 by lmattern         ###   ########.fr       */
->>>>>>> bf588359e10ec5f2a0ea8fc3be87a034b5037cfd
+/*   Updated: 2024/04/21 16:18:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +102,3 @@ t_env	*create_mini_env(char **envp)
 	}
 	return (minishell_env);
 }
-<<<<<<< HEAD
-
-void	initialize_environnement(t_g_data **g_data, char **envp)
-{
-	signals_init();
-	*g_data = malloc(sizeof(t_g_data));
-	if (!*g_data)
-		exit(EXIT_FAILURE);
-	memset(*g_data, 0, sizeof(t_g_data));
-	(*g_data)->t = 0;
-	(*g_data)->mini_env = create_mini_env(envp);
-	initialize_shell_variables(&(*g_data)->mini_env);
-	(*g_data)->pre_input = init_bash();
-}
-=======
->>>>>>> bf588359e10ec5f2a0ea8fc3be87a034b5037cfd
