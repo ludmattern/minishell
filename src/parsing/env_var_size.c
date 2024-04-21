@@ -6,12 +6,21 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 13:40:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:49:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
+
+void	handle_failure(char *tkn, char *env, t_g_data *data)
+{
+	if (tkn)
+		free(tkn);
+	if (env)
+		free(env);
+	fail_exit_shell(data);
+}
 
 void	init_var_size_ctx(t_var_size_context *s)
 {
@@ -37,13 +46,15 @@ char *tkn, t_g_data *data, bool dquotes)
 	s->env_length = s->i - s->start;
 	env = malloc(s->env_length + 1);
 	if (!env)
-		fail_exit_shell(data);
+		handle_failure(tkn, env, data);
 	ft_strncpy(env, tkn + s->start, s->env_length);
 	env[s->env_length] = '\0';
 	env_val = ft_get_env3(env, data->mini_env, data, dquotes);
 	if (!env_val)
 	{
 		env_val = malloc(2);
+		if (!env_val)
+			handle_failure(tkn, env, data);
 		env_val[0] = -1;
 		env_val[1] = '\0';
 	}

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 13:16:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:37:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_g_data *data, bool dquotes)
 	{
 		ctx->res = malloc(ctx->s.size);
 		if (!ctx->res)
-			fail_exit_shell(data);
+			return(free(tkn), fail_exit_shell(data));
 		ft_bzero(ctx->res, ctx->s.size);
 	}
 }
@@ -40,7 +40,7 @@ t_g_data *data, bool dquotes)
 	ctx->env_length = ctx->i - ctx->start;
 	ctx->tmp_env = malloc(ctx->env_length + 1);
 	if (!ctx->tmp_env)
-		fail_exit_shell(data);
+		return(free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
 	ctx->tmp_env[ctx->env_length] = '\0';
 	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, dquotes);
@@ -48,6 +48,8 @@ t_g_data *data, bool dquotes)
 	if (!ctx->env_val)
 	{
 		ctx->env_val = malloc(2);
+		if (!ctx->env_val)
+			return(free(tkn), free(ctx->res), fail_exit_shell(data));
 		ctx->env_val[0] = -1;
 		ctx->env_val[1] = '\0';
 	}

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:04:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 15:00:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 17:59:57 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *value, int last_exit_status, t_g_data *data)
 
 	io = malloc(sizeof(t_io_node));
 	if (!io)
-		fail_exit_shell(data);
+		return (NULL);
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	if (io->type == IO_HEREDOC)
@@ -32,7 +32,7 @@ char *value, int last_exit_status, t_g_data *data)
 	else
 		io->value = ft_strdup(value);
 	if (!io->value)
-		fail_exit_shell(data);
+		return (free(io), NULL);
 	if (io->type == IO_HEREDOC)
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else

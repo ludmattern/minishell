@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 15:21:38 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:12:34 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,18 @@ t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 
 	new = malloc(sizeof(t_node) * 1);
 	if (!new)
+	{
+		ft_free_double_array(tkn->expanded);
 		fail_exit_shell(g_data);
+	}
 	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
 	if (!new->args)
+	{
+		free(new);
+		ft_free_double_array(tkn->expanded);
 		fail_exit_shell(g_data);
+	}
 	new->type = N_INIT;
 	return (new);
 }

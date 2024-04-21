@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 15:35:02 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:58:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	free_data_structure(t_data **data)
 
 void	fail_exit_shell(t_g_data *g_data)
 {
+	if (g_data->lexed)
+		free_lexed(g_data->lexed);
 	ft_clear_memory(g_data);
 	free_data_structure(&g_data->data);
 	free(g_data);
