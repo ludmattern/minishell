@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:44:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:15:11 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	handle_command_child(t_data *data, t_node *node, bool piped)
 	int	status;
 
 	signal(SIGINT, proc_handle_sigint);
-	signal(SIGQUIT, proc_handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	status = apply_command_redirections(node->io_list, piped, node->is_empty);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);

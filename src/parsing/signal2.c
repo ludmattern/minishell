@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 15:02:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/22 11:19:18 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	proc_handle_sigint(int sig)
 void	proc_handle_sigquit(int sig)
 {
 	(void)sig;
-	exit(3);
 }
 
 void	handle_sigint_herdoc(int sig)
