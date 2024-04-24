@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 18:12:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:35:13 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,10 @@ bool	check_local(char *arg)
 	return (false);
 }
 
-t_node	*create_command_node(t_token *tkn, int \
-last_exit_status, t_g_data *g_data)
+t_node	*create_command_node(t_token *tkn, t_g_data *g_data)
 {
 	t_node	*node;
 
-	(void)last_exit_status;
 	node = create_empty_node(tkn, g_data);
 	node->io_list = tkn->io_list;
 	node->expanded_args = tkn->expanded;

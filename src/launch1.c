@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 18:18:18 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 19:05:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@ void	launch_lexing(t_g_data *g_data)
 
 void	launch_parsing(t_g_data *g_data)
 {
-	g_data->lexed->last = g_data->lexed->first;
-	while (g_data->lexed->last->next != NULL)
-		g_data->lexed->last = g_data->lexed->last->next;
-	g_data->data->ast = build_ast(&g_data->lexed->last, \
-	g_data->data->last_exit_status, g_data);
+	t_node	**root;
+	t_token *current_lex;
+	
+	g_data->data->ast = NULL;
+	current_lex = g_data->lexed->first;
+	root = &g_data->data->ast;
+	while (current_lex)
+	{
+		build_ast(&current_lex, &g_data->data->ast, root, g_data);
+		current_lex = current_lex->next;
+	}
+	print_ast(*root, 10);
+	
 	free_lexed(g_data->save);
 }
 
