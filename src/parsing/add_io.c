@@ -66,13 +66,13 @@ int last_exit_status, t_g_data *data)
 		fail_exit_shell(data);
 	new_io = create_io_node_from_string(io->type, filename, \
 	last_exit_status, data);
+	if (g_heredoc_sigint == 2)
+		return ;
 	if (new_io == NULL)
 	{
 		free(filename);
 		fail_exit_shell(data);
 	}
 	free(filename);
-	if (g_heredoc_sigint == 2)
-		return ;
 	initialize_and_add_io_node(io, new_io);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:44:13 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:18:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,3 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //cat CTRL+C ajouter /n
-//leaks echo "" dans l4exec
