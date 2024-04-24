@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:35:13 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:50:36 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	init_ft_cd(char *oldpwd, bool *alloc)
 
 bool	cd_to_home(char **args, t_env **env, char **path, bool *alloc)
 {
-	if (args[1] == NULL)
+	if (args[1] == NULL || (args[1][0] == '~' && args[1][1] == '\0'))
 	{
 		*path = ft_get_env("HOME", *env);
 		*alloc = true;
-		if (path == NULL)
+		if (!path || !*path)
 		{
 			ft_eprintf(MS"cd: HOME not set\n");
 			return (false);

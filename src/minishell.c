@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/22 11:18:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:57:41 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,3 +127,31 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //cat CTRL+C ajouter /n
+//MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les ss processus aussi) (a voir pour les autres signaux)
+/*heredoc :
+		ne pas expand les var d'environnement dans le delimiteur du heredoc (mais retirer les guillemets) (<< $delimiteur -> ne pas expand $delimiteur)
+		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
+		sinon, le faire (cas actuel)*/
+/* redirection :
+ 	redirection seule, ne se passe rien alors que le fichier devrait etre cree ou tente d'etre ouvert (exemple : < infile ou >> outfile)
+	idem dans un pipe (exemple : < infile | echo salut)*/
+/* code erreur :
+	ls: invalid option -- 'z' return 1 au lieu de 2*/
+/* mauvais arbre :
+.	ls && pwd | wc (tout est envoye dans le pipe alors que seul pwd devrait etre envoye
+.		tout doit etre au meme niveau mais ls $$ pwd sont a gauche de | et wc a droite
+. BON ARBRE A OBTENIR
+.
+.         &&
+.		/   \
+.	  ls     |
+.           / \
+.		  pwd  wc
+. nous :
+.            |
+.           / \
+.         &&  wc
+.        /  \   
+.		ls  pwd
+.
+.*/

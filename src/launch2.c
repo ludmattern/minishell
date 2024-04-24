@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/22 12:15:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 09:20:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,20 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	pre_input2 = ft_strjoin(cwd, "$ ");
 	free(cwd);
 	if (pre_input && pre_input[0])
-		prompt = ft_strjoin(pre_input, pre_input2);
+		tmp = ft_strjoin(pre_input, pre_input2);
 	else
-		prompt = ft_strdup(pre_input2);
+		tmp = ft_strdup(pre_input2);
 	free(pre_input2);
-	
+	if (g_data->last_exit_status)
+	{
+		pre_input2 = calloc(10, sizeof(char));
+		ft_sprintf(pre_input2, "[%d]", g_data->last_exit_status);
+		prompt = ft_strjoin(pre_input2, tmp);
+		free(pre_input2);
+	}
+	else
+		prompt = ft_strdup(tmp);
+	free(tmp);
 	g_data->in_put = readline(prompt);
 	free(prompt);
 	free(g_data->join);
