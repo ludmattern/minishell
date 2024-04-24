@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/24 12:57:41 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:40:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,12 @@ int	main(int argc, char **argv, char **envp)
 /*heredoc :
 		ne pas expand les var d'environnement dans le delimiteur du heredoc (mais retirer les guillemets) (<< $delimiteur -> ne pas expand $delimiteur)
 		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
-		sinon, le faire (cas actuel)*/
+		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
 /* redirection :
  	redirection seule, ne se passe rien alors que le fichier devrait etre cree ou tente d'etre ouvert (exemple : < infile ou >> outfile)
 	idem dans un pipe (exemple : < infile | echo salut)*/
 /* code erreur :
-	ls: invalid option -- 'z' return 1 au lieu de 2*/
+	ls: invalid option -- 'z' return 2 au lieu de 1*/
 /* mauvais arbre :
 .	ls && pwd | wc (tout est envoye dans le pipe alors que seul pwd devrait etre envoye
 .		tout doit etre au meme niveau mais ls $$ pwd sont a gauche de | et wc a droite
@@ -155,3 +155,7 @@ int	main(int argc, char **argv, char **envp)
 .		ls  pwd
 .
 .*/
+/*
+add_new_io_node(t_io_bundle *io, char **cursor, \
+int last_exit_status, t_g_data *data --> virer data et last exit status (peut etre ?)
+*/

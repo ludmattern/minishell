@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/22 11:11:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:36:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 # include <limits.h>
 
 t_token		*lex_me(char *in_put, int i);
-t_node		*build_ast(t_token **current, \
-int last_exit_status, t_g_data *g_data);
+void	build_ast(t_token **current_lex, t_node **root, t_node **current_node, t_g_data *g_data);
 char		**expander(char *arg, int last_exit_status, t_g_data *data);
 char		*get_command_path(char *cmd, t_g_data *g_data);
 char		*skip_quote(char *tkn, char q, t_g_data *data);
@@ -39,8 +38,7 @@ void		imore(int size, int *i);
 t_io_node	*parse_io_from_command(char *cmd, int \
 last_exit_status, t_g_data *data);
 void		free_data_structure(t_data **data);
-t_node		*create_command_node(t_token *tkn, \
-int last_exit_status, t_g_data *g_data);
+t_node		*create_command_node(t_token *tkn, t_g_data *g_data);
 t_node		*create_operator_node(t_token *tkn, t_g_data *g_data);
 t_node		*create_empty_node(t_token *tkn, t_g_data *g_data);
 void		printredir(t_io_node *io);
