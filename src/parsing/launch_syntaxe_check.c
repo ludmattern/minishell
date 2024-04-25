@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:01:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 15:19:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/25 19:12:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ bool	syntax2(const char *cmd, int *status)
 	char	*token;
 
 	token = NULL;
-	if (!check_par(cmd, &token, 0, 0))
-	{
-		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
-		free(token);
-		*status = EXIT_SYNTAX_ERROR;
-		return (true);
-	}
 	if (!check_first(cmd, &token))
 	{
 		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
@@ -44,6 +37,13 @@ bool	syntax2(const char *cmd, int *status)
 		return (true);
 	}
 	if (!check_redir(cmd, &token))
+	{
+		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
+		free(token);
+		*status = EXIT_SYNTAX_ERROR;
+		return (true);
+	}
+	if (!check_par(cmd, &token, 0, 0))
 	{
 		ft_eprintf(MS"syntax error near unexpected token `%s'\n", token);
 		free(token);
@@ -74,9 +74,9 @@ bool	syntax1(const char *cmd, int *status)
 
 bool	syntax_error(const char *cmd, int *status)
 {
-	if (syntax1(cmd, status) == true)
-		return (true);
 	if (syntax2(cmd, status) == true)
+		return (true);
+	if (syntax1(cmd, status) == true)
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/24 15:40:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/25 19:10:53 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,4 +158,6 @@ int	main(int argc, char **argv, char **envp)
 /*
 add_new_io_node(t_io_bundle *io, char **cursor, \
 int last_exit_status, t_g_data *data --> virer data et last exit status (peut etre ?)
+
+//si ctrl+c dans cat alors on sort de toute la ligne de commande 
 */

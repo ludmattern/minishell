@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:23:38 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:23:31 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ typedef struct s_global_data
 	char			*pre_input;
 	struct s_data	*data;
 	int				t;
+	t_node			*root;
 }					t_g_data;
 
 typedef struct s_var_context

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:09 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 16:01:06 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/25 19:23:47 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,28 @@ void	toggle_quo(bool *in_quotes, char c, int i, const char *cmd)
 bool	validate_special_char(const char *cmd, int *i, char **token)
 {
 	int	j;
+	int	k;
 
 	j = *i + 1;
-	while (cmd[j] == ' ')
+	while (ft_isspace(cmd[j]))
 		j++;
 	if (cmd[j] == '\0' || strchr("|&<>", cmd[j]))
 	{
 		if (cmd[j] == '\0')
 			*token = ft_strdup("newline");
+		else if (strchr("|&<>", cmd[j]))
+		{
+			k = j;
+			k++;
+			while (ft_isspace(cmd[k]))
+			{
+				write(1, &cmd[k], 1);
+				k++;
+			}
+			if (!cmd[k])
+				*token = ft_strdup("newline");
+			return(false);
+		}
 		else
 		{
 			*token = malloc(sizeof(char) * 3);
