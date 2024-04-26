@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/25 15:23:31 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:55:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ typedef struct s_global_data
 	struct s_data	*data;
 	int				t;
 	t_node			*root;
+	int				checkpar;
 }					t_g_data;
 
 typedef struct s_var_context

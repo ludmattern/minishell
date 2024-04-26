@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/25 18:57:32 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:37:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,10 @@ void launch_parsing(t_g_data *g_data)
     t_token *current_lex = g_data->lexed->first;
 	while (current_lex->next != NULL)
 		current_lex = current_lex->next;
-		
     root = build_ast(&current_lex, g_data);
 	g_data->data->ast = root;
-    print_ast(root, 10);
-
     free_lexed(g_data->save);
 }
-
-
-
 
 void	launch_execution(t_g_data *g_data)
 {

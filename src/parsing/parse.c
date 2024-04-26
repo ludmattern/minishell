@@ -117,34 +117,44 @@ void	handle_operator_node(t_token **current_lex, t_node **root, t_node **current
 
 t_node *build_ast(t_token **c, t_g_data *g_data)
 {
-	if (!*c)
-		return (NULL);
 	t_node *root = NULL;
 	t_node *current = NULL;
 	t_node *new_node = NULL;
-	t_node *pipe_node;
+	t_node *pipe_node = NULL;
+
+	g_data->checkpar = 0;
 	while (*c && (*c)->type != T_AND && (*c)->type != T_OR) 
 	{
-		if ((*c)->type == T_WORD || (*c)->type == T_PIPE)
+		if ((*c)->type == T_WORD || (*c)->type == T_PIPE || (*c)->type == T_RPAR || (*c)->type == T_LPAR)
 		{
-			if ((*c)->type == T_WORD)
+			if ((*c)->type == T_RPAR)
+			{
+				*c = (*c)->prev;
+				new_node = build_ast(c, g_data);
+			}
+			else if ((*c)->type == T_LPAR)
+			{
+				g_data->checkpar = 1;
+				break ;
+			}
+			else if ((*c)->type == T_WORD)
 				new_node = create_command_node(*c, g_data);
-			//else
-			//	new_node = create_operator_node(*c, g_data);
 			if (!root)
 				root = new_node;
-			else if (current && current->type == T_PIPE)
+			else if (current->type == N_PIPE)
 				current->left = new_node;
-			else if  ((*c)->type == T_WORD)
+			else if  ((*c)->type == T_WORD || g_data->checkpar == 1)
 			{
 				pipe_node = create_operator_node(&(t_token){.type = T_PIPE, .value = "|"}, g_data);
 				pipe_node->right = root;
 				pipe_node->left = new_node;
 				root = pipe_node;
+				g_data->checkpar = 0;
 			}
 			current = new_node;
 		}
-		*c = (*c)->prev;
+		if ((*c)->type != T_AND && (*c)->type != T_OR)
+			*c = (*c)->prev;
 	}
 	if (*c && ((*c)->type == T_AND || (*c)->type == T_OR))
 	{
@@ -154,5 +164,7 @@ t_node *build_ast(t_token **c, t_g_data *g_data)
 		op_node->left = build_ast(c, g_data);
 		root = op_node;
 	}
+	if (*c && (*c)->type == T_LPAR)
+		*c = (*c)->prev;
 	return (root);
 }
