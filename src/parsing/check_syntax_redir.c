@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:09 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/25 19:23:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:42:55 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ bool	validate_special_char(const char *cmd, int *i, char **token)
 	j = *i + 1;
 	while (ft_isspace(cmd[j]))
 		j++;
-	if (cmd[j] == '\0' || strchr("|&<>", cmd[j]))
+	if (cmd[j] == '\0' || ft_strchr("|&", cmd[j]))
 	{
 		if (cmd[j] == '\0')
 			*token = ft_strdup("newline");
-		else if (strchr("|&<>", cmd[j]))
+		else if (ft_strchr("|&<>", cmd[j]))
 		{
 			k = j;
 			k++;
