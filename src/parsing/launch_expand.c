@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   launch_expand.c									:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2024/04/16 13:40:08 by fprevot		   #+#	#+#			 */
-/*   Updated: 2024/04/17 11:45:04 by fprevot		  ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   launch_expand.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 10:34:42 by lmattern          #+#    #+#             */
+/*   Updated: 2024/04/29 10:34:47 by lmattern         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
@@ -67,7 +67,6 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 	}
 	else
 	{
-		printf("bad\n");
 		token->is_empty = false;
 		token->expanded = expander(token->value, \
 		last_exit_status, token->g_data);
@@ -88,7 +87,6 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 			if (g_heredoc_sigint == 2)
 				return ;
 			lexed->is_add_local = check_local(lexed->value);
-			printf("tval = %s\n", lexed->value);
 			handle_expanded_token(lexed, last_exit_status);
 		}
 		lexed = lexed->next;
