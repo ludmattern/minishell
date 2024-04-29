@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 14:28:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:28:26 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	handle_user_input(t_g_data *g_data)
 	if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 	{
 		launch_lexing(g_data);
-		printlex(g_data->lexed);
 		if (g_data->lexed->error == -1)
 		{
 			free_lexed(g_data->lexed);
@@ -118,8 +117,8 @@ int	main(int argc, char **argv, char **envp)
 		update_input(g_data, g_data->pre_input);
 		if (g_data->in_put[0])
 		{
-			//if (!syntax_error(g_data->in_put, &g_data->last_exit_status))
-			handle_user_input(g_data);
+			if (!syntax_error(g_data->in_put, &g_data->last_exit_status))
+				handle_user_input(g_data);
 			update_history(g_data);
 		}
 	}
@@ -133,11 +132,6 @@ int	main(int argc, char **argv, char **envp)
 		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
 /* code erreur :
 		ls: invalid option -- 'z' return 2 au lieu de 1*/
-/*
-var inutilisees :
-		add_new_io_node(t_io_bundle *io, char **cursor, \
-		int last_exit_status, t_g_data *data --> virer data et last exit status (peut etre ?)
-*/
 /*
 cat :
 		//si ctrl+c dans cat alors on sort de toute la ligne de commande 

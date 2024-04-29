@@ -52,7 +52,7 @@ void	initialize_and_add_io_node(t_io_bundle *io, t_io_node *new_io)
 }
 
 void	add_new_io_node(t_io_bundle *io, char **cursor, \
-int last_exit_status, t_g_data *data)
+t_g_data *data)
 {
 	t_io_node	*new_io;
 	char		*filename;
@@ -65,7 +65,7 @@ int last_exit_status, t_g_data *data)
 	if (!filename)
 		fail_exit_shell(data);
 	new_io = create_io_node_from_string(io->type, filename, \
-	last_exit_status, data);
+	data);
 	if (g_heredoc_sigint == 2)
 		return ;
 	if (new_io == NULL)

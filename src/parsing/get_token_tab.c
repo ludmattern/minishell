@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 15:44:05 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:43:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,38 +106,3 @@ char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
 		fail_exit_shell(data);
 	return (final_tab);
 }
-
-/*
-char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
-{
-	char	**tab;
-	char	**final_tab;
-	char	**new_tab;
-	int		k;
-
-	k = 0;
-	tab = malloc(size * sizeof(char *));
-	if (!tab)
-		fail_exit_shell(data);
-	while (arg[i])
-	{
-		skip_spaces(arg, &i);
-		if (!arg[i])
-			break ;
-		if (k >= size - 1) 
-		{ 
-			size += 1;
-			new_tab = realloc_tab(tab, k, size);
-			if (!new_tab)
-				fail_exit_shell(data);
-			tab = new_tab;
-		}
-		tab[k++] = space_token(arg, &i, data);
-	}
-	final_tab = realloc_tab(tab, k, k + 1);
-	if (!final_tab)
-		fail_exit_shell(data);
-	final_tab[k] = NULL; 
-	return (final_tab);
-}
-*/

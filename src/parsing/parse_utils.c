@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 11:30:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 16:43:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	check_local(char *arg)
 	int	i;
 
 	i = 0;
+	if (!ft_isalpha(arg[0]))
+		return (false);
 	while (arg && arg[i] && arg[i] != ' ')
 	{
 		if (arg[i] == '=' && arg[i + 1] != ' ' && arg[i - 1] != ' ')

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:43:50 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:12:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 17:09:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*get_command_path(char *cmd, t_g_data *g_data)
 	char	*result;
 
 	temp = prepare_temp_path(cmd, g_data);
-	path_env = getenv("PATH");
+	path_env = ft_get_env2("PATH", g_data->mini_env, g_data);
 	paths = get_path_splits(path_env);
 	if (!paths)
 		return (temp);

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 11:30:38 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:33:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char		*replace_substring(char *original, \
 int start, char *replace, t_g_data *data);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 void		imore(int size, int *i);
-t_io_node	*parse_io_from_command(char *cmd, int \
-last_exit_status, t_g_data *data);
+t_io_node	*parse_io_from_command(char *cmd, t_g_data *data);
+
 void		free_data_structure(t_data **data);
 t_node		*create_command_node(t_token *tkn, t_g_data *g_data);
 t_node		*create_operator_node(t_token *tkn, t_g_data *g_data);
@@ -78,11 +78,11 @@ bool		check_squotes(const char *cmd);
 bool		check_redir(const char *cmd, char **token);
 char		**replace_input_vars(t_g_data *data, char *input, int i);
 void		add_new_io_node(t_io_bundle *io, char **cursor, \
-int last_exit_status, t_g_data *data);
+t_g_data *data);
 char		*extract_with_quote(char **c, t_g_data *data);
 int			countq(const char *str);
 t_io_node	*create_io_node_from_string(t_io_type type, char *value, \
-int last_exit_status, t_g_data *data);
+t_g_data *data);
 void		set_io_type(t_io_type *type, char **cursor);
 
 void		handle_failure(char *tkn, char *env, t_g_data *data);

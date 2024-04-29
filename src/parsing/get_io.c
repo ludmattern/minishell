@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:04:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 14:15:42 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:32:48 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	check_delimiter(char *value)
 }
 
 t_io_node	*create_io_node_from_string(t_io_type type, \
-char *value, int last_exit_status, t_g_data *data)
+char *value, t_g_data *data)
 {
 	t_io_node	*io;
 	//bool		check_her = check_delimiter(value);
@@ -67,7 +67,6 @@ char *value, int last_exit_status, t_g_data *data)
 	if (io->type == IO_HEREDOC)
 	{
 		//value = value_her(value);
-		printf("her = %s\n", value);
 		read_heredoc_into_string(value, &io->value);
 		if (g_heredoc_sigint == 2)
 			return (NULL);
@@ -79,13 +78,12 @@ char *value, int last_exit_status, t_g_data *data)
 	if (io->type == IO_HEREDOC/* && check_her == true*/)
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else
-		io->expanded_value = expander(io->value, last_exit_status, data);
+		io->expanded_value = expander(io->value, data->last_exit_status, data);
 	io->here_doc = 0;
 	return (io->prev = NULL, io->next = NULL, io);
 }
 
-t_io_node	*parse_io_from_command(char *cmd, int \
-last_exit_status, t_g_data *data)
+t_io_node	*parse_io_from_command(char *cmd, t_g_data *data)
 {
 	t_io_bundle	io;
 
@@ -102,7 +100,7 @@ last_exit_status, t_g_data *data)
 		else if ((*io.cursor == '>' || *io.cursor == '<') && !io.current_quote)
 		{
 			set_io_type(&io.type, &io.cursor);
-			add_new_io_node(&io, &io.cursor, last_exit_status, data);
+			add_new_io_node(&io, &io.cursor, data);
 			if (g_heredoc_sigint == 2)
 				return (NULL);
 		}

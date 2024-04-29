@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/22 11:09:24 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 17:43:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	process_variable(t_var_context *ctx, char *tkn, \
 t_g_data *data, bool dquotes)
 {
 	ctx->start = ctx->i;
-	while (ft_isalnum(tkn[ctx->i]))
+	while (ft_isalpha(tkn[ctx->i]))
+		ctx->i++;
+	if (tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9')
 		ctx->i++;
 	ctx->env_length = ctx->i - ctx->start;
 	ctx->tmp_env = malloc(ctx->env_length + 1);
@@ -71,7 +73,7 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 	{
 		if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
 		&& tkn[ctx.i + 1] != ' ' && tkn[ctx.i + 1] \
-		!= '$' && tkn[ctx.i + 1] != '"')
+		!= '$')
 		{
 			ctx.i++;
 			process_variable(&ctx, tkn, data, dquotes);

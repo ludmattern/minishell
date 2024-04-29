@@ -1,19 +1,52 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 11:40:23 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 17:11:42 by fprevot          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   expander.c										 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/03/14 11:40:23 by fprevot		   #+#	#+#			 */
+/*   Updated: 2024/04/29 16:03:03 by fprevot		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
+void remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
+{
+	bool in_dquote;
+
+	in_dquote = false;
+	while (str[rp] != '\0')
+	{
+		if (str[rp] == '\'' && !in_dquote)
+		{
+			if (!in_squote && str[rp + 1] == '\'')
+			{
+				rp += 2;
+				continue ;
+			}
+			in_squote = !in_squote;
+		}
+		else if (str[rp] == '"' && !in_squote)
+		{
+			if ((!in_dquote && str[rp + 1] == '"'))
+			{
+				rp += 2;
+				continue ;
+			}
+			in_dquote = !in_dquote;
+		}
+		else if (str[rp] == -1)
+			rp += 1;
+		str[wp++] = str[rp++];
+	}
+	str[wp] = '\0';
+}
+
 char	*expand_simple_quote(char *tkn, t_g_data *data)
 {
+	remove_empty_quotes(tkn, 0, 0, false);
 	tkn = skip_quote(tkn, '\'', data);
 	if (!tkn)
 		return (NULL);
@@ -25,6 +58,7 @@ char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data)
 	size_t		i;
 	char		*res;
 
+	remove_empty_quotes(tkn, 0, 0, false);
 	res = skip_quote(tkn, '"', data);
 	if (!tkn)
 		return (NULL);
@@ -44,6 +78,7 @@ last_exit_status, size_t i, t_g_data *data)
 {
 	char	*res;
 
+	remove_empty_quotes(tkn, 0, 0, false);
 	res = tkn;
 	(void)last_exit_status;
 	(void)data;

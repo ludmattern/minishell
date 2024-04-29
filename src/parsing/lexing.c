@@ -119,7 +119,7 @@ bool	is_end(char *str, int i)
 			return false;
 		i++;
 	}
-	return true;
+	return (true);
 }
 t_token	*lex_me(char *in_put, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:34:42 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 11:27:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:34:10 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ bool	redirection_outside_quotes(const char *args)
 }
 
 void	process_redirections_and_filenames(t_token \
-	*token, int last_exit_status, t_g_data *g_data)
+	*token, t_g_data *g_data)
 {
 	char	*tmp;
 
 	if (redirection_outside_quotes(token->value))
 	{
 		token->io_list = parse_io_from_command(token->value, \
-		last_exit_status, token->g_data);
+		token->g_data);
 		if (g_heredoc_sigint == 2)
 			return ;
 		tmp = ft_strdup(token->value);
@@ -82,7 +82,7 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 		lexed->first = fir;
 		if (lexed->type == T_WORD)
 		{
-			process_redirections_and_filenames(lexed, last_exit_status, g_data);
+			process_redirections_and_filenames(lexed, g_data);
 			if (g_heredoc_sigint == 2)
 				return ;
 			lexed->is_add_local = check_local(lexed->value);
