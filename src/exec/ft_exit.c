@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 23:54:23 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:26:07 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,40 @@ bool	ft_isnumber(const char *str)
 	return (true);
 }
 
-int	exiting_exit(int status, t_data **data, bool g_data)
+int	exiting_exit(int status, t_data **data, bool g_data, bool piped)
 {
 	if (g_data)
 		ft_clear_memory((*data)->g_data);
-	printf("exit\n");
-	free((*data)->g_data);
+	if (!piped)
+		printf("exit\n");
 	if (data && *data)
+	{
+		free((*data)->g_data);
 		free_data_structure(data);
+	}
 	close_standard_fds();
 	exit(status);
 	return (status);
 }
 
-int	ft_exit(char **args, t_data **data)
+int	ft_exit(char **args, t_data **data, bool piped)
 {
 	long long	status;
 	char		endptr;
 	bool		error;
 
 	error = false;
-	if (args[1] && !args[2])
+	if (args[1])
 	{
 		status = ft_strtol(args[1], &endptr, &error);
 		if (endptr != '\0' || error == true)
 		{
 			ft_eprintf(MS"exit: %s: numeric argument required\n", args[1]);
-			exiting_exit(EXIT_SYNTAX_ERROR, NULL, false);
+			exiting_exit(EXIT_SYNTAX_ERROR, NULL, false, piped);
 		}
-		return (exiting_exit((int)(status % 256 + 256) % 256, data, false));
+		if (args[2])
+			return (ft_eprintf(MS"exit: too many arguments\n"), EXIT_SYNTAX_ERROR);
+		return (exiting_exit((int)(status % 256 + 256) % 256, data, false, piped));
 	}
-	else if (args[1] && args[2])
-		return (ft_eprintf(MS"exit: too many arguments\n"), EXIT_GENERAL_ERROR);
-	return (exiting_exit(EXIT_SUCCESS, data, true));
+	return (exiting_exit(EXIT_SUCCESS, data, true, piped));
 }

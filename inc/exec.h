@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:09:43 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:25:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int			ft_export(char **args, t_data *data);
 int			ft_env(char **args, t_env *mini_env);
 int			ft_unset_vars(char **names, t_env **mini_env);
 int			ft_unset(char *name, t_env **mini_env);
-int			ft_exit(char **args, t_data **data);
+int			ft_exit(char **args, t_data **data, bool piped);
 int			launch_non_forked_builtins(t_data *data, t_node *node, bool piped);
 bool		is_non_forked_builtins(t_node *node);
 

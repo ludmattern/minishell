@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/24 10:50:36 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:49:30 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	cd_update_env(char *oldpwd, t_env **env)
 	if (getcwd(newpwd, sizeof(newpwd)) != NULL)
 		ft_addenv_or_update(env, "PWD", newpwd);
 	else
-		perror(MS"error updating PWD");
+		perror("getcwd: cannot access parent directories");
 }
 
 void	init_ft_cd(char *oldpwd, bool *alloc)
@@ -39,7 +39,7 @@ bool	cd_to_home(char **args, t_env **env, char **path, bool *alloc)
 	{
 		*path = ft_get_env("HOME", *env);
 		*alloc = true;
-		if (!path || !*path)
+		if (!path || !*path || **path == '\0')
 		{
 			ft_eprintf(MS"cd: HOME not set\n");
 			return (false);
@@ -62,7 +62,7 @@ int	ft_cd(char **args, t_env **env)
 	path = NULL;
 	init_ft_cd(oldpwd, &alloc);
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
-		perror(MS"error retrieving current directory");
+		ft_eprintf("cd: error retrieving current directory : \n");
 	if (args[1] != NULL && args[2] != NULL)
 		return (ft_eprintf(MS"cd: too many arguments\n"),
 			EXIT_FAILURE);

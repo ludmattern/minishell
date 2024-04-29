@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:08:54 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:24:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	is_non_forked_builtins(t_node *node)
 		return (false);
 }
 
-int	execute_non_forked_builtins(t_data *data, t_node *node)
+int	execute_non_forked_builtins(t_data *data, t_node *node, bool piped)
 {
 	int			status;
 	const char	*str;
@@ -44,7 +44,7 @@ int	execute_non_forked_builtins(t_data *data, t_node *node)
 	else if (ft_strncmp(str, "export", 7) == 0)
 		status = ft_export(node->expanded_args, data);
 	else if (ft_strncmp(str, "exit", 5) == 0)
-		status = ft_exit(node->expanded_args, &data);
+		status = ft_exit(node->expanded_args, &data, piped);
 	else
 		status = ft_unset_vars(node->expanded_args, &data->mini_env);
 	return (status);
@@ -58,7 +58,7 @@ int	launch_non_forked_builtins(t_data *data, t_node *node, bool piped)
 	if (node->is_empty)
 		return (status);
 	if (status == EXIT_SUCCESS)
-		status = execute_non_forked_builtins(data, node);
+		status = execute_non_forked_builtins(data, node, piped);
 	if (piped)
 		restore_original_fds(data);
 	return (status);

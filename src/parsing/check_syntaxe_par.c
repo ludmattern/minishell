@@ -42,7 +42,7 @@ bool	process_parentheses(char c, int *par_count, bool *empty_par)
 	return (true);
 }
 
-bool	check_par(const char *cmd, char **token, int i, int par_count)
+bool	check_par(const char *cmd, int i, int par_count)
 {
 	char	current_quote;
 	bool	empty_par;
@@ -62,8 +62,8 @@ bool	check_par(const char *cmd, char **token, int i, int par_count)
 		i++;
 	}
 	if (empty_par || par_count < 0)
-		return (*token = ft_strdup(")"), false);
+		return (false);
 	else if (par_count > 0)
-		return (*token = ft_strdup("("), false);
+		return (false);
 	return (true);
 }

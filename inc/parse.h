@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 15:33:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:40:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ t_env *mini_env, t_g_data *data, bool dquotes);
 char		*get_env_var2(char *tkn, t_g_data *data, bool dquotes);
 const		char	*skip_s(const char *s);
 
-bool		check_par(const char *cmd, char **token, int i, int par_count);
-bool		check_first(const char *cmd, char **token);
+bool		check_par(const char *cmd, int i, int par_count);
+bool		check_first(const char *cmd);
 bool		check_dquotes(const char *cmd);
 bool		check_squotes(const char *cmd);
-bool		check_redir(const char *cmd, char **token);
+bool		check_redir(const char *cmd);
 char		**replace_input_vars(t_g_data *data, char *input, int i);
 void		add_new_io_node(t_io_bundle *io, char **cursor, \
 t_g_data *data);

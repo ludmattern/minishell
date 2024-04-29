@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 12:59:14 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:25:43 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ bool	validate_export_argument(const char *arg)
 
 	equal_pos = ft_strchr(arg, '=');
 	if (equal_pos)
+	{	if (equal_pos == arg)
+			return (ft_eprintf(MS"export: `%s': not a valid identifier\n", arg), false);
 		name = ft_strndup(arg, equal_pos - arg);
+	}
 	else
 		name = ft_strdup(arg);
 	is_valid = ft_isvalid_identifier(name);

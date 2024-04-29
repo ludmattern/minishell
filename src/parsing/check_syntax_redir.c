@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax_redir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:09 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 13:47:29 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:58:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	toggle_quo(bool *in_quotes, char c, int i, const char *cmd)
 	}
 }
 
-bool	validate_special_char(const char *cmd, int *i, char **token)
+bool	validate_special_char(const char *cmd, int *i)
 {
 	int	j;
 	int	k;
@@ -30,41 +30,22 @@ bool	validate_special_char(const char *cmd, int *i, char **token)
 	while (ft_isspace(cmd[j]))
 		j++;
 	if (cmd[j] == '\0' || ft_strchr("|&", cmd[j]))
-	{
-		if (cmd[j] == '\0')
-			*token = ft_strdup("newline");
-		else if (ft_strchr("|&<>", cmd[j]))
-		{
-			k = j;
-			k++;
-			while (ft_isspace(cmd[k]))
-			{
-				write(1, &cmd[k], 1);
-				k++;
-			}
-			if (!cmd[k])
-				*token = ft_strdup("newline");
-			return(false);
-		}
-		else
-		{
-			*token = malloc(sizeof(char) * 3);
-			if (!*token)
-				return (perror("malloc"), false);
-			(*token)[0] = cmd[j];
-			if (cmd[j + 1] == cmd[j])
-				(*token)[1] = cmd[j];
-			else
-				(*token)[1] = '\0';
-			(*token)[2] = '\0';
-		}
 		return (false);
+	if (cmd[*i] == '>' || cmd[*i] == '<')
+	{
+		if (cmd[j] == '>' || cmd[j] == '<')
+			return (false);
+		k = j;
+		while (cmd[k] && !ft_strchr("><&|(", cmd[k]))
+			k++;
+		if (cmd[k] == '(')
+			return (false);
 	}
 	*i = j;
 	return (true);
 }
 
-bool	check_redir(const char *cmd, char **token)
+bool	check_redir(const char *cmd)
 {
 	bool	in_quotes;
 	int		i;
@@ -81,7 +62,7 @@ bool	check_redir(const char *cmd, char **token)
 			{
 				if (cmd[i + 1] == cmd[i])
 					i++;
-				if (!validate_special_char(cmd, &i, token))
+				if (!validate_special_char(cmd, &i))
 					return (false);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 18:04:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:44:47 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	ft_pwd(void)
 		free(cwd);
 	}
 	else
-		return (perror("getcwd() error"), EXIT_FAILURE);
+	{
+		ft_eprintf("pwd: error retrieving current directory: ");
+		perror("getcwd: cannot access parent directories");
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

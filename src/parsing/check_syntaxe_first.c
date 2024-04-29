@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntaxe_first.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:39:19 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/19 15:40:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:31:40 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,14 @@ int	skips(const char *cmd, int i)
 	return (i);
 }
 
-bool	check_special_chars(const char *cmd, int i, char **token)
+bool	check_special_chars(const char *cmd, int i)
 {
 	if (cmd[i] == '|' || cmd[i] == '&')
-	{
-		*token = malloc(sizeof(char) * 3);
-		if (!*token)
-		{
-			perror("malloc");
-			return (false);
-		}
-		(*token)[0] = cmd[i];
-		if (cmd[i + 1] == cmd[i])
-			(*token)[1] = cmd[i];
-		else
-			(*token)[1] = '\0';
-		(*token)[2] = '\0';
 		return (false);
-	}
 	return (true);
 }
 
-bool	check_first(const char *cmd, char **token)
+bool	check_first(const char *cmd)
 {
 	bool	in_quotes;
 	int		i;
@@ -63,7 +49,7 @@ bool	check_first(const char *cmd, char **token)
 		if (!in_quotes)
 		{
 			i = skips(cmd, i);
-			if (!check_special_chars(cmd, i, token))
+			if (!check_special_chars(cmd, i))
 				return (false);
 			else
 				return (true);
