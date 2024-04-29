@@ -107,11 +107,12 @@ char	*replace_env_vars(t_g_data *data, int i)
 				i += 1;
 			else if (!ctx.squotes && ctx.res[i] == '$' && ctx.res \
 			[i + 1] != '\0' && ctx.res[i + 1] != ' ' && ctx.res[i + 1] != '"')
+			if (is_previous_heredoc(i, ctx.res))
 			{
-				//if(is_previous_heredoc(i, ctx.res))
-					if (!process_variable_substitution(&ctx, &i, data))
-						return (ctx.res);
+				if (!process_variable_substitution(&ctx, &i, data))
+					return (ctx.res);
 			}
+
 		}
 		i++;
 	}

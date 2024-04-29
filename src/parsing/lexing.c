@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 11:12:59 by fprevot          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   lexing.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/03/13 17:39:45 by fprevot		   #+#	#+#			 */
+/*   Updated: 2024/04/29 14:28:06 by fprevot		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
@@ -86,7 +86,7 @@ int	fill_t_word(t_token *lex, int *i, int j, char *in_put)
 
 int	init_filling(t_token *lex, int *i, char *in_put, int t)
 {
-	while (in_put && in_put[*i] == ' ')
+	while (in_put && ft_isspace(in_put[*i]))
 		(*i)++;
 	if (in_put[*i] == '(')
 		t = fill_type(lex, 9, i, 1);
@@ -111,7 +111,16 @@ int	init_filling(t_token *lex, int *i, char *in_put, int t)
 		return (-1);
 	return (0);
 }
-
+bool	is_end(char *str, int i)
+{
+	while (str[i] != '\0')
+	{
+		if (!ft_isspace(str[i]))
+			return false;
+		i++;
+	}
+	return true;
+}
 t_token	*lex_me(char *in_put, int i)
 {
 	t_token	*head;
@@ -123,6 +132,11 @@ t_token	*lex_me(char *in_put, int i)
 	lex = NULL;
 	while (in_put && in_put[i])
 	{
+		if (ft_isspace(in_put[i]))
+		{
+			if (is_end(in_put, i))
+				break;
+		}
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)
 			return (head->error = -1, head);

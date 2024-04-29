@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:34:42 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 10:34:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:27:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 {
 	if ((token->value[0] == -1) || !token->value[0])
 	{
-		printf("good\n");
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
 		token->expanded[0] = ft_strdup("EMPTY");

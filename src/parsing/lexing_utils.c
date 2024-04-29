@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:32:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/18 16:47:59 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:30:24 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,17 @@ void	skip_space(char *input, int *index)
 {
 	while (input[*index] == ' ')
 		(*index)++;
+}
+
+bool	is_previous_heredoc(int i, char *res)
+{
+	int j;
+	
+	j = i - 1;
+	while (ft_isspace(res[j]))
+		j--;
+	if (res[j] == '<' && res[j - 1] == '<')
+		return (false);
+	else
+		return (true);
 }

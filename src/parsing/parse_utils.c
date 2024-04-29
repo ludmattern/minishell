@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/24 18:35:13 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:30:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,6 @@ size_t	ft_arrlen(char **arr)
 		i++;
 	return (i);
 }
-/*
-char	**ft_cleaner(char **args,  t_g_data *g_data)
-{
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	char **result = malloc(sizeof(char *) * (ft_arrlen(args) + 1));
-	if(!result)
-		fail_exit_shell(g_data);
-	while (args[i] != NULL)
-	{
-		if (args[i][0] != '\0' )
-		{
-			if (i == 0)
-			{
-				k = 0;
-				while (args[i] && args[i][k] != '\0')
-					k++;
-				if (args[0][k - 1] != '=')
-					result[j++] = ft_strdup(args[i]);
-			}
-			else
-				result[j++] = ft_strdup(args[i]);
-			if(!result)
-				fail_exit_shell(g_data);
-		}
-		i++;
-	}
-	result[j] = NULL;
-	i = 0;
-	ft_free_double_array(args);
-	return (result);
-}*/
 
 bool	check_local(char *arg)
 {

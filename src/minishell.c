@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/26 18:44:45 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:28:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	handle_user_input(t_g_data *g_data)
 	if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 	{
 		launch_lexing(g_data);
+		printlex(g_data->lexed);
 		if (g_data->lexed->error == -1)
 		{
 			free_lexed(g_data->lexed);
@@ -117,8 +118,8 @@ int	main(int argc, char **argv, char **envp)
 		update_input(g_data, g_data->pre_input);
 		if (g_data->in_put[0])
 		{
-			if (!syntax_error(g_data->in_put, &g_data->last_exit_status))
-				handle_user_input(g_data);
+			//if (!syntax_error(g_data->in_put, &g_data->last_exit_status))
+			handle_user_input(g_data);
 			update_history(g_data);
 		}
 	}
@@ -128,7 +129,6 @@ int	main(int argc, char **argv, char **envp)
 
 //MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les ss processus aussi) (a voir pour les autres signaux)
 /*heredoc :
-		ne pas expand les var d'environnement dans le delimiteur du heredoc (mais retirer les guillemets) (<< $delimiteur -> ne pas expand $delimiteur)
 		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
 		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
 /* code erreur :
