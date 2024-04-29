@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:39:45 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/26 13:53:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:12:59 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	fill_value(t_token *lex, int num)
 		lex->value = ft_strdup("(\0");
 	else if (num == 10)
 		lex->value = ft_strdup(")\0");
+	else if (num == 11)
+		lex->value = ft_strdup("&\0");
 	if (!lex->value)
 		return (-1);
 	return (0);
@@ -46,6 +48,8 @@ int	fill_type(t_token *lex, int num, int *i, int size)
 		lex->type = 9;
 	else if (num == 10)
 		lex->type = 10;
+	else if (num == 11)
+		lex->type = 11;
 	if (fill_value(lex, num) == -1)
 		return (-1);
 	return (0);
@@ -80,11 +84,8 @@ int	fill_t_word(t_token *lex, int *i, int j, char *in_put)
 	return (0);
 }
 
-int	init_filling(t_token *lex, int *i, char *in_put)
+int	init_filling(t_token *lex, int *i, char *in_put, int t)
 {
-	int	t;
-
-	t = 0;
 	while (in_put && in_put[*i] == ' ')
 		(*i)++;
 	if (in_put[*i] == '(')
@@ -100,6 +101,8 @@ int	init_filling(t_token *lex, int *i, char *in_put)
 	}
 	else if (in_put[*i] == '|' && in_put[*i + 1] != '|')
 		t = fill_type(lex, 5, i, 1);
+	else if (in_put[*i] == '&' && in_put[*i + 1] != '&')
+		t = fill_type(lex, 11, i, 1);
 	else if (in_put[*i] == '&' && in_put[*i + 1] == '&')
 		t = fill_type(lex, 6, i, 2);
 	else if (in_put[*i] == '|' && in_put[*i + 1] == '|')
@@ -131,7 +134,7 @@ t_token	*lex_me(char *in_put, int i)
 		else
 			head = new_token;
 		lex = new_token;
-		if (init_filling(lex, &i, in_put) == -1)
+		if (init_filling(lex, &i, in_put, 1) == -1)
 			return (head->error = -1, head);
 	}
 	return (head);

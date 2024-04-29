@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/26 16:55:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:13:49 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef enum e_token_type
 	T_OR,
 	T_NEWLINE,
 	T_LPAR,
-	T_RPAR
+	T_RPAR,
+	T_SAND
 }	t_token_type;
 
 typedef enum e_io_type
