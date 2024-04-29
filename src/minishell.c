@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/24 15:40:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:44:45 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,36 +126,20 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-//cat CTRL+C ajouter /n
 //MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les ss processus aussi) (a voir pour les autres signaux)
 /*heredoc :
 		ne pas expand les var d'environnement dans le delimiteur du heredoc (mais retirer les guillemets) (<< $delimiteur -> ne pas expand $delimiteur)
 		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
 		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
-/* redirection :
- 	redirection seule, ne se passe rien alors que le fichier devrait etre cree ou tente d'etre ouvert (exemple : < infile ou >> outfile)
-	idem dans un pipe (exemple : < infile | echo salut)*/
 /* code erreur :
-	ls: invalid option -- 'z' return 2 au lieu de 1*/
-/* mauvais arbre :
-.	ls && pwd | wc (tout est envoye dans le pipe alors que seul pwd devrait etre envoye
-.		tout doit etre au meme niveau mais ls $$ pwd sont a gauche de | et wc a droite
-. BON ARBRE A OBTENIR
-.
-.         &&
-.		/   \
-.	  ls     |
-.           / \
-.		  pwd  wc
-. nous :
-.            |
-.           / \
-.         &&  wc
-.        /  \   
-.		ls  pwd
-.
-.*/
+		ls: invalid option -- 'z' return 2 au lieu de 1*/
 /*
-add_new_io_node(t_io_bundle *io, char **cursor, \
-int last_exit_status, t_g_data *data --> virer data et last exit status (peut etre ?)
+var inutilisees :
+		add_new_io_node(t_io_bundle *io, char **cursor, \
+		int last_exit_status, t_g_data *data --> virer data et last exit status (peut etre ?)
+*/
+/*
+cat :
+		//si ctrl+c dans cat alors on sort de toute la ligne de commande 
+		//cat CTRL+C ajouter /n
 */

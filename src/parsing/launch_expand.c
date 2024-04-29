@@ -55,8 +55,9 @@ void	process_redirections_and_filenames(t_token \
 
 void	handle_expanded_token(t_token *token, int last_exit_status)
 {
-	if (token->value[0] == -1 && !token->value[1])
+	if ((token->value[0] == -1) || !token->value[0])
 	{
+		printf("good\n");
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
 		token->expanded[0] = ft_strdup("EMPTY");
@@ -66,6 +67,7 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 	}
 	else
 	{
+		printf("bad\n");
 		token->is_empty = false;
 		token->expanded = expander(token->value, \
 		last_exit_status, token->g_data);
@@ -86,6 +88,7 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 			if (g_heredoc_sigint == 2)
 				return ;
 			lexed->is_add_local = check_local(lexed->value);
+			printf("tval = %s\n", lexed->value);
 			handle_expanded_token(lexed, last_exit_status);
 		}
 		lexed = lexed->next;

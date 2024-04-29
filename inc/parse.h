@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/24 18:36:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:55:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <limits.h>
 
 t_token		*lex_me(char *in_put, int i);
-void	build_ast(t_token **current_lex, t_node **root, t_node **current_node, t_g_data *g_data);
+t_node      *build_ast(t_token **current_lex, t_g_data *g_data);
 char		**expander(char *arg, int last_exit_status, t_g_data *data);
 char		*get_command_path(char *cmd, t_g_data *g_data);
 char		*skip_quote(char *tkn, char q, t_g_data *data);
