@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
+#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/21 17:58:54 by lmattern         ###   ########.fr        #
+#    Updated: 2024/04/30 17:31:35 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/ft_env.c \
 					$(EXECDIR)/ft_cd.c
 
-PARSE_SRCS		:=	$(PARSEDIR)/clean.c \
+PARSE_SRCS		:=	$(PARSEDIR)/ast_utils.c \
+					$(PARSEDIR)/clean.c \
 					$(PARSEDIR)/parse.c \
 					$(PARSEDIR)/get_io.c \
 					$(PARSEDIR)/signal.c \

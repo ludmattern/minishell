@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 18:40:18 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:34:43 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 t_token		*lex_me(char *in_put, int i);
 t_node      *build_ast(t_token **current_lex, t_g_data *g_data);
-char		**expander(char *arg, int last_exit_status, t_g_data *data);
+char        **expander(char *arg, int last_exit_status, t_g_data *data, bool is_export);
 char		*get_command_path(char *cmd, t_g_data *g_data);
 char		*skip_quote(char *tkn, char q, t_g_data *data);
 char		**get_tkn_tab(char *arg, int size, int i, t_g_data *data);
@@ -60,7 +60,7 @@ void		print_start(void);
 void		skip_spaces(char *arg, int *i);
 void		free_forked_data(t_data *data);
 char		find_first(char *arg);
-char		*expand_simple_quote(char *tkn, t_g_data *data);
+char        *expand_simple_quote(char *tkn, t_g_data *data, bool is_export);
 char		*expand_without_quote(char *tkn, \
 int last_exit_status, size_t i, t_g_data *data);
 char		*expand_double_quote(char *tkn, \
@@ -112,6 +112,12 @@ void		signals_ignore(void);
 void		setup_heredoc_si(void);
 void		handle_sigint_herdoc(int sig);
 bool        is_previous_heredoc(int i, char *res);
+
+t_node      *handle_op(t_token **c, t_g_data *g_data, t_node *root);
+t_node      *process_operator(t_token **c, t_g_data *g_data, t_node *root);
+t_node      *process_rpar(t_token **c, t_g_data *g_data);
+t_node      *add_pipe_node(t_node *new_node, t_node **root, t_g_data *g_data);
+void        move_token_prev(t_token **c);
 
 
 #endif

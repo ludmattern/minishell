@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:34:42 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 15:34:10 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:00:28 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,14 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 	else
 	{
 		token->is_empty = false;
+		token->is_export = false;
+		if (ft_strncmp(token->value, "export", 6) == 0 && \
+		(token->value[6] == ' ' || token->value[6] == '\0'))
+   			token->is_export = true;
 		token->expanded = expander(token->value, \
-		last_exit_status, token->g_data);
+		last_exit_status, token->g_data, token->is_export);
+		if (token->is_export == true)
+			token->is_export = false;
 	}
 }
 

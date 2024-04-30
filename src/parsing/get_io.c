@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:04:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 15:32:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:27:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char *value, t_g_data *data)
 	if (io->type == IO_HEREDOC/* && check_her == true*/)
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else
-		io->expanded_value = expander(io->value, data->last_exit_status, data);
+		io->expanded_value = expander(io->value, data->last_exit_status, data, false);
 	io->here_doc = 0;
 	return (io->prev = NULL, io->next = NULL, io);
 }

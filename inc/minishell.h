@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 11:13:49 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:53:44 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_token
 	char					**expanded;
 	bool					is_add_local;
 	bool					is_empty;
+	bool					is_export;
 	t_io_node				*io_list;
 	struct s_token			*next;
 	struct s_token			*prev;

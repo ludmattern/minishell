@@ -44,10 +44,14 @@ void remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
 	str[wp] = '\0';
 }
 
-char	*expand_simple_quote(char *tkn, t_g_data *data)
+char	*expand_simple_quote(char *tkn, t_g_data *data, bool is_export)
 {
+	if (is_export == true)
 	remove_empty_quotes(tkn, 0, 0, false);
-	tkn = skip_quote(tkn, '\'', data);
+	if (is_export != true)
+	{
+		tkn = skip_quote(tkn, '\'', data);
+	}
 	if (!tkn)
 		return (NULL);
 	return (tkn);
@@ -91,7 +95,7 @@ last_exit_status, size_t i, t_g_data *data)
 	return (res);
 }
 
-void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data)
+void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data, bool is_export)
 {
 	int		j;
 	char	*temp;
@@ -102,7 +106,7 @@ void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data)
 		if (find_first(tab[j]) == '"')
 			temp = expand_double_quote(tab[j], last_exit_status, data);
 		else if (find_first(tab[j]) == '\'')
-			temp = expand_simple_quote(tab[j], data);
+			temp = expand_simple_quote(tab[j], data, is_export);
 		else
 			temp = expand_without_quote(tab[j], last_exit_status, 0, data);
 		if (!temp)
@@ -117,13 +121,13 @@ void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data)
 	}
 }
 
-char	**expander(char *arg, int last_exit_status, t_g_data *data)
+char	**expander(char *arg, int last_exit_status, t_g_data *data, bool is_export)
 {
 	char	**expanded;
 
 	expanded = NULL;
 	(void)last_exit_status;
 	expanded = get_tkn_tab(arg, 1, 0, data);
-	expand_tkn_tab(expanded, last_exit_status, data);
+	expand_tkn_tab(expanded, last_exit_status, data, is_export);
 	return (expanded);
 }
