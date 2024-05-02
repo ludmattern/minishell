@@ -111,12 +111,13 @@ int	init_filling(t_token *lex, int *i, char *in_put, int t)
 		return (-1);
 	return (0);
 }
+
 bool	is_end(char *str, int i)
 {
 	while (str[i] != '\0')
 	{
 		if (!ft_isspace(str[i]))
-			return false;
+			return (false);
 		i++;
 	}
 	return (true);
@@ -133,10 +134,8 @@ t_token	*lex_me(char *in_put, int i)
 	while (in_put && in_put[i])
 	{
 		if (ft_isspace(in_put[i]))
-		{
 			if (is_end(in_put, i))
-				break;
-		}
+				break ;
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)
 			return (head->error = -1, head);

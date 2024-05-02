@@ -12,9 +12,9 @@
 
 #include "../../inc/parse.h"
 
-void remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
+void	remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
 {
-	bool in_dquote;
+	bool	in_dquote;
 
 	in_dquote = false;
 	while (str[rp] != '\0')
@@ -46,14 +46,18 @@ void remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
 
 char	*expand_simple_quote(char *tkn, t_g_data *data, bool is_export)
 {
-	if (is_export == true)
+	char		*tmp;
+
 	remove_empty_quotes(tkn, 0, 0, false);
 	if (is_export != true)
 	{
-		tkn = skip_quote(tkn, '\'', data);
+		tmp = skip_quote(tkn, '\'', data);
+		tkn = skip_quote(tmp, '"', data);
+		free(tmp);
 	}
-	if (!tkn)
-		return (NULL);
+	else
+		tkn = skip_quote(tkn, '"', data);
+	
 	return (tkn);
 }
 
@@ -61,9 +65,12 @@ char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data)
 {
 	size_t		i;
 	char		*res;
+	char		*tmp;
 
 	remove_empty_quotes(tkn, 0, 0, false);
-	res = skip_quote(tkn, '"', data);
+	tmp = skip_quote(tkn, '"', data);
+	res = skip_quote(tmp, '\'', data);
+	free(tmp);
 	if (!tkn)
 		return (NULL);
 	i = 0;
@@ -95,7 +102,8 @@ last_exit_status, size_t i, t_g_data *data)
 	return (res);
 }
 
-void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data, bool is_export)
+void	expand_tkn_tab(char **tab, int last_exit_status, \
+t_g_data *data, bool is_export)
 {
 	int		j;
 	char	*temp;
@@ -121,7 +129,8 @@ void	expand_tkn_tab(char **tab, int last_exit_status, t_g_data *data, bool is_ex
 	}
 }
 
-char	**expander(char *arg, int last_exit_status, t_g_data *data, bool is_export)
+char	**expander(char *arg, int last_exit_status, \
+t_g_data *data, bool is_export)
 {
 	char	**expanded;
 
