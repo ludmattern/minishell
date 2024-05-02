@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 18:41:10 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:00:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,6 @@ int	main(int argc, char **argv, char **envp)
 /*heredoc :
 		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
 		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
-/* code erreur :
-		ls: invalid option -- 'z' return 2 au lieu de 1*/
 /*
 cat :
 		//si ctrl+c dans cat alors on sort de toute la ligne de commande 
