@@ -1,16 +1,35 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   check_syntaxe_par.c								:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2024/04/19 15:29:16 by fprevot		   #+#	#+#			 */
-/*   Updated: 2024/04/19 15:32:03 by fprevot		  ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_syntaxe_par.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/19 15:29:16 by lmattern          #+#    #+#             */
+/*   Updated: 2024/05/02 19:09:47 by lmattern         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
+
+bool	process_closed_par(const char *cmd, int i)
+{
+	if (cmd && cmd[i] == ')')
+	{
+		i++;
+		while (ft_isspace(cmd[i]))
+			i++;
+		if (cmd[i] && (cmd[i] != '<' 
+			&& cmd[i] != '>' 
+			&& cmd[i] != '|' 
+			&& cmd[i] != '&'))
+		{
+			printf("cmd[%d] = %c\n", i, cmd[i]);
+			return (false);
+		}
+	}
+	return (true);
+}
 
 void	update_quote_status(char c, char *current_quote, \
 int i, const char *cmd)
@@ -56,6 +75,8 @@ bool	check_par(const char *cmd, int i, int par_count)
 		{
 			if (!process_parentheses(cmd[i], &par_count, &empty_par))
 				break ;
+			if (!process_closed_par(cmd, i))
+				return (false);
 			if (par_count < 0)
 				break ;
 		}
