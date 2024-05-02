@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:07:19 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/16 15:31:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:21:04 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_io_node(t_io_node *io_node)
 				temp++;
 			}
 			free(current->expanded_value);
+			
 		}
 		free(current);
 		current = next;

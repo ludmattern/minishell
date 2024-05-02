@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:43:50 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 17:09:17 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/02 11:22:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*get_command_path(char *cmd, t_g_data *g_data)
 	paths = get_path_splits(path_env);
 	if (!paths)
 		return (temp);
+	free(path_env);
 	result = build_and_verify_path(paths, temp, g_data);
 	if (result != NULL)
 		return (result);
@@ -123,4 +124,5 @@ char	*get_command_path(char *cmd, int i, t_g_data *g_data)
 		i++;
 	}
 	return (free_path(p.paths), free(p.paths), p.temp);
-}*/
+}
+*/

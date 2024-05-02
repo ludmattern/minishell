@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:32:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/30 17:36:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/02 11:07:42 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@ t_node	*process_rpar(t_token **c, t_g_data *g_data)
 t_node	*add_pipe_node(t_node *new_node, t_node **root, t_g_data *g_data)
 {
 	t_node	*pipe_node;
-
-	pipe_node = create_operator_node(&(t_token) \
-	{.type = T_PIPE, .value = "|"}, g_data);
+	t_token *node;
+	
+	node = malloc(sizeof(t_token));
+	if (!node)
+		fail_exit_shell(g_data);
+	node->type = T_PIPE;
+	node->value = "|";
+	pipe_node = create_operator_node(node, g_data);
 	pipe_node->right = *root;
 	pipe_node->left = new_node;
 	g_data->checkpar = 0;
+	free(node);
 	return (pipe_node);
 }
 
