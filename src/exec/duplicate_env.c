@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 13:09:09 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:48:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	copy_env_entries(char **source, char **dest, int size)
 	i = 0;
 	while (i < size)
 	{
-		dest[i] = malloc(ft_strlen(source[i]) + 1);
+		dest[i] = malloc(ft_ft_strlen(source[i]) + 1);
 		if (dest[i] == NULL)
 		{
 			perror("Failed to allocate memory for dest[i]");

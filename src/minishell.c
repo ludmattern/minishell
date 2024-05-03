@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 11:00:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:19:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_clear_memory(g_data);
 	return (0);
 }
+/*
+Au moment de lexpand j parcours env val si jai des quote deans je les transform en -2 -3 et au moment de skip les quote le les repasse en quote
+*/
 
 //MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les ss processus aussi) (a voir pour les autres signaux)
 /*heredoc :
