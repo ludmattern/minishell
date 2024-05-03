@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:39:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:43:46 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ bool	initialize_shell_variables(t_env **mini_env)
 	free(tmp);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		if(!ft_addenv_or_update(mini_env, "PWD", cwd))
+		if (!ft_addenv_or_update(mini_env, "PWD", cwd))
 			return (false);
 	}
 	else
 	{
-		if(!ft_addenv_or_update(mini_env, "PWD", ""))
+		if (!ft_addenv_or_update(mini_env, "PWD", ""))
 			return (false);
 	}
 	env_entry = find_env_var(*mini_env, "OLDPWD");

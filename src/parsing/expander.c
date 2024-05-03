@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   expander.c										 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2024/03/14 11:40:23 by fprevot		   #+#	#+#			 */
-/*   Updated: 2024/04/29 16:03:03 by fprevot		  ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/14 11:40:23 by lmattern          #+#    #+#             */
+/*   Updated: 2024/05/03 11:21:01 by lmattern         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
@@ -47,7 +47,6 @@ void	remove_empty_quotes(char *str, int rp, int wp, bool in_squote)
 char	*expand_simple_quote(char *tkn, t_g_data *data, bool is_export)
 {
 	//char		*tmp;
-
 	remove_empty_quotes(tkn, 0, 0, false);
 	if (is_export != true)
 	{
@@ -56,10 +55,7 @@ char	*expand_simple_quote(char *tkn, t_g_data *data, bool is_export)
 		//free(tmp);
 	}
 	else
-	{
 		tkn = skip_quote(tkn, '"', data);
-	}
-	
 	return (tkn);
 }
 
@@ -79,14 +75,13 @@ char	*expand_double_quote(char *tkn, int last_exit_status, t_g_data *data)
 	(void)last_exit_status;
 	while (res && res[i] != '\0')
 	{
-		i++;
-		if (i >= ft_strlen(res))
+		if (i++ >= ft_strlen(res))
 			break ;
 	}
 	return (res);
 }
 
-char	*expand_without_quote(char *tkn, int \
+char	*expand_without_quote(char *tkn, int 
 last_exit_status, size_t i, t_g_data *data)
 {
 	char	*res;
@@ -95,9 +90,8 @@ last_exit_status, size_t i, t_g_data *data)
 	res = tkn;
 	(void)last_exit_status;
 	(void)data;
-	while (res && res[i] != '\0')
+	while (res && res[++i] != '\0')
 	{
-		i++;
 		if (i >= ft_strlen(res))
 			break ;
 	}
@@ -106,13 +100,13 @@ last_exit_status, size_t i, t_g_data *data)
 
 char *process_quotes(char *input, t_g_data *data)
 {
-    char *output;
-    bool in_single = false;
-	bool in_double = false;
-    int i = 0;
-	int j = 0;
+	char	*output;
+	bool	in_single = false;
+	bool	in_double = false;
+	int		i = 0;
+	int		j = 0;
 	(void)data;
-    if (!input) 
+	if (!input) 
 		return NULL;
 
     output = malloc(strlen(input) + 1);

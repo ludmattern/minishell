@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:01:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:56:59 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Updates the environment variables with the specified name and value.
 */
 bool	has_updated(t_env *current, char *name, char *value, bool is_local)
 {
-	if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+	if (ft_strncmp(current->name, name, ft_strlen(name) + 1) == 0)
 	{
 		if (value && value[0])
 		{
@@ -39,7 +39,7 @@ int	add_or_update_env(t_env **mini_env, char *name, char *value, bool is_local)
 {
 	t_env	*current;
 	t_env	*last;
-	t_env	*new_env;
+	t_env	*new_env = NULL;
 
 	current = *mini_env;
 	last = NULL;
