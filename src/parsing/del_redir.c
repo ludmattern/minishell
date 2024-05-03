@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:38:57 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/17 11:41:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:09:54 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*del_redir(char *cmd, int i, int j, t_g_data *g_data)
 
 	inq = 0;
 	currentq = 0;
-	result = malloc(strlen(cmd) + 1);
+	result = malloc(ft_strlen(cmd) + 1);
 	if (!result)
 		fail_exit_shell(g_data);
 	while (cmd[i] != '\0')

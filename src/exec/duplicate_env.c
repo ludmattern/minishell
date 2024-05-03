@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   duplicate_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/04 13:20:18 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:09:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	copy_env_entries(char **source, char **dest, int size)
 	i = 0;
 	while (i < size)
 	{
-		dest[i] = malloc(strlen(source[i]) + 1);
+		dest[i] = malloc(ft_strlen(source[i]) + 1);
 		if (dest[i] == NULL)
 		{
 			perror("Failed to allocate memory for dest[i]");
@@ -33,7 +33,7 @@ void	copy_env_entries(char **source, char **dest, int size)
 			free(dest);
 			exit(EXIT_FAILURE);
 		}
-		ft_strlcpy(dest[i], source[i], strlen(source[i]) + 1);
+		ft_strlcpy(dest[i], source[i], ft_strlen(source[i]) + 1);
 		i++;
 	}
 	dest[size] = NULL;

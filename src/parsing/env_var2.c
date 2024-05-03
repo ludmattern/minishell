@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_var2.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 11:49:43 by fprevot          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   env_var2.c										 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/19 13:09:31 by fprevot		   #+#	#+#			 */
+/*   Updated: 2024/05/03 15:21:26 by fprevot		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
@@ -30,6 +30,20 @@ t_g_data *data, bool dquotes)
 		ft_bzero(ctx->res, ctx->s.size);
 	}
 }
+void	quote_in_env_val(char *env_val)
+{
+	int	i;
+	
+	i = 0;
+	while (env_val[i])
+	{
+		if (env_val[i] == '\'')
+			env_val[i] = -2;
+		else if (env_val[i] == '\"')
+			env_val[i] = -3;
+		i++;
+	}
+}
 
 void	process_variable(t_var_context *ctx, char *tkn, \
 t_g_data *data, bool dquotes)
@@ -37,7 +51,7 @@ t_g_data *data, bool dquotes)
 	ctx->start = ctx->i;
 	while (ft_isalpha(tkn[ctx->i]))
 		ctx->i++;
-	if (tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9')
+	if ((tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9') || tkn[ctx->i] == '_')
 		ctx->i++;
 	ctx->env_length = ctx->i - ctx->start;
 	ctx->tmp_env = malloc(ctx->env_length + 1);
@@ -55,6 +69,7 @@ t_g_data *data, bool dquotes)
 		ctx->env_val[0] = -1;
 		ctx->env_val[1] = '\0';
 	}
+	quote_in_env_val(ctx->env_val);
 	ctx->j = 0;
 	while (ctx->env_val[ctx->j])
 		ctx->res[ctx->k++] = ctx->env_val[ctx->j++];
@@ -86,6 +101,8 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 			ctx.i++;
 			process_variable(&ctx, tkn, data, dquotes);
 		}
+		else if (tkn[ctx.i] == '$' && !ft_isalnum(tkn[ctx.i + 1]))
+			ctx.i++;
 		else
 			ctx.res[ctx.k++] = tkn[ctx.i++];
 	}
