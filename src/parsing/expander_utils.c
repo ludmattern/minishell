@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:48:52 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 17:21:13 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 11:17:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,39 @@ char	*skip_quote(char *tkn, char q, t_g_data *data)
 	return (res);
 }
 */
+
 char	*skip_quote(char *tkn, char q, t_g_data *data)
 {
 	char	*res;
 	int		i;
 	int		j;
-	bool	inq = false;
+	bool	inq;
 	char	quote;
 
+	inq = false;
 	if (q == '"')
 		quote = '"';
 	else
 		quote = '\'';
-	i = 0;
+	i = -1;
 	j = 0;
 	(void)data;
 	res = malloc((ft_strlen(tkn) + 1) * sizeof(char));
 	if (!res)
 		return (NULL);
-	while (tkn[i] != '\0')
+	while (tkn[++i] != '\0')
 	{
 		if (tkn[i] == quote)
-		{
 			inq = !inq;
-			
-		}
-		if ((tkn[i] != q && tkn[i] != -1) || (inq == true && tkn[i] != -1 && tkn[i] != q))
+		if ((tkn[i] != q && tkn[i] != -1)
+			|| (inq == true
+				&& tkn[i] != -1
+				&& tkn[i] != q))
 			res[j++] = tkn[i];
-		i++;
 	}
 	res[j] = '\0';
 	return (res);
 }
-
 
 char	*replace_substring(char *original, \
 	int start, char *replace, t_g_data *data)

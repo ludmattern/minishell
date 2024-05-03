@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 18:26:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:41:33 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,12 @@ int	ft_exit(char **args, t_data **data, bool piped)
 			exiting_exit(EXIT_SYNTAX_ERROR, NULL, false, piped);
 		}
 		if (args[2])
-			return (ft_eprintf(MS"exit: too many arguments\n"), EXIT_SYNTAX_ERROR);
-		return (exiting_exit((int)(status % 256 + 256) % 256, data, false, piped));
+		{
+			ft_eprintf(MS"exit: too many arguments\n");
+			return (EXIT_SYNTAX_ERROR);
+		}
+		return (exiting_exit((int)(status % 256 + 256) % 256, \
+		data, false, piped));
 	}
 	return (exiting_exit(EXIT_SUCCESS, data, true, piped));
 }
