@@ -69,7 +69,7 @@ void	process_status_var(t_env_context *ctx, int *i)
 	free(ctx->res);
 	ctx->res = ctx->new;
 	ctx->new = NULL;
-	*i += strlen(ctx->status_str) - 1;
+	*i += ft_strlen(ctx->status_str) - 1;
 	free(ctx->status_str);
 }
 
@@ -80,7 +80,7 @@ bool	process_variable_substitution(t_env_context \
 	if (ctx->new == NULL)
 	{
 		free(ctx->res);
-		ctx->res = strdup("");
+		ctx->res = ft_strdup("");
 		return (false);
 	}
 	free(ctx->res);

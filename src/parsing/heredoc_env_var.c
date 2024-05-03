@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:22:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:10:30 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	process_status_var_h(t_env_context_her *ctx, int *i)
 	free(ctx->res[0]);
 	ctx->res[0] = ctx->new;
 	ctx->new = NULL;
-	*i += strlen(ctx->status_str) - 1;
+	*i += ft_strlen(ctx->status_str) - 1;
 	free(ctx->status_str);
 }
 

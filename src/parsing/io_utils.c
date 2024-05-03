@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:23:43 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 11:34:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:10:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*extract_with_quote(char **c, t_g_data *data)
 	int		iq;
 	char	*result;
 
-	result = malloc(strlen(*c) + 1);
+	result = malloc(ft_strlen(*c) + 1);
 	if (!result)
 		fail_exit_shell(data);
 	output = result;

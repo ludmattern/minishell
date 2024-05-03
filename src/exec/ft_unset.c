@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:56:09 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:33:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_isvalid_identifier(const char *name)
 	name++;
 	while (*name)
 	{
-		if (!isalnum(*name) && *name != '_')
+		if (!ft_isalnum(*name) && *name != '_')
 			return (false);
 		name++;
 	}

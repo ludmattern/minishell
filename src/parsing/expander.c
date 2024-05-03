@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 11:21:01 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:10:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char *process_quotes(char *input, t_g_data *data)
 	if (!input) 
 		return NULL;
 
-    output = malloc(strlen(input) + 1);
+    output = malloc(ft_strlen(input) + 1);
     if (!output) return NULL;
 
     while (input[i] != '\0')

@@ -6,14 +6,14 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 19:23:50 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 15:29:50 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:28:55 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
 /*
-Split the name and value of the argument.
+split the name and value of the argument.
 */
 int	get_local_name_n_value(char *arg, char *name, char *value)
 {

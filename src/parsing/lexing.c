@@ -139,7 +139,7 @@ t_token	*lex_me(char *in_put, int i)
 		new_token = malloc(sizeof(t_token));
 		if (new_token == NULL)
 			return (head->error = -1, head);
-		ft_memset(new_token, 0, sizeof(t_token));
+		memset(new_token, 0, sizeof(t_token));
 		new_token->next = NULL;
 		new_token->prev = lex;
 		if (lex != NULL)

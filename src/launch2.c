@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 17:54:18 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:23:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	free(pre_input2);
 	if (g_data->last_exit_status)
 	{
-		pre_input2 = calloc(10, sizeof(char));
+		pre_input2 = ft_calloc(10, sizeof(char));
 		ft_sprintf(pre_input2, "[%d]", g_data->last_exit_status);
 		prompt = ft_strjoin(pre_input2, tmp);
 		free(pre_input2);

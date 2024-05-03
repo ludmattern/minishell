@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 18:41:54 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:18:57 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_env(char **args, t_env *mini_env)
 			continue ;
 		}
 		else if (tmp->value && tmp->value[0])
-			ft_printf("%s=%s\n", tmp->name, tmp->value);
+			printf("%s=%s\n", tmp->name, tmp->value);
 		tmp = tmp->next;
 	}
 	return (EXIT_SUCCESS);

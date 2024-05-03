@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredeocc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:05:51 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 18:20:18 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:22:02 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*append_line_to_result(char *result, char *line, size_t *total_size)
 
 	if (result == NULL)
 	{
-		result = strdup(line);
+		result = ft_strdup(line);
 		if (!result)
 		{
 			perror("Allocation failed");
@@ -52,14 +52,14 @@ char	*append_line_to_result(char *result, char *line, size_t *total_size)
 	else
 	{
 		new_result = ft_realloc(result, *total_size, \
-		*total_size + strlen(line) + 1);
+		*total_size + ft_strlen(line) + 1);
 		if (!new_result)
 			return (free(line), free(result), \
 			perror("Realloc failed"), NULL);
 		result = new_result;
-		strcat(result, line);
+		ft_strcat(result, line);
 	}
-	*total_size += strlen(line);
+	*total_size += ft_strlen(line);
 	free(line);
 	return (result);
 }
@@ -83,7 +83,7 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 	}
 	if (result == NULL)
 	{
-		result = strdup("");
+		result = ft_strdup("");
 		if (!result)
 			return (perror("Allocation failed"), EXIT_GENERAL_ERROR);
 	}

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 17:44:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:19:10 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd != NULL)
 	{
-		ft_printf("%s\n", cwd);
+		printf("%s\n", cwd);
 		free(cwd);
 	}
 	else
