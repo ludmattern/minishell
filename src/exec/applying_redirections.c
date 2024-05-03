@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 15:29:31 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:19:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirect_heredoc_pipe(const char *heredoc_input, bool piped)
 /*
 Redirects the input to the given file.
 */
-int	redirect_input(const char *filename)
+int	redirect_input(const char *filename, bool is_empty)
 {
 	int	fd;
 	int	status;
@@ -49,6 +49,11 @@ int	redirect_input(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (command_redirection_failure(filename, EXIT_GENERAL_ERROR));
+	if (is_empty)
+	{
+		close(fd);
+		return (EXIT_SUCCESS);
+	}
 	status = dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (status < 0)
@@ -116,7 +121,7 @@ int	apply_command_redirections(t_io_node *io_list, bool piped, bool is_empty)
 	while (current != NULL)
 	{
 		if (current->type == IO_IN)
-			status = redirect_input(current->expanded_value[0]);
+			status = redirect_input(current->expanded_value[0], is_empty);
 		else if (current->type == IO_OUT)
 			status = redirect_output(current->expanded_value[0]);
 		else if (current->type == IO_APPEND)

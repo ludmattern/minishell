@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:09 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 15:58:15 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/02 19:08:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	validate_special_char(const char *cmd, int *i)
 		if (cmd[k] == '(')
 			return (false);
 	}
-	*i = j;
+	// *i = j;
 	return (true);
 }
 

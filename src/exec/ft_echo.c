@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 15:23:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:23:31 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ int	ft_echo(char **args)
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
-		if (args[i + 1])
+		if (args[i++ + 1])
 			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
 	}
 	if (!option)
 		ft_putchar_fd('\n', STDOUT_FILENO);
