@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 17:43:14 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/02 21:40:31 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 	while (tkn[ctx.i])
 	{
 		if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
-		&& tkn[ctx.i + 1] != ' ' && tkn[ctx.i + 1] \
+		&& !ft_isspace(tkn[ctx.i + 1]) && tkn[ctx.i + 1] \
 		!= '$')
 		{
 			ctx.i++;
