@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:09:31 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 21:40:31 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 11:49:43 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,23 @@ t_g_data *data, bool dquotes)
 char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 {
 	t_var_context	ctx;
+	bool			squote;
+	bool			dquote;
 
+	squote = false;
+	dquote = false;
 	init_var_ctx(&ctx, tkn, data, dquotes);
 	if (!ctx.res)
 		return (NULL);
 	while (tkn[ctx.i])
 	{
+		if (tkn[ctx.i] == '\'' && !dquote)
+			squote = !squote;
+		if (tkn[ctx.i] == '"' && !squote)
+			dquote = !dquote;
 		if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
 		&& !ft_isspace(tkn[ctx.i + 1]) && tkn[ctx.i + 1] \
-		!= '$')
+		!= '$' && !squote)
 		{
 			ctx.i++;
 			process_variable(&ctx, tkn, data, dquotes);
