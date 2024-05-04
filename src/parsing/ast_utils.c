@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:32:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 11:30:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 10:20:15 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ t_node	*add_pipe_node(t_node *new_node, t_node **root, t_g_data *g_data)
 
 	node = malloc(sizeof(t_token));
 	if (!node)
+	{
+		free_tree(new_node);
+		free_tree(*root);
 		fail_exit_shell(g_data);
+	}
 	node->type = T_PIPE;
 	node->value = "|";
 	pipe_node = create_operator_node(node, g_data);

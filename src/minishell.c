@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 14:19:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 11:01:35 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,3 +138,9 @@ cat :
 		//si ctrl+c dans cat alors on sort de toute la ligne de commande 
 		//cat CTRL+C ajouter /n
 */
+
+
+/*pb de free dans command_path*/
+
+
+/*Malloc fail cd sur gt_get_env a check*/

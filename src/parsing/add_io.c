@@ -109,7 +109,7 @@ t_g_data *data)
 		filename = extract_filename(cursor);
 	if (!filename)
 		fail_exit_shell(data);
-	new_io = create_io_node_from_string(io->type, filename, \
+	new_io = create_io_node_from_string(io->type, filename, 
 	data);
 	if (g_heredoc_sigint == 2)
 		return ;

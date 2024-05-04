@@ -26,7 +26,11 @@ char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data)
 		{
 			env_val = ft_strdup(tmp->value);
 			if (!env_val)
+			{
+				free(data->path);
+				free_lexed(data->lexed);
 				fail_exit_shell(data);
+			}
 			return (env_val);
 		}
 		tmp = tmp->next;

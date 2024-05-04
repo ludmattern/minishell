@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:38:57 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 16:49:44 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/04 10:37:47 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ char	*del_redir(char *cmd, int i, int j, t_g_data *g_data)
 
 	inq = 0;
 	currentq = 0;
+	(void)g_data;
 	result = malloc(ft_strlen(cmd) + 1);
 	if (!result)
-		fail_exit_shell(g_data);
+		return (NULL);
 	while (cmd[i] != '\0')
 	{
 		if ((cmd[i] == '\'' || cmd[i] == '\"') \

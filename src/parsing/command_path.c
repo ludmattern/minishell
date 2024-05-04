@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:43:50 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 11:06:17 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 10:27:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	free_path(char **paths)
 char	*prepare_temp_path(char *cmd, t_g_data *g_data)
 {
 	char	*temp;
-
+	(void)cmd;
 	temp = ft_strdup(cmd);
 	if (!temp)
+	{
+
 		fail_exit_shell(g_data);
+	}
 	return (temp);
 }
 
@@ -57,7 +60,11 @@ char	*build_and_verify_path(char **paths, char *temp, t_g_data *g_data)
 		full_cmd_path = ft_strjoin(cmd_path, temp);
 		free(cmd_path);
 		if (!full_cmd_path)
+		{
+			free(temp);
+			free_path(paths);
 			fail_exit_shell(g_data);
+		}
 		if (access(full_cmd_path, X_OK) == 0)
 		{
 			free(temp);

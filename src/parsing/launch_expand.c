@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   launch_expand.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 10:34:42 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 12:54:15 by fprevot          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   launch_expand.c									:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: fprevot <fprevot@student.42.fr>			+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/29 10:34:42 by lmattern		  #+#	#+#			 */
+/*   Updated: 2024/05/04 10:36:07 by fprevot		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
@@ -35,6 +35,43 @@ bool	redirection_outside_quotes(const char *args)
 	return (false);
 }
 
+void free_string_array(char **array)
+{
+	if (array)
+	{
+		char **temp = array;
+		while (*temp)
+		{
+			free(*temp);
+			temp++;
+		}
+		free(array);
+	}
+}
+
+void free_io_nod(t_io_node *node)
+{
+	if (node)
+	{
+		free(node->value);			
+		free_string_array(node->expanded_value);
+		free(node);
+	}
+}
+
+void free_io_list(t_io_node *head)
+{
+	t_io_node *current = head;
+	t_io_node *next;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		free_io_nod(current);
+		current = next;
+	}
+}
+
 void	process_redirections_and_filenames(t_token \
 	*token, t_g_data *g_data)
 {
@@ -47,8 +84,19 @@ void	process_redirections_and_filenames(t_token \
 		if (g_heredoc_sigint == 2)
 			return ;
 		tmp = ft_strdup(token->value);
+		if (!token->value)
+		{
+			free_io_list(token->io_list);
+			fail_exit_shell(g_data);
+		}
 		free(token->value);
 		token->value = del_redir(tmp, 0, 0, g_data);
+		if (!token->value)
+		{
+			free(tmp);
+			free_io_list(token->io_list);
+			fail_exit_shell(g_data);
+		}
 		free(tmp);
 	}
 }
@@ -59,6 +107,8 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 	{
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
+		if (!token->expanded)
+			fail_exit_shell(token->g_data);
 		token->expanded[0] = ft_strdup("EMPTY");
 		if (!token->expanded[0])
 			fail_exit_shell(token->g_data);

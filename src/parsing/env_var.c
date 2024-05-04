@@ -62,7 +62,7 @@ char	*ft_env_strdup(const char *s, bool dquotes \
 	char	*str;
 	char	*original;
 
-	while (s[index])
+	while (s && s[index])
 	{
 		if (s[index] == ' ' && !dquotes)
 		{
@@ -77,7 +77,7 @@ char	*ft_env_strdup(const char *s, bool dquotes \
 	if (str == NULL)
 		return (NULL);
 	original = str;
-	while (*s)
+	while (s && *s)
 	{
 		if (*s == ' ' && !dquotes)
 			s = skip_s(s);
@@ -89,22 +89,31 @@ char	*ft_env_strdup(const char *s, bool dquotes \
 char	*ft_get_env3(char *tmp_env, t_env *mini_env, \
 t_g_data *data, bool dquotes)
 {
-	t_env	*tmp;
+	t_env	*current;
 	char	*env_val;
 	size_t	tmp_env_len;
 
-	tmp = mini_env;
+	(void)dquotes;
+	current = mini_env;
 	tmp_env_len = ft_strlen(tmp_env);
-	while (tmp)
+	while (current)
 	{
-		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len + 1) == 0)
+		if (ft_strncmp(current->name, tmp_env, tmp_env_len + 1) == 0)
 		{
-			env_val = ft_env_strdup(tmp->value, dquotes, 0, 0);
+			if (!current->value || !current->value[0])
+				return (NULL);
+			env_val = ft_strdup(current->value);
 			if (!env_val)
-				fail_exit_shell(data);
+			{
+				free(data->in_putsave);
+				free_mini_env(mini_env);
+				free(data->data);
+				free(data);
+				exit(EXIT_FAILURE);
+			}
 			return (env_val);
 		}
-		tmp = tmp->next;
+		current = current->next;
 	}
 	return (NULL);
 }

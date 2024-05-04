@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/21 16:49:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 10:45:53 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	handle_failure(char *tkn, char *env, t_g_data *data)
 		free(tkn);
 	if (env)
 		free(env);
-	fail_exit_shell(data);
+	free(data->in_putsave);
+	free_mini_env(data->mini_env);
+	free(data->data);
+	free(data);
+	printf("Memory fail\n");
+	exit(EXIT_FAILURE);
 }
 
 void	init_var_size_ctx(t_var_size_context *s)

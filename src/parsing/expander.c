@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 16:50:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:27:05 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ char *process_quotes(char *input, t_g_data *data)
 	int		j = 0;
 	(void)data;
 	if (!input) 
-		return NULL;
-
+		return (NULL);
 	output = malloc(ft_strlen(input) + 1);
-	if (!output) return NULL;
-
+	if (!output) 
+		return (NULL);
 	while (input[i] != '\0')
 	{
 		if (input[i] == -1)
+		{
 			i++;
-		if (input[i] == '\'')
+			continue ;
+		}
+		else if (input[i] == '\'')
 		{
 			if (!in_double) 
 				in_single = !in_single;
@@ -85,6 +87,7 @@ t_g_data *data, bool is_export)
 		temp =  process_quotes(tab[j], data);
 		if (!temp)
 		{
+			free_lexed(data->lexed);
 			ft_free_double_array(tab);
 			fail_exit_shell(data);
 		}
