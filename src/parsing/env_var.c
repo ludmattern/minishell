@@ -56,44 +56,25 @@ const char	*skip_s(const char *s)
 	return (s - 1);
 }
 
-char	*ft_env_strdup(const char *s, bool dquotes \
-, size_t	length, size_t	index)
+void	cleanup_and_exit(char *res, char *tmp_env, \
+t_env *mini_env, t_g_data *data)
 {
-	char	*str;
-	char	*original;
-
-	while (s && s[index])
-	{
-		if (s[index] == ' ' && !dquotes)
-		{
-			while (s[index] && s[index] == ' ')
-				index++;
-			index--;
-		}
-		length++;
-		index++;
-	}
-	str = ft_calloc((length + 1), sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	original = str;
-	while (s && *s)
-	{
-		if (*s == ' ' && !dquotes)
-			s = skip_s(s);
-		*str++ = *s++;
-	}
-	return (original);
+	free(res);
+	free(data->in_putsave);
+	free(tmp_env);
+	free_mini_env(mini_env);
+	free(data->data);
+	free(data);
+	exit(EXIT_FAILURE);
 }
 
 char	*ft_get_env3(char *tmp_env, t_env *mini_env, \
-t_g_data *data, bool dquotes)
+t_g_data *data, char *res)
 {
 	t_env	*current;
 	char	*env_val;
 	size_t	tmp_env_len;
 
-	(void)dquotes;
 	current = mini_env;
 	tmp_env_len = ft_strlen(tmp_env);
 	while (current)
@@ -105,11 +86,7 @@ t_g_data *data, bool dquotes)
 			env_val = ft_strdup(current->value);
 			if (!env_val)
 			{
-				free(data->in_putsave);
-				free_mini_env(mini_env);
-				free(data->data);
-				free(data);
-				exit(EXIT_FAILURE);
+				cleanup_and_exit(res, tmp_env, mini_env, data);
 			}
 			return (env_val);
 		}

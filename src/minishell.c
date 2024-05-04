@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 12:20:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:32:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,4 @@ cat :
 /*pb de free dans command_path*/
 
 
-/*Malloc fail cd sur gt_get_env a check*/
+/*Malloc fail cd sur ft_get_env a check et ft_get_env2*/

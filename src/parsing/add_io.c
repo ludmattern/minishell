@@ -108,7 +108,10 @@ t_g_data *data)
 	else
 		filename = extract_filename(cursor);
 	if (!filename)
+	{
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	new_io = create_io_node_from_string(io->type, filename, 
 	data);
 	if (g_heredoc_sigint == 2)

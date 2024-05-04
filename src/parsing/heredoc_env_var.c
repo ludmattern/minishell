@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 13:10:30 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:43:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**replace_input_vars(t_g_data *data, char *input, int i)
 		else if (!ctx.squotes && ctx.res[0][i] == '$' && ctx.res[0][i + 1] \
 		!= '\0' && ctx.res[0][i + 1] != ' ' && ctx.res[0][i + 1] != '"')
 		{
-			ctx.new = get_env_var2(ctx.res[0], data, false);
+			ctx.new = get_env_var2(ctx.res[0], data);
 			free(ctx.res[0]);
 			ctx.res[0] = ctx.new;
 			ctx.new = NULL;

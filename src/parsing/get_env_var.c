@@ -27,9 +27,12 @@ char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data)
 			env_val = ft_strdup(tmp->value);
 			if (!env_val)
 			{
-				free(data->path);
+				free_mini_env(mini_env);
+				free(data->in_putsave);
+				free_tree(data->root);
 				free_lexed(data->lexed);
-				fail_exit_shell(data);
+				exit(EXIT_FAILURE);
+				//fail_exit_shell(data);
 			}
 			return (env_val);
 		}
@@ -80,11 +83,14 @@ void	process_status_var(t_env_context *ctx, int *i)
 bool	process_variable_substitution(t_env_context \
 *ctx, int *i, t_g_data *data)
 {
-	ctx->new = get_env_var2(ctx->res, data, ctx->dquotes);
+	ctx->new = get_env_var2(ctx->res, data);
 	if (ctx->new == NULL)
 	{
 		free(ctx->res);
 		ctx->res = ft_strdup("");
+		{
+			fail_exit_shell(data);
+		}
 		return (false);
 	}
 	free(ctx->res);

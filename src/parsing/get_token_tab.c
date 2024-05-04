@@ -6,30 +6,12 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/29 15:43:32 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:46:45 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-char	*quote_token(char *arg, int *i, t_g_data *data)
-{
-	int		start;
-	char	quote_type;
-	char	*token;
-
-	start = *i;
-	quote_type = arg[*i];
-	(*i)++;
-	while (arg[*i] && arg[*i] != quote_type)
-		(*i)++;
-	token = ft_strndup(arg + start, *i - start + 1);
-	if (!token)
-		fail_exit_shell(data);
-	if (arg[*i])
-		(*i)++;
-	return (token);
-}
 
 char	*space_token(char *arg, int *i)
 {

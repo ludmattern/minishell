@@ -95,6 +95,7 @@ void	process_redirections_and_filenames(t_token \
 		{
 			free(tmp);
 			free_io_list(token->io_list);
+			free(token);
 			fail_exit_shell(g_data);
 		}
 		free(tmp);

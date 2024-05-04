@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 18:00:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:45:56 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,14 @@ int	calc_size(char *value)
 	return (c + 1);
 }
 
-char	*value_her(char *value)
-{
-	char	*res;
-	int		i;
-	int		j;
-	int		size;
-
-	i = 0;
-	j = 0;
-	size = calc_size(value);
-	res = malloc(size);
-	if (res == NULL)
-		return (NULL);
-	while (value[i])
-	{
-		if (value[i] != '"' && value[i] != '\'')
-			res[j++] = value[i];
-		i++;
-	}
-	res[j] = '\0';
-	return (res);
-}
-
-bool	check_delimiter(char *value)
-{
-	if (value[0] == '"' || value[0] == '\'')
-		return (false);
-	return (true);
-}
-
-void	fill_extended_value(t_io_node **io)
+void	fill_extended_value(t_io_node **io, t_g_data *data)
 {
 	(*io)->expanded_value = ft_calloc(2, sizeof(char *));
-	//if (!(*io)->expanded_value)
-	//	fail_exit_shell
+	if (!(*io)->expanded_value)
+		fail_exit_shell(data);
 	(*io)->expanded_value[0] = ft_strdup((*io)->value);
+	if (!(*io)->expanded_value[0])
+		fail_exit_shell(data);
 	ft_free((*io)->value);
 	(*io)->value = NULL;
 }
@@ -81,7 +53,7 @@ char *value, t_g_data *data)
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	if (io->type == IO_HEREDOC)
-	{	
+	{
 		tmp = process_quotes(value, data);
 		read_heredoc_into_string(tmp, &io->value);
 		free(tmp);
@@ -95,7 +67,7 @@ char *value, t_g_data *data)
 	if (io->type == IO_HEREDOC && !ft_strchr(value, '\'') && !ft_strchr(value, '"'))
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else if (io->type == IO_HEREDOC && (ft_strchr(value, '\'') || ft_strchr(value, '"')))
-		fill_extended_value(&io);
+		fill_extended_value(&io, data);
 	else
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	io->here_doc = 0;
