@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 18:00:08 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 12:40:08 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char *value, t_g_data *data)
 	io->type = type;
 	if (io->type == IO_HEREDOC)
 	{	
-		tmp = process_quotes(value, data);
+		tmp = process_quotes(value);
 		read_heredoc_into_string(tmp, &io->value);
 		free(tmp);
 		if (g_heredoc_sigint == 2)

@@ -86,14 +86,12 @@ char	*ft_env_strdup(const char *s, bool dquotes \
 	return (original);
 }
 
-char	*ft_get_env3(char *tmp_env, t_env *mini_env, \
-t_g_data *data, bool dquotes)
+char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data)
 {
 	t_env	*current;
 	char	*env_val;
 	size_t	tmp_env_len;
 
-	(void)dquotes;
 	current = mini_env;
 	tmp_env_len = ft_strlen(tmp_env);
 	while (current)

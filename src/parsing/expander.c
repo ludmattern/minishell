@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:40:23 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 11:27:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:33:42 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,76 +15,73 @@
 void	process_lit_quote(char *env_val)
 {
 	int	i;
-	
+
 	i = 0;
 	while (env_val[i])
 	{
 		if (env_val[i] == -2)
-			env_val[i] = '\''; 
+			env_val[i] = '\'';
 		else if (env_val[i] == -3)
 			env_val[i] = '"';
 		i++;
 	}
 }
 
-char *process_quotes(char *input, t_g_data *data)
+void	cpy_input_to_output(char input, char **output, char *last_quote, bool *in_quotes)
 {
-	char	*output;
-	bool	in_single = false;
-	bool	in_double = false;
-	int		i = 0;
-	int		j = 0;
-	(void)data;
-	if (!input) 
-		return (NULL);
-	output = malloc(ft_strlen(input) + 1);
-	if (!output) 
-		return (NULL);
-	while (input[i] != '\0')
+	if (input == -1)
+		return ;
+	else if (input == '\'' || input == '"')
 	{
-		if (input[i] == -1)
+		if (!(*in_quotes))
 		{
-			i++;
-			continue ;
+			*last_quote = input;
+			*in_quotes = true;
 		}
-		else if (input[i] == '\'')
+		else if (*last_quote == input)
 		{
-			if (!in_double) 
-				in_single = !in_single;
-			else 
-				output[j++] = input[i];
-		}
-		else if (input[i] == '"')
-		{
-			if (!in_single) 
-				in_double = !in_double;
-			else 
-				output[j++] = input[i];
+			*last_quote = 0;
+			*in_quotes = false;
 		}
 		else
-		{
-			if (in_single || in_double || (!in_single && !in_double))
-				output[j++] = input[i];
-		}
-		i++;
+			*(*output)++ = input;
 	}
-	output[j] = '\0';
+	else
+		*(*output)++ = input;
+}
+
+char	*process_quotes(char *input)
+{
+	int		i;
+	char	*tmp;
+	char	*output;
+	char	last_quote;
+	bool	in_quotes;
+
+	in_quotes = false;
+	last_quote = 0;
+	if (!input) 
+		return (NULL);
+	output = ft_calloc(ft_strlen(input) + 1, sizeof(char));
+	if (!output) 
+		return (NULL);
+	tmp = output;
+	i = 0;
+	while (input[i])
+		cpy_input_to_output(input[i++], &tmp, &last_quote, &in_quotes);
 	process_lit_quote(output);
 	return (output);
 }
 
-void	expand_tkn_tab(char **tab, int last_exit_status, \
-t_g_data *data, bool is_export)
+void	expand_tkn_tab(char **tab, t_g_data *data)
 {
 	int		j;
 	char	*temp;
 
-	(void)last_exit_status;
-	(void)is_export;
 	j = 0;
 	while (tab[j])
 	{
-		temp =  process_quotes(tab[j], data);
+		temp =  process_quotes(tab[j]);
 		if (!temp)
 		{
 			free_lexed(data->lexed);
@@ -93,19 +90,16 @@ t_g_data *data, bool is_export)
 		}
 		if (temp != tab[j])
 			free(tab[j]);
-		tab[j] = temp;
-		j++;
+		tab[j++] = temp;
 	}
 }
 
-char	**expander(char *arg, int last_exit_status, \
-t_g_data *data, bool is_export)
+char	**expander(char *arg, t_g_data *data)
 {
 	char	**expanded;
 
 	expanded = NULL;
-	(void)last_exit_status;
 	expanded = get_tkn_tab(arg, 1, 0, data);
-	expand_tkn_tab(expanded, last_exit_status, data, is_export);
+	expand_tkn_tab(expanded, data);
 	return (expanded);
 }

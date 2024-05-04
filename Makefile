@@ -6,7 +6,7 @@
 #    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/05/04 11:00:48 by lmattern         ###   ########.fr        #
+#    Updated: 2024/05/04 12:36:06 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ MAIN_SRC		:=	$(MAINDIR)/handle_user_input.c \
 
 EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/initialize_environnement.c \
+					$(EXECDIR)/initialisation_env_utils.c \
 					$(EXECDIR)/handling_pipeline_utils.c \
 					$(EXECDIR)/applying_redirections.c \
 					$(EXECDIR)/command_exec_failure.c \
@@ -55,6 +56,7 @@ EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/ft_export.c \
 					$(EXECDIR)/env_utils.c \
 					$(EXECDIR)/ft_unset.c \
+					$(EXECDIR)/mini_env.c \
 					$(EXECDIR)/ft_echo.c \
 					$(EXECDIR)/ft_exit.c \
 					$(EXECDIR)/ft_pwd.c \

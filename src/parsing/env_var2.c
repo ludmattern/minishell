@@ -13,13 +13,12 @@
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
 
-void	init_var_ctx(t_var_context *ctx, char *tkn, \
-t_g_data *data, bool dquotes)
+void	init_var_ctx(t_var_context *ctx, char *tkn, t_g_data *data)
 {
 	ctx->i = 0;
 	ctx->k = 0;
 	ctx->j = 0;
-	ctx->s = get_mal_size2(tkn, data->mini_env, data, dquotes);
+	ctx->s = get_mal_size2(tkn, data);
 	if (ctx->s.size == 1)
 		ctx->res = NULL;
 	else
@@ -45,8 +44,7 @@ void	quote_in_env_val(char *env_val)
 	}
 }
 
-void	process_variable(t_var_context *ctx, char *tkn, \
-t_g_data *data, bool dquotes)
+void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 {
 	ctx->start = ctx->i;
 	while (ft_isalpha(tkn[ctx->i]))
@@ -59,7 +57,7 @@ t_g_data *data, bool dquotes)
 		return (free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
 	ctx->tmp_env[ctx->env_length] = '\0';
-	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, dquotes);
+	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data);
 	free(ctx->tmp_env);
 	if (!ctx->env_val)
 	{
@@ -77,7 +75,7 @@ t_g_data *data, bool dquotes)
 	ctx->env_val = NULL;
 }
 
-char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
+char	*get_env_var2(char *tkn, t_g_data *data)
 {
 	t_var_context	ctx;
 	bool			squote;
@@ -85,7 +83,7 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 
 	squote = false;
 	dquote = false;
-	init_var_ctx(&ctx, tkn, data, dquotes);
+	init_var_ctx(&ctx, tkn, data);
 	if (!ctx.res)
 		return (NULL);
 	while (tkn[ctx.i])
@@ -99,7 +97,7 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquotes)
 		!= '$' && !squote)
 		{
 			ctx.i++;
-			process_variable(&ctx, tkn, data, dquotes);
+			process_variable(&ctx, tkn, data);
 		}
 		else if (tkn[ctx.i] == '$' && !ft_isalnum(tkn[ctx.i + 1]))
 			ctx.i++;
