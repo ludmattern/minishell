@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch1.c                                          :+:      :+:    :+:   */
+/*   handle_user_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/26 17:50:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 11:00:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ void	launch_lexing(t_g_data *g_data)
 	g_data->lexed->g_data = g_data;
 }
 
-void launch_parsing(t_g_data *g_data)
+void	launch_parsing(t_g_data *g_data)
 {
-    t_node *root;
+	t_node	*root;
+	t_token	*current_lex;
 
-	root = NULL; 
-    t_token *current_lex = g_data->lexed->first;
+	root = NULL;
+	current_lex = g_data->lexed->first;
 	while (current_lex->next != NULL)
 		current_lex = current_lex->next;
-    root = build_ast(&current_lex, g_data);
+	root = build_ast(&current_lex, g_data);
 	g_data->data->ast = root;
-    free_lexed(g_data->save);
+	free_lexed(g_data->save);
 }
 
 void	launch_execution(t_g_data *g_data)

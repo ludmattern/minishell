@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/29 18:25:15 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:07:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void		signals_init(void);
 misc
 */
 void		update_input(t_g_data *g_data, char *pre_input);
-char		*init_bash(void);
+char		*init_bash(char *host);
 void		main_clean_exit(t_g_data *g_data);
 
 #endif

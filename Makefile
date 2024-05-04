@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
+#    By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/04/30 17:31:35 by fprevot          ###   ########.fr        #
+#    Updated: 2024/05/04 11:00:48 by lmattern         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, run, valgrind, valenv, FORCE, fclean, re, normal_spinner, \
-stop_normal_spinner, bash, bash_spinner, stop_bash_spinner, zsh, zsh_spinner, \
+stop_normal_spinner, mandatory, bash_spinner, stop_bash_spinner, bonus, zsh_spinner, \
 stop_zsh_spinner
 
 CC				:=	cc
@@ -32,9 +32,9 @@ PARSEDIR		:=	./src/parsing
 EXECDIR			:=	./src/exec
 MAINDIR			:=	./src/
 
-MAIN_SRC		:=	$(MAINDIR)/minishell.c \
-					$(MAINDIR)/launch2.c \
-					$(MAINDIR)/launch1.c
+MAIN_SRC		:=	$(MAINDIR)/handle_user_input.c \
+					$(MAINDIR)/update_input.c \
+					$(MAINDIR)/minishell.c
 
 EXEC_SRCS		:=	$(EXECDIR)/applying_redirections_utils.c \
 					$(EXECDIR)/initialize_environnement.c \
@@ -86,6 +86,7 @@ PARSE_SRCS		:=	$(PARSEDIR)/ast_utils.c \
 					$(PARSEDIR)/launch_expand.c \
 					$(PARSEDIR)/expander_utils.c \
 					$(PARSEDIR)/heredoc_env_var.c \
+					$(PARSEDIR)/lex_n_parse_util.c \
 					$(PARSEDIR)/check_syntaxe_par.c \
 					$(PARSEDIR)/check_syntax_redir.c \
 					$(PARSEDIR)/check_syntaxe_first.c \
@@ -102,10 +103,10 @@ OBJS			:=	$(MAIN_OBJ) $(EXEC_OBJS) $(PARSE_OBJS)
 
 all  : normal_spinner $(LIBFT) $(NAME) stop_normal_spinner
 
-bash : bash_spinner $(LIBFT) $(NAME) stop_bash_spinner
+mandatory : bash_spinner $(LIBFT) $(NAME) stop_bash_spinner
 	@./$(NAME)
 
-zsh : zsh_spinner $(LIBFT) $(NAME) stop_zsh_spinner
+bonus : zsh_spinner $(LIBFT) $(NAME) stop_zsh_spinner
 	@./$(NAME)
 
 $(OBJDIR)/%.o: $(EXECDIR)/%.c $(DEPS) | $(OBJDIR)
@@ -138,7 +139,7 @@ stop_normal_spinner:
 	@echo "\nCompilation of mandatory minishell sucessful."
 
 bash_spinner:
-	@echo "\033[1;32mCompiling minibash ....\c\033[0m"
+	@echo "\033[1;32mCompiling mandatory minishell ....\c\033[0m"
 	@while :; do \
 		for s in / - \\ \|; do \
 			printf "\b$$s"; \
@@ -149,7 +150,7 @@ bash_spinner:
 stop_bash_spinner:
 	@kill `cat spinner_pid.txt` 2>/dev/null || true
 	@rm -f spinner_pid.txt
-	@echo "\nCompilation of minibash sucessful."
+	@echo "\nCompilation of mandatory minishell successful."
 	@sleep 0.1; 
 	@echo "\033[32m  __  __  _         _       _           _  _ "
 	@sleep 0.1; 
@@ -164,7 +165,7 @@ stop_bash_spinner:
 	@echo "\033[1;32m\nReady to go ! 🚀\033[0m"
 
 zsh_spinner:
-	@echo "\033[1;32mCompiling minizshell ....\c\033[0m"
+	@echo "\033[1;32mCompiling bonus minishell ....\c\033[0m"
 	@while :; do \
 		for s in / - \\ \|; do \
 			printf "\b$$s"; \
@@ -175,7 +176,7 @@ zsh_spinner:
 stop_zsh_spinner:
 	@kill `cat spinner_pid.txt` 2>/dev/null || true
 	@rm -f spinner_pid.txt
-	@echo "\nCompilation of minizsh sucessful."
+	@echo "\nCompilation of bonus minishell sucessful."
 	@sleep 0.1; 
 	@echo "\033[32m                                                            \
 	        "
