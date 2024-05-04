@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:29:16 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 19:09:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:55:24 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ bool	process_closed_par(const char *cmd, int i)
 		i++;
 		while (ft_isspace(cmd[i]))
 			i++;
-		if (cmd[i] && (cmd[i] != '<' 
-			&& cmd[i] != '>' 
-			&& cmd[i] != '|' 
-			&& cmd[i] != '&'))
+		if (cmd[i] && (cmd[i] != '<'
+				&& cmd[i] != '>'
+				&& cmd[i] != '|'
+				&& cmd[i] != '&'))
 		{
 			printf("cmd[%d] = %c\n", i, cmd[i]);
 			return (false);

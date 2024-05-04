@@ -29,10 +29,11 @@ void	init_var_ctx(t_var_context *ctx, char *tkn, t_g_data *data)
 		ft_bzero(ctx->res, ctx->s.size);
 	}
 }
+
 void	quote_in_env_val(char *env_val)
 {
 	int	i;
-	
+
 	i = 0;
 	while (env_val[i])
 	{
@@ -52,20 +53,18 @@ void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 	if ((tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9') || tkn[ctx->i] == '_')
 		ctx->i++;
 	ctx->env_length = ctx->i - ctx->start;
-	ctx->tmp_env = malloc(ctx->env_length + 1);
+	ctx->tmp_env = calloc(ctx->env_length + 1, sizeof(char));
 	if (!ctx->tmp_env)
 		return (free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
-	ctx->tmp_env[ctx->env_length] = '\0';
 	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data);
 	free(ctx->tmp_env);
 	if (!ctx->env_val)
 	{
-		ctx->env_val = malloc(2);
+		ctx->env_val = calloc(2, sizeof(char));
 		if (!ctx->env_val)
 			return (free(tkn), free(ctx->res), fail_exit_shell(data));
 		ctx->env_val[0] = -1;
-		ctx->env_val[1] = '\0';
 	}
 	quote_in_env_val(ctx->env_val);
 	ctx->j = 0;

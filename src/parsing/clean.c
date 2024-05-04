@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 12:20:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:02:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	free_data_structure(t_data **data)
 
 void	fail_exit_shell(t_g_data *g_data)
 {
-	//if (g_data->lexed)
-	//	free_lexed(g_data->lexed);
 	ft_clear_memory(g_data);
 	free_data_structure(&g_data->data);
 	free(g_data);

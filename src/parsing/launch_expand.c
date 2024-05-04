@@ -35,11 +35,13 @@ bool	redirection_outside_quotes(const char *args)
 	return (false);
 }
 
-void free_string_array(char **array)
+void	free_string_array(char **array)
 {
+	char	**temp;
+
 	if (array)
 	{
-		char **temp = array;
+		temp = array;
 		while (*temp)
 		{
 			free(*temp);
@@ -49,21 +51,22 @@ void free_string_array(char **array)
 	}
 }
 
-void free_io_nod(t_io_node *node)
+void	free_io_nod(t_io_node *node)
 {
 	if (node)
 	{
-		free(node->value);			
+		free(node->value);
 		free_string_array(node->expanded_value);
 		free(node);
 	}
 }
 
-void free_io_list(t_io_node *head)
+void	free_io_list(t_io_node *head)
 {
-	t_io_node *current = head;
-	t_io_node *next;
+	t_io_node	*current;
+	t_io_node	*next;
 
+	current = head;
 	while (current != NULL)
 	{
 		next = current->next;
@@ -72,15 +75,13 @@ void free_io_list(t_io_node *head)
 	}
 }
 
-void	process_redirections_and_filenames(t_token \
-	*token, t_g_data *g_data)
+void	process_redirections_and_filenames(t_token *token, t_g_data *g_data)
 {
 	char	*tmp;
 
 	if (redirection_outside_quotes(token->value))
 	{
-		token->io_list = parse_io_from_command(token->value, \
-		token->g_data);
+		token->io_list = parse_io_from_command(token->value, token->g_data);
 		if (g_heredoc_sigint == 2)
 			return ;
 		tmp = ft_strdup(token->value);
@@ -122,7 +123,7 @@ void	handle_expanded_token(t_token *token)
 		token->is_export = false;
 		if (ft_strncmp(token->value, "export", 6) == 0 && \
 		(token->value[6] == ' ' || token->value[6] == '\0'))
-   			token->is_export = true;
+			token->is_export = true;
 		token->expanded = expander(token->value, token->g_data);
 		if (token->is_export == true)
 			token->is_export = false;
