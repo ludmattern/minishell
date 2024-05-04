@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 11:01:35 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 12:20:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 
 int	g_heredoc_sigint = 0;
 
-char	*init_bash(void)
+char	*init_bash(char *host)
 {
 	static char	buffer[1024];
-	char		*host;
 	char		*tmp;
 	char		*tmp2;
 	char		*usr;
 
-	host = NULL;
 	buffer[0] = 0;
 	usr = getenv("USER");
 	tmp = getenv("SESSION_MANAGER");
@@ -101,7 +99,7 @@ void	init_minishell(t_g_data **g_data, char **env, char **av, int ac)
 	(*g_data)->mini_env = create_mini_env(env, g_data);
 	if (!initialize_shell_variables(&(*g_data)->mini_env))
 		main_clean_exit(*g_data);
-	(*g_data)->pre_input = init_bash();
+	(*g_data)->pre_input = init_bash(NULL);
 	if (!(*g_data)->pre_input)
 		main_clean_exit(*g_data);
 	(*g_data)->t = 0;
@@ -125,13 +123,11 @@ int	main(int argc, char **argv, char **envp)
 	ft_clear_memory(g_data);
 	return (0);
 }
-/*
-Au moment de lexpand j parcours env val si jai des quote deans je les transform en -2 -3 et au moment de skip les quote le les repasse en quote
-*/
-
-//MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les ss processus aussi) (a voir pour les autres signaux)
+//MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les 
+//ss processus aussi)(a voir pour les autres signaux)
 /*heredoc :
-		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne pas expand les var d'environnement dans le resultat
+		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne 
+		pas expand les var d'environnement dans le resultat
 		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
 /*
 cat :

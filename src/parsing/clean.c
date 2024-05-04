@@ -6,11 +6,18 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 11:01:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 12:20:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
+
+void	ft_clear_memory(t_g_data *g_data)
+{
+	free_mini_env(g_data->mini_env);
+	free(g_data->in_put);
+	free(g_data->in_putsave);
+}
 
 void	free_data(t_data *data)
 {
