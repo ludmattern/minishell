@@ -84,9 +84,10 @@ void	process_redirections_and_filenames(t_token \
 		if (g_heredoc_sigint == 2)
 			return ;
 		tmp = ft_strdup(token->value);
-		if (!token->value)
+		if (!tmp)
 		{
 			free_io_list(token->io_list);
+			free_lexed(g_data->lexed);
 			fail_exit_shell(g_data);
 		}
 		free(token->value);
@@ -107,7 +108,7 @@ void	handle_expanded_token(t_token *token)
 	if ((token->value[0] == -1) || !token->value[0])
 	{
 		token->is_empty = true;
-		token->expanded = malloc(sizeof(char *) * 2);
+		token->expanded = NULL;//malloc(sizeof(char *) * 2);
 		if (!token->expanded)
 			fail_exit_shell(token->g_data);
 		token->expanded[0] = ft_strdup("EMPTY");
