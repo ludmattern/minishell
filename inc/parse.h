@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 13:08:11 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:57:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ t_node		*process_operator(t_token **c, t_g_data *g_data, t_node *root);
 t_node		*process_rpar(t_token **c, t_g_data *g_data);
 t_node		*add_pipe_node(t_node *new_node, t_node **root, t_g_data *g_data);
 void		move_token_prev(t_token **c);
+char        *process_quotes(char *input, t_g_data *data);
 
 #endif

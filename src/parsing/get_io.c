@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 13:41:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:00:08 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,21 @@ bool	check_delimiter(char *value)
 	return (true);
 }
 
+void	fill_extended_value(t_io_node **io)
+{
+	(*io)->expanded_value = ft_calloc(2, sizeof(char *));
+	//if (!(*io)->expanded_value)
+	//	fail_exit_shell
+	(*io)->expanded_value[0] = ft_strdup((*io)->value);
+	ft_free((*io)->value);
+	(*io)->value = NULL;
+}
+
 t_io_node	*create_io_node_from_string(t_io_type type, \
 char *value, t_g_data *data)
 {
 	t_io_node	*io;
-	//bool		check_her = check_delimiter(value);
+	char		*tmp;
 
 	io = malloc(sizeof(t_io_node));
 	if (!io)
@@ -71,8 +81,10 @@ char *value, t_g_data *data)
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	if (io->type == IO_HEREDOC)
-	{
-		read_heredoc_into_string(value, &io->value);
+	{	
+		tmp = process_quotes(value, data);
+		read_heredoc_into_string(tmp, &io->value);
+		free(tmp);
 		if (g_heredoc_sigint == 2)
 			return (NULL);
 	}
@@ -80,12 +92,12 @@ char *value, t_g_data *data)
 		io->value = ft_strdup(value);
 	if (!io->value)
 		return (free(io), NULL);
-	if (io->type == IO_HEREDOC/* && check_her == true*/)
+	if (io->type == IO_HEREDOC && !ft_strchr(value, '\'') && !ft_strchr(value, '"'))
 		io->expanded_value = replace_input_vars(data, io->value, 0);
+	else if (io->type == IO_HEREDOC && (ft_strchr(value, '\'') || ft_strchr(value, '"')))
+		fill_extended_value(&io);
 	else
-	{
 		io->expanded_value = replace_input_vars(data, io->value, 0);
-	}
 	io->here_doc = 0;
 	return (io->prev = NULL, io->next = NULL, io);
 }
