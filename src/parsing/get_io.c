@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:50:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:06:10 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	fill_extended_value(t_io_node **io, t_g_data *data)
 	(*io)->value = NULL;
 }
 
-t_io_node	*create_io_node_from_string(t_io_type type, \
-char *value, t_g_data *data)
+t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 {
 	t_io_node	*io;
 	char		*tmp;
@@ -53,7 +52,7 @@ char *value, t_g_data *data)
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	if (io->type == IO_HEREDOC)
-	{	
+	{
 		tmp = process_quotes(value);
 		read_heredoc_into_string(tmp, &io->value);
 		free(tmp);
@@ -64,9 +63,12 @@ char *value, t_g_data *data)
 		io->value = ft_strdup(value);
 	if (!io->value)
 		return (free(io), NULL);
-	if (io->type == IO_HEREDOC && !ft_strchr(value, '\'') && !ft_strchr(value, '"'))
+	if (io->type == IO_HEREDOC && !ft_strchr(value, '\'')
+		&& !ft_strchr(value, '"'))
 		io->expanded_value = replace_input_vars(data, io->value, 0);
-	else if (io->type == IO_HEREDOC && (ft_strchr(value, '\'') || ft_strchr(value, '"')))
+	else if (io->type == IO_HEREDOC
+		&& (ft_strchr(value, '\'')
+			|| ft_strchr(value, '"')))
 		fill_extended_value(&io, data);
 	else
 		io->expanded_value = replace_input_vars(data, io->value, 0);
@@ -99,6 +101,5 @@ t_io_node	*parse_io_from_command(char *cmd, t_g_data *data)
 			break ;
 		io.cursor++;
 	}
-	
 	return (io.head);
 }

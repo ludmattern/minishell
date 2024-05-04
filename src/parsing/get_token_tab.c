@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:46:45 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:52:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
-
 
 char	*space_token(char *arg, int *i)
 {

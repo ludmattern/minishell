@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:47:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:05:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		add_new_io_node(t_io_bundle *io, char **cursor, \
 t_g_data *data);
 char		*extract_with_quote(char **c, t_g_data *data);
 int			countq(const char *str);
-t_io_node	*create_io_node_from_string(t_io_type type, char *value, \
+t_io_node	*create_io_from_string(t_io_type type, char *value, \
 			t_g_data *data);
 void		set_io_type(t_io_type *type, char **cursor);
 void		handle_failure(char *tkn, char *env, t_g_data *data);

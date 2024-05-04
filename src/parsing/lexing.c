@@ -122,6 +122,7 @@ bool	is_end(char *str, int i)
 	}
 	return (true);
 }
+
 t_token	*lex_me(char *in_put, int i)
 {
 	t_token	*head;
@@ -136,11 +137,9 @@ t_token	*lex_me(char *in_put, int i)
 		if (ft_isspace(in_put[i]))
 			if (is_end(in_put, i))
 				break ;
-		new_token = malloc(sizeof(t_token));
+		new_token = calloc(1, sizeof(t_token));
 		if (new_token == NULL)
 			return (head->error = -1, head);
-		memset(new_token, 0, sizeof(t_token));
-		new_token->next = NULL;
 		new_token->prev = lex;
 		if (lex != NULL)
 			lex->next = new_token;

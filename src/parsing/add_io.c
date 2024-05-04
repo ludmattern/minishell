@@ -57,7 +57,6 @@ void	initialize_and_add_io_node(t_io_bundle *io, t_io_node *new_io)
 	}
 }
 
-
 char	*extract_filename_her(char **cursor)
 {
 	char	*start;
@@ -67,7 +66,6 @@ char	*extract_filename_her(char **cursor)
 	lquote = 0;
 	quote = false;
 	start = (*cursor);
-
 	while (ft_isspace((**cursor)))
 		(*cursor)++;
 	while (**cursor)
@@ -89,14 +87,11 @@ char	*extract_filename_her(char **cursor)
 			break ;
 		(*cursor)++;
 	}
-	
 	return (ft_strndup(start, *cursor - start));
 }
 
-void	add_new_io_node(t_io_bundle *io, char **cursor, \
-t_g_data *data)
+void	add_new_io_node(t_io_bundle *io, char **cursor, t_g_data *data)
 {
-
 	t_io_node	*new_io;
 	char		*filename;
 
@@ -112,8 +107,7 @@ t_g_data *data)
 		free_lexed(data->lexed);
 		fail_exit_shell(data);
 	}
-	new_io = create_io_node_from_string(io->type, filename, 
-	data);
+	new_io = create_io_from_string(io->type, filename, data);
 	if (g_heredoc_sigint == 2)
 		return ;
 	if (new_io == NULL)
