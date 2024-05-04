@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 12:37:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:49:17 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	init_var_size_ctx(t_var_size_context *s)
 	s->env_length = 0;
 }
 
-void	handle_variable_size(t_var_size_context *s, \
-char *tkn, t_g_data *data)
+void	handle_variable_size(t_var_size_context *s, char *tkn, t_g_data *data)
 {
 	char	*env;
 	char	*env_val;
@@ -54,7 +53,7 @@ char *tkn, t_g_data *data)
 		handle_failure(tkn, env, data);
 	ft_strncpy(env, tkn + s->start, s->env_length);
 	env[s->env_length] = '\0';
-	env_val = ft_get_env3(env, data->mini_env, data, NULL);
+	env_val = ft_get_env3(env, data->mini_env, data);
 	if (!env_val)
 	{
 		env_val = malloc(2);
@@ -69,13 +68,11 @@ char *tkn, t_g_data *data)
 	free(env_val);
 }
 
-t_envsize	get_mal_size2(char *tkn, t_env *mini_env, t_g_data \
-*data)
+t_envsize	get_mal_size2(char *tkn, t_g_data *data)
 {
 	t_var_size_context	s;
 
 	init_var_size_ctx(&s);
-	(void)mini_env;
 	while (tkn[s.i])
 	{
 		if (tkn[s.i] == '$' && tkn[s.i + 1] && tkn[s.i + 1] \

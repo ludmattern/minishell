@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:38:57 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 12:25:36 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:48:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	skip_filenames(const char *cmd, int *i, int inq, char currentq)
 		(*i)++;
 }
 
-char	*del_redir(char *cmd, int i, int j, t_g_data *g_data)
+char	*del_redir(char *cmd, int i, int j)
 {
 	char	*result;
 	int		inq;
@@ -55,7 +55,6 @@ char	*del_redir(char *cmd, int i, int j, t_g_data *g_data)
 
 	inq = 0;
 	currentq = 0;
-	(void)g_data;
 	result = malloc(ft_strlen(cmd) + 1);
 	if (!result)
 		return (NULL);

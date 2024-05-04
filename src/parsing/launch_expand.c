@@ -90,7 +90,7 @@ void	process_redirections_and_filenames(t_token \
 			fail_exit_shell(g_data);
 		}
 		free(token->value);
-		token->value = del_redir(tmp, 0, 0, g_data);
+		token->value = del_redir(tmp, 0, 0);
 		if (!token->value)
 		{
 			free(tmp);
@@ -102,7 +102,7 @@ void	process_redirections_and_filenames(t_token \
 	}
 }
 
-void	handle_expanded_token(t_token *token, int last_exit_status)
+void	handle_expanded_token(t_token *token)
 {
 	if ((token->value[0] == -1) || !token->value[0])
 	{
@@ -122,14 +122,13 @@ void	handle_expanded_token(t_token *token, int last_exit_status)
 		if (ft_strncmp(token->value, "export", 6) == 0 && \
 		(token->value[6] == ' ' || token->value[6] == '\0'))
    			token->is_export = true;
-		token->expanded = expander(token->value, \
-		last_exit_status, token->g_data, token->is_export);
+		token->expanded = expander(token->value, token->g_data);
 		if (token->is_export == true)
 			token->is_export = false;
 	}
 }
 
-void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
+void	expe(t_token *lexed, t_g_data *g_data)
 {
 	t_token	*fir;
 
@@ -143,7 +142,7 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 			if (g_heredoc_sigint == 2)
 				return ;
 			lexed->is_add_local = check_local(lexed->value);
-			handle_expanded_token(lexed, last_exit_status);
+			handle_expanded_token(lexed);
 		}
 		lexed = lexed->next;
 	}
@@ -151,7 +150,7 @@ void	expe(t_token *lexed, int last_exit_status, t_g_data *g_data)
 
 void	launch_expand(t_g_data *g_data)
 {
-	expe(g_data->lexed, g_data->last_exit_status, g_data);
+	expe(g_data->lexed, g_data);
 	if (g_heredoc_sigint == 2)
 		return ;
 }

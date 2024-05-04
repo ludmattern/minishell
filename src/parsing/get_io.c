@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:45:56 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/04 13:50:43 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char *value, t_g_data *data)
 	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
 	if (io->type == IO_HEREDOC)
-	{
-		tmp = process_quotes(value, data);
+	{	
+		tmp = process_quotes(value);
 		read_heredoc_into_string(tmp, &io->value);
 		free(tmp);
 		if (g_heredoc_sigint == 2)

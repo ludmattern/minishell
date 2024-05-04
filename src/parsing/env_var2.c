@@ -13,13 +13,12 @@
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
 
-void	init_var_ctx(t_var_context *ctx, char *tkn, \
-t_g_data *data)
+void	init_var_ctx(t_var_context *ctx, char *tkn, t_g_data *data)
 {
 	ctx->i = 0;
 	ctx->k = 0;
 	ctx->j = 0;
-	ctx->s = get_mal_size2(tkn, data->mini_env, data);
+	ctx->s = get_mal_size2(tkn, data);
 	if (ctx->s.size == 1)
 		ctx->res = NULL;
 	else
@@ -45,8 +44,7 @@ void	quote_in_env_val(char *env_val)
 	}
 }
 
-void	process_variable(t_var_context *ctx, char *tkn, \
-t_g_data *data)
+void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 {
 	ctx->start = ctx->i;
 	while (ft_isalpha(tkn[ctx->i]))
@@ -59,7 +57,7 @@ t_g_data *data)
 		return (free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
 	ctx->tmp_env[ctx->env_length] = '\0';
-	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, tkn);
+	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data);
 	free(ctx->tmp_env);
 	if (!ctx->env_val)
 	{
