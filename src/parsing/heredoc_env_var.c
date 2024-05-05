@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:50:53 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/05 21:35:50 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,18 @@ void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 	ctx->data = data;
 	ctx->res = malloc(sizeof(char *) * 2);
 	if (!ctx->res)
+	{
+		free(input);
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	ctx->res[0] = ft_strdup(input);
 	if (!ctx->res)
+	{
+		free(input);
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	ctx->i = 0;
 }
 
@@ -58,7 +66,7 @@ char	**replace_input_vars(t_g_data *data, char *input, int i)
 		else if (!ctx.squotes && ctx.res[0][i] == '$' && ctx.res[0][i + 1] \
 		!= '\0' && ctx.res[0][i + 1] != ' ' && ctx.res[0][i + 1] != '"')
 		{
-			ctx.new = get_env_var2(ctx.res[0], data);
+			ctx.new = get_env_var2(ctx.res[0], data, false, false);
 			free(ctx.res[0]);
 			ctx.res[0] = ctx.new;
 			ctx.new = NULL;

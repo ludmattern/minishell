@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:43:50 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:38:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/05 21:33:51 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ char	*prepare_temp_path(char *cmd, t_g_data *g_data)
 
 char	**get_path_splits(char *path_env)
 {
+	char	**tab;
+
 	if (path_env == NULL)
 		return (NULL);
-	return (ft_split(path_env, ':'));
+	tab = ft_split(path_env, ':');
+	if (!tab)
+		free(path_env);
+	return (tab);
 }
 
 char	*build_and_verify_path(char **paths, char *temp, t_g_data *g_data)
@@ -49,6 +54,7 @@ char	*build_and_verify_path(char **paths, char *temp, t_g_data *g_data)
 	char	*full_cmd_path;
 
 	i = 0;
+	(void)g_data;
 	while (paths[i] != NULL)
 	{
 		cmd_path = ft_strjoin(paths[i], "/");
@@ -57,11 +63,7 @@ char	*build_and_verify_path(char **paths, char *temp, t_g_data *g_data)
 		full_cmd_path = ft_strjoin(cmd_path, temp);
 		free(cmd_path);
 		if (!full_cmd_path)
-		{
-			free(temp);
-			free_path(paths);
-			fail_exit_shell(g_data);
-		}
+			return (free_path(paths), temp);
 		if (access(full_cmd_path, X_OK) == 0)
 		{
 			free(temp);
@@ -83,6 +85,8 @@ char	*get_command_path(char *cmd, t_g_data *g_data)
 
 	temp = prepare_temp_path(cmd, g_data);
 	path_env = ft_get_env2("PATH", g_data->mini_env, g_data);
+	if (!path_env)
+		return (temp);
 	paths = get_path_splits(path_env);
 	if (!paths)
 		return (temp);

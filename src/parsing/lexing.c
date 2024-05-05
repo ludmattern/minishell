@@ -112,18 +112,7 @@ int	init_filling(t_token *lex, int *i, char *in_put, int t)
 	return (0);
 }
 
-bool	is_end(char *str, int i)
-{
-	while (str[i] != '\0')
-	{
-		if (!ft_isspace(str[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-t_token	*lex_me(char *in_put, int i)
+t_token	*lex_me(char *in_put, int i, t_g_data *g_data)
 {
 	t_token	*head;
 	t_token	*lex;
@@ -138,8 +127,8 @@ t_token	*lex_me(char *in_put, int i)
 			if (is_end(in_put, i))
 				break ;
 		new_token = calloc(1, sizeof(t_token));
-		if (new_token == NULL)
-			return (head->error = -1, head);
+		if (!new_token)
+			return (g_data->exit_fail = -1, head);
 		new_token->prev = lex;
 		if (lex != NULL)
 			lex->next = new_token;
@@ -147,7 +136,7 @@ t_token	*lex_me(char *in_put, int i)
 			head = new_token;
 		lex = new_token;
 		if (init_filling(lex, &i, in_put, 1) == -1)
-			return (head->error = -1, head);
+			return (g_data->exit_fail = -1, head);
 	}
 	return (head);
 }

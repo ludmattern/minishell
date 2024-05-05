@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 13:48:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/05 21:29:10 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	handle_user_input(t_g_data *g_data)
 	if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
 	{
 		launch_lexing(g_data);
-		if (g_data->lexed->error == -1)
+		if (g_data->exit_fail == -1)
 		{
 			free_lexed(g_data->lexed);
 			fail_exit_shell(g_data);
@@ -134,5 +134,5 @@ cat :
 		//si ctrl+c dans cat alors on sort de toute la ligne de commande 
 		//cat CTRL+C ajouter /n
 */
-/*pb de free dans command_path*/
-/*Malloc fail cd sur gt_get_env a check*/
+
+/*Launch expand*/

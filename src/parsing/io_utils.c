@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:23:43 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 17:50:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/05 21:34:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,4 @@ void	toggle_quote(int *iq, char **c)
 		*iq = !*iq;
 		(*c)++;
 	}
-}
-
-char	*extract_with_quote(char **c, t_g_data *data)
-{
-	char	*output;
-	int		iq;
-	char	*result;
-
-	result = malloc(ft_strlen(*c) + 1);
-	if (!result)
-		fail_exit_shell(data);
-	output = result;
-	iq = 0;
-	while (**c && **c != '>' && **c != '<')
-	{
-		toggle_quote(&iq, c);
-		if (**c && !iq && **c != '"' && **c != '>' && **c != '<')
-		{
-			*output++ = **c;
-			(*c)++;
-		}
-		else if (iq)
-		{
-			*output++ = **c;
-			(*c)++;
-		}
-	}
-	*output = '\0';
-	return (result);
 }

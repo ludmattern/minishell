@@ -57,7 +57,7 @@ void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 	if (!ctx->tmp_env)
 		return (free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
-	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data);
+	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, tkn);
 	free(ctx->tmp_env);
 	if (!ctx->env_val)
 	{
@@ -74,14 +74,10 @@ void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 	ctx->env_val = NULL;
 }
 
-char	*get_env_var2(char *tkn, t_g_data *data)
+char	*get_env_var2(char *tkn, t_g_data *data, bool dquote, bool squote)
 {
 	t_var_context	ctx;
-	bool			squote;
-	bool			dquote;
 
-	squote = false;
-	dquote = false;
 	init_var_ctx(&ctx, tkn, data);
 	if (!ctx.res)
 		return (NULL);

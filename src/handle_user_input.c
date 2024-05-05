@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_user_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 11:00:18 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:28:38 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 void	launch_lexing(t_g_data *g_data)
 {
-	g_data->lexed = lex_me(g_data->in_put, 0);
-	if (g_data->exit_fail == -1)
-		lex_mallox_error(g_data->lexed);
+	g_data->lexed = lex_me(g_data->in_put, 0, g_data);
+	if (!g_data->lexed)
+	{
+		g_data->exit_fail = -1;
+		return ;
+	}
 	g_data->save = g_data->lexed;
 	g_data->lexed->g_data = g_data;
 }

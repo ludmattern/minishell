@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:52:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:50:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,23 @@ char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
 
 	tab = malloc(size * sizeof(char *));
 	if (!tab)
+	{
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	tab = fill_token_array(arg, tab, &size, i);
 	if (!tab)
+	{
+		free(tab);
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	final_tab = realloc_tab(tab, size, size);
 	if (!final_tab)
+	{
+		ft_free_double_array(tab);
+		free_lexed(data->lexed);
 		fail_exit_shell(data);
+	}
 	return (final_tab);
 }

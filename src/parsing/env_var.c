@@ -57,17 +57,18 @@ const char	*skip_s(const char *s)
 }
 
 void	cleanup_and_exit(char *tmp_env, \
-t_env *mini_env, t_g_data *data)
+t_env *mini_env, t_g_data *data, char *tkn)
 {
 	free(data->in_putsave);
 	free(tmp_env);
 	free_mini_env(mini_env);
 	free(data->data);
 	free(data);
+	free(tkn);
 	exit(EXIT_FAILURE);
 }
 
-char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data)
+char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data, char *tkn)
 {
 	t_env	*current;
 	char	*env_val;
@@ -83,9 +84,7 @@ char	*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data)
 				return (NULL);
 			env_val = ft_strdup(current->value);
 			if (!env_val)
-			{
-				cleanup_and_exit(tmp_env, mini_env, data);
-			}
+				cleanup_and_exit(tmp_env, mini_env, data, tkn);
 			return (env_val);
 		}
 		current = current->next;

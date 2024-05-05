@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 13:20:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:19:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 	if (!new)
 	{
 		ft_free_double_array(tkn->expanded);
+		free_lexed(g_data->lexed);
 		fail_exit_shell(g_data);
 	}
 	memset(new, 0, sizeof(t_node));
@@ -28,6 +29,7 @@ t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 	{
 		free(new);
 		ft_free_double_array(tkn->expanded);
+		free_lexed(g_data->lexed);
 		fail_exit_shell(g_data);
 	}
 	new->type = N_INIT;

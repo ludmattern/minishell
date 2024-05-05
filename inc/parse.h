@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 14:05:18 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:43:41 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <signal.h>
 # include <limits.h>
 
-t_token		*lex_me(char *in_put, int i);
+t_token		*lex_me(char *in_put, int i, t_g_data *g_data);
 t_node		*build_ast(t_token **current_lex, t_g_data *g_data);
 char		**expander(char *arg, t_g_data *data);
 char		*get_command_path(char *cmd, t_g_data *g_data);
@@ -46,7 +46,6 @@ void		print_ast(t_node *node, int depth);
 void		print_exp(char **tab, char *arg);
 bool		syntax_error(const char *cmd, int *status);
 void		free_tree(t_node *node);
-char		*ft_get_env3(char *tmp_env, t_env *mini_env, t_g_data *data);
 char		*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data);
 void		free_mini_env(t_env *mini_env);
 void		launch_expand(t_g_data *g_data);
@@ -65,7 +64,8 @@ char		*expand_double_quote(char *tkn, \
 			int last_exit_status, t_g_data *data);
 char		*del_redir(char *cmd, int i, int j);
 t_envsize	get_mal_size2(char *tkn, t_g_data *data);
-char		*get_env_var2(char *tkn, t_g_data *data);
+char		*get_env_var2(char *tkn, t_g_data \
+*data, bool dquote, bool squote);
 const char	*skip_s(const char *s);
 bool		check_par(const char *cmd, int i, int par_count);
 bool		check_first(const char *cmd);
@@ -112,5 +112,10 @@ t_node		*process_rpar(t_token **c, t_g_data *g_data);
 t_node		*add_pipe_node(t_node *new_node, t_node **root, t_g_data *g_data);
 void		move_token_prev(t_token **c);
 char		*process_quotes(char *input);
+char		*ft_get_env3(char *tmp_env, t_env *mini_env, \
+t_g_data *data, char *tkn);
+bool		redirection_outside_quotes(const char *args);
+void		free_io_list(t_io_node *head);
+bool		is_end(char *str, int i);
 
 #endif

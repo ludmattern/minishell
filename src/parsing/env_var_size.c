@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:49:17 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/05 20:34:20 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_variable_size(t_var_size_context *s, char *tkn, t_g_data *data)
 		handle_failure(tkn, env, data);
 	ft_strncpy(env, tkn + s->start, s->env_length);
 	env[s->env_length] = '\0';
-	env_val = ft_get_env3(env, data->mini_env, data);
+	env_val = ft_get_env3(env, data->mini_env, data, tkn);
 	if (!env_val)
 	{
 		env_val = malloc(2);

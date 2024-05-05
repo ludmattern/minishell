@@ -20,20 +20,14 @@ char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data)
 
 	tmp = mini_env;
 	tmp_env_len = ft_strlen(tmp_env);
+	(void)data;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->name, tmp_env, tmp_env_len + 1) == 0)
 		{
 			env_val = ft_strdup(tmp->value);
 			if (!env_val)
-			{
-				free_mini_env(mini_env);
-				free(data->in_putsave);
-				free_tree(data->root);
-				free_lexed(data->lexed);
-				exit(EXIT_FAILURE);
-				//fail_exit_shell(data);
-			}
+				return (NULL);
 			return (env_val);
 		}
 		tmp = tmp->next;
@@ -83,15 +77,11 @@ void	process_status_var(t_env_context *ctx, int *i)
 bool	process_variable_substitution(t_env_context \
 *ctx, int *i, t_g_data *data)
 {
-	ctx->new = get_env_var2(ctx->res, data);
+	ctx->new = get_env_var2(ctx->res, data, false, false);
 	if (ctx->new == NULL)
 	{
 		free(ctx->res);
-		ctx->res = ft_strdup("");
-		{
-			fail_exit_shell(data);
-		}
-		return (false);
+		fail_exit_shell(data);
 	}
 	free(ctx->res);
 	ctx->res = ctx->new;
@@ -118,18 +108,14 @@ char	*replace_env_vars(t_g_data *data, int i)
 				&& ctx.res[i + 1] != '"')
 				i += 1;
 			else if (!ctx.squotes && ctx.res[i] == '$'
-				&& ctx.res[i + 1] != '='
-				&& ctx.res[i + 1] != ':'
-				&& ctx.res[i + 1] != '\0'
-				&& !ft_isspace(ctx.res[i + 1]))
-			{
+				&& ctx.res[i + 1] != '=' && ctx.res[i + 1] != ':'
+				&& ctx.res[i + 1] != '\0' && !ft_isspace(ctx.res[i + 1]))
 				if (is_previous_heredoc(i, ctx.res))
 				{
 					if (!process_variable_substitution(&ctx, &i, data))
 						return (ctx.res);
 					i++;
 				}
-			}
 		}
 		i++;
 	}
