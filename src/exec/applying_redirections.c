@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 17:19:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:45:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int	apply_command_redirections(t_io_node *io_list, bool piped, bool is_empty)
 	current = io_list;
 	while (current != NULL)
 	{
+		if (!handle_ambiguous(current))
+			return (EXIT_GENERAL_ERROR);
 		if (current->type == IO_IN)
 			status = redirect_input(current->expanded_value[0], is_empty);
 		else if (current->type == IO_OUT)
