@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 12:45:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:43:19 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ Handles the ambiguous redirection error (if the filename is empty)
 */
 bool	handle_ambiguous(t_io_node	*current)
 {
+	if (current->expanded_value[0] && current->expanded_value[0][0] == -4)
+		return (ft_eprintf(MS"filename: ambiguous redirect\n"), false);
 	if (current->type == IO_HEREDOC)
 		return (true);
 	if (current->expanded_value[0] && current->expanded_value[0][0] == -1)
