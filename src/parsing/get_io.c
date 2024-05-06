@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 20:42:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/06 11:11:09 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 		&& !ft_strchr(value, '"'))
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else if (io->type == IO_HEREDOC
-		&& (ft_strchr(value, '\'')
-			|| ft_strchr(value, '"')))
+		&& (ft_strchr(value, '\'') || ft_strchr(value, '"')))
 		fill_extended_value(&io, data);
 	else
 		io->expanded_value = replace_input_vars(data, io->value, 0);
