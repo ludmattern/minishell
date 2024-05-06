@@ -61,6 +61,8 @@ int	ft_count_wrds(char const *s)
 
 	nb_wrd = 0;
 	in_wrd = 0;
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (!ft_isspace(*s) && !in_wrd)
