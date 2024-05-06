@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:32:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 21:43:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:41:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ bool	is_previous_heredoc(int i, char *res)
 	if (i == 0)
 		return (true);
 	j = i - 1;
-	while (res && res[j] && (ft_isspace(res[j]) \
-		|| res[j] == '\'' || res[j] == '"'))
+	while (res && res[j] && res[j] != '>' && res[j] != '<')
 		j--;
 	if (res[j] == '<' && res[j - 1] == '<')
 		return (false);
