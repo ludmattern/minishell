@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 20:34:20 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:20:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	handle_variable_size(t_var_size_context *s, char *tkn, t_g_data *data)
 	char	*env_val;
 
 	s->start = s->i;
-	while (ft_isalnum(tkn[s->i]))
+	while (ft_isalpha(tkn[s->i]))
+		s->i++;
+	if ((tkn[s->i] >= '0' && tkn[s->i] <= '9') || tkn[s->i] == '_')
 		s->i++;
 	s->env_length = s->i - s->start;
 	env = malloc(s->env_length + 1);

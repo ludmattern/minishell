@@ -129,11 +129,16 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquote, bool squote)
 			squote = !squote;
 		if (tkn[ctx.i] == '"' && !squote)
 			dquote = !dquote;
-		if (!squote && !dquote && tkn[ctx.i] == '$' && (tkn[ctx.i + 1] == '"' ||  tkn[ctx.i + 1] == '\''))
+		if (!squote && !dquote && tkn[ctx.i] == '$' && tkn[ctx.i + 1] == '$' && !is_previous_heredoc(ctx.i, tkn))
+		{
+			ctx.res[ctx.k++] = tkn[ctx.i++];
+			ctx.res[ctx.k++] = tkn[ctx.i++];
+		}
+		else if (!squote && !dquote && tkn[ctx.i] == '$' && (tkn[ctx.i + 1] == '"' ||  tkn[ctx.i + 1] == '\''))
 			ctx.i++;
 		else if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
 		&& !ft_isspace(tkn[ctx.i + 1]) && tkn[ctx.i + 1] \
-		!= '$' && !squote && is_previous_heredoc(ctx.i, tkn) && tkn[ctx.i + 1] != '"')
+		!= '$' && !squote && is_previous_heredoc(ctx.i, tkn))
 		{
 			ctx.i++;
 			process_variable(&ctx, tkn, data);
