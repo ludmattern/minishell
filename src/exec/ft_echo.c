@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 17:23:31 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:47:15 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	ft_echo(char **args)
 	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
 	{
 		j = 0;
-		while (args[i][j] && (args[i][j] == 'n' || args[i][j] == '-'))
+		while (args[i][j] && args[i][j] == '-')
+			j++;
+		if (args[i][j] != 'n')
+			break ;
+		while (args[i][j] && args[i][j] == 'n')
 			j++;
 		if (args[i][j])
 			break ;
