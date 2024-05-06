@@ -6,12 +6,24 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 16:55:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:45:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 #include "../../inc/parse.h"
+
+/*
+Handles the ambiguous redirection error (if the filename is empty)
+*/
+bool	handle_ambiguous(t_io_node	*current)
+{
+	if (current->type == IO_HEREDOC)
+		return (true);
+	if (current->expanded_value[0] && current->expanded_value[0][0] == -1)
+		return (ft_eprintf(MS"filename: ambiguous redirect\n"), false);
+	return (true);
+}
 
 /*
 print an error message and return the exit code.

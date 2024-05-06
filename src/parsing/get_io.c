@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 20:42:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/06 11:38:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../../inc/exec.h"
-
-int	calc_size(char *value)
-{
-	int	i;
-	int	c;
-
-	i = 0;
-	c = 0;
-	while (value[i])
-	{
-		if (value[i] != '\'' && value[i] != '"')
-			c++;
-		i++;
-	}
-	return (c + 1);
-}
 
 void	fill_extended_value(t_io_node **io, t_g_data *data)
 {
@@ -41,29 +25,42 @@ void	fill_extended_value(t_io_node **io, t_g_data *data)
 	(*io)->value = NULL;
 }
 
-t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
+t_io_node	*init_n_process_heredoc(t_io_type type, char *value)
 {
 	t_io_node	*io;
 	char		*tmp;
 
-	io = malloc(sizeof(t_io_node));
+	io = ft_calloc(1, sizeof(t_io_node));
 	if (!io)
 		return (NULL);
-	memset(io, 0, sizeof(t_io_node));
 	io->type = type;
-	if (io->type == IO_HEREDOC)
+	if (io->type != IO_HEREDOC)
 	{
-		tmp = process_quotes(value);
-		read_heredoc_into_string(tmp, &io->value);
-		free(tmp);
-		if (g_heredoc_sigint == 2)
-			return (NULL);
-	}
-	else
 		io->value = ft_strdup(value);
-	if (!io->value)
+		if (!io->value)
+			return (free(io), NULL);
+		return (io);
+	}
+	tmp = process_quotes(value);
+	if (!tmp)
 		return (free(io), NULL);
-	if (io->type == IO_HEREDOC && !ft_strchr(value, '\'')
+	if (read_heredoc_into_string(tmp, &io->value) == -1)
+		return (free(io), free(tmp), NULL);
+	free(tmp);
+	if (g_heredoc_sigint == 2)
+		return (NULL);
+	return (io);
+}
+
+t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
+{
+	t_io_node	*io;
+
+	io = init_n_process_heredoc(type, value);
+	if (!io)
+		return (NULL);
+	if (io->type == IO_HEREDOC
+		&& !ft_strchr(value, '\'')
 		&& !ft_strchr(value, '"'))
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	else if (io->type == IO_HEREDOC

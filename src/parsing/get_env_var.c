@@ -96,28 +96,25 @@ char	*replace_env_vars(t_g_data *data, int i)
 
 	memset(&ctx, 0, sizeof(t_env_context));
 	init_env_ctx(&ctx, data, 0, 1);
-	while (ctx.res && ctx.res[i] != '\0')
+	while (ctx.res && ctx.res[++i] != '\0')
 	{
 		init_env_ctx(&ctx, data, ctx.res[i], 2);
-		if (ctx.squotes == false)
+		if (!ctx.squotes && ctx.res[i] == '$' && ctx.res[i + 1] == '?')
+			process_status_var(&ctx, &i);
+		else if (!ctx.squotes && ctx.res[i] == '$'
+			&& !ft_isalnum(ctx.res[i + 1]) && ctx.res[i + 1] != '"')
+			i += 1;
+		else if (!ctx.squotes && ctx.res[i] == '$'
+			&& ctx.res[i + 1] != '=' && ctx.res[i + 1] != ':'
+			&& ctx.res[i + 1] != '\0' && !ft_isspace(ctx.res[i + 1]))
 		{
-			if (!ctx.squotes && ctx.res[i] == '$' && ctx.res[i + 1] == '?')
-				process_status_var(&ctx, &i);
-			else if (!ctx.squotes && ctx.res[i] == '$'
-				&& !ft_isalnum(ctx.res[i + 1])
-				&& ctx.res[i + 1] != '"')
-				i += 1;
-			else if (!ctx.squotes && ctx.res[i] == '$'
-				&& ctx.res[i + 1] != '=' && ctx.res[i + 1] != ':'
-				&& ctx.res[i + 1] != '\0' && !ft_isspace(ctx.res[i + 1]))
-				if (is_previous_heredoc(i, ctx.res))
-				{
-					if (!process_variable_substitution(&ctx, &i, data))
-						return (ctx.res);
-					i++;
-				}
+			if (is_previous_heredoc(i, ctx.res))
+			{
+				if (!process_variable_substitution(&ctx, &i, data))
+					return (ctx.res);
+				i++;
+			}
 		}
-		i++;
 	}
 	return (ctx.res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_user_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 21:28:38 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/06 11:18:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void	update_data(t_g_data *g_data)
 		fail_exit_shell(g_data);
 	free(g_data->in_put);
 	g_data->in_put = NULL;
-	g_data->in_put = replace_env_vars(g_data, 0);
+	g_data->in_put = replace_env_vars(g_data, -1);
 	g_data->t = 1;
 }

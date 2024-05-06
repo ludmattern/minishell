@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 11:07:25 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:46:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			apply_command_redirections(t_io_node *io_list, bool piped,
 /*
 handling commands utils
 */
+bool		handle_ambiguous(t_io_node	*current);
 int			wait_for_child(pid_t pid, t_data *data);
 int			create_pipe(int pipefd[2]);
 int			wait_for_pipeline_children(pid_t pid1, pid_t pid2);
