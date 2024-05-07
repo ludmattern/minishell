@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/06 15:22:50 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:37:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ t_io_node	*init_n_process_heredoc(t_io_type type, char *value)
 t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 {
 	t_io_node	*io;
-	
-	printf("%s\n", value);
+
 	io = init_n_process_heredoc(type, value);
 	if (!io)
 		return (NULL);

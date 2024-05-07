@@ -89,6 +89,7 @@ bool	process_variable_substitution(t_env_context \
 	(*i)--;
 	return (true);
 }
+
 char	*replace_env_vars(t_g_data *data, int i)
 {
 	t_env_context	ctx;
@@ -100,8 +101,9 @@ char	*replace_env_vars(t_g_data *data, int i)
 		init_env_ctx(&ctx, data, ctx.res[i], 2);
 		if (!ctx.squotes && ctx.res[i] == '$' && ctx.res[i + 1] == '?')
 			process_status_var(&ctx, &i);
-		else if (!ctx.squotes && ctx.res[i] == '$'  && ctx.res[i + 1]
-			&& !ft_isalnum(ctx.res[i + 1]) && ctx.res[i + 1] != '"' && ctx.res[i + 1] != '\'')
+		if (!ctx.squotes && ctx.res[i] == '$' && ctx.res[i + 1]
+			&& !ft_isalnum(ctx.res[i + 1]) && \
+				ctx.res[i + 1] != '"' && ctx.res[i + 1] != '\'')
 			i++;
 		else if (!ctx.squotes && ctx.res[i] == '$' && ctx.res[i + 1]
 			&& ctx.res[i + 1] != '=' && ctx.res[i + 1] != ':'

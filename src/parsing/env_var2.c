@@ -57,7 +57,7 @@ bool	is_previous_redir(int cursor, char *tkn)
 int	ft_count_wrds(char const *s)
 {
 	int	nb_wrd;
-	int		in_wrd;
+	int	in_wrd;
 
 	nb_wrd = 0;
 	in_wrd = 0;
@@ -77,22 +77,27 @@ int	ft_count_wrds(char const *s)
 	return (nb_wrd);
 }
 
-void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
+void	toggle_quote_s(char c, bool *dquote, bool *squote)
 {
-	bool	previous_redir;
-	ctx->start = ctx->i;
-	previous_redir = is_previous_redir(ctx->start, tkn);
-	while (ft_isalpha(tkn[ctx->i]))
-		ctx->i++;
-	if ((tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9') || tkn[ctx->i] == '_')
-		ctx->i++;
-	ctx->env_length = ctx->i - ctx->start;
+	if (c == '\'' && !*dquote)
+		*squote = !*squote;
+	if (c == '"' && !*squote)
+		*dquote = !*dquote;
+}
+
+void	fetch_and_cleanup_env_var(t_var_context *ctx, char *tkn, t_g_data *data)
+{
 	ctx->tmp_env = calloc(ctx->env_length + 1, sizeof(char));
 	if (!ctx->tmp_env)
 		return (free(tkn), free(ctx->res), fail_exit_shell(data));
 	ft_strncpy(ctx->tmp_env, tkn + ctx->start, ctx->env_length);
 	ctx->env_val = ft_get_env3(ctx->tmp_env, data->mini_env, data, tkn);
 	free(ctx->tmp_env);
+}
+
+void	handle_redir_and_default_value(t_var_context *ctx, char *tkn, \
+		bool previous_redir, t_g_data *data)
+{
 	if (previous_redir && ft_count_wrds(ctx->env_val) > 1)
 	{
 		ft_free(ctx->env_val);
@@ -108,6 +113,25 @@ void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
 			return (free(tkn), free(ctx->res), fail_exit_shell(data));
 		ctx->env_val[0] = -1;
 	}
+}
+
+void	process_variable(t_var_context *ctx, char *tkn, t_g_data *data)
+{
+	bool	previous_redir;
+
+	ctx->start = ctx->i;
+	previous_redir = is_previous_redir(ctx->start, tkn);
+	while (ft_isalpha(tkn[ctx->i]))
+		ctx->i++;
+	if ((tkn[ctx->i] >= '0' && tkn[ctx->i] <= '9') \
+		|| tkn[ctx->i] == '_' || tkn[ctx->i] == '?')
+		ctx->i++;
+	ctx->env_length = ctx->i - ctx->start;
+	if (ctx->env_length == 1 && tkn[ctx->start] == '?')
+		ctx->env_val = ft_itoa(data->last_exit_status);
+	else
+		fetch_and_cleanup_env_var(ctx, tkn, data);
+	handle_redir_and_default_value(ctx, tkn, previous_redir, data);
 	quote_in_env_val(ctx->env_val);
 	ctx->j = 0;
 	while (ctx->env_val[ctx->j])
@@ -125,16 +149,15 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquote, bool squote)
 		return (NULL);
 	while (tkn[ctx.i])
 	{
-		if (tkn[ctx.i] == '\'' && !dquote)
-			squote = !squote;
-		if (tkn[ctx.i] == '"' && !squote)
-			dquote = !dquote;
-		if (!squote && !dquote && tkn[ctx.i] == '$' && tkn[ctx.i + 1] == '$' && !is_previous_heredoc(ctx.i, tkn))
+		toggle_quote_s(tkn[ctx.i], &dquote, &squote);
+		if (!squote && !dquote && tkn[ctx.i] == '$' && \
+		tkn[ctx.i + 1] == '$' && !is_previous_heredoc(ctx.i, tkn))
 		{
 			ctx.res[ctx.k++] = tkn[ctx.i++];
 			ctx.res[ctx.k++] = tkn[ctx.i++];
 		}
-		else if (!squote && !dquote && tkn[ctx.i] == '$' && (tkn[ctx.i + 1] == '"' ||  tkn[ctx.i + 1] == '\''))
+		else if (!squote && !dquote && tkn[ctx.i] == \
+		'$' && (tkn[ctx.i + 1] == '"' || tkn[ctx.i + 1] == '\''))
 			ctx.i++;
 		else if (tkn[ctx.i] == '$' && tkn[ctx.i + 1] \
 		&& !ft_isspace(tkn[ctx.i + 1]) && tkn[ctx.i + 1] \
@@ -146,6 +169,5 @@ char	*get_env_var2(char *tkn, t_g_data *data, bool dquote, bool squote)
 		else
 			ctx.res[ctx.k++] = tkn[ctx.i++];
 	}
-	ctx.res[ctx.k] = '\0';
-	return (ctx.res);
+	return (ctx.res[ctx.k] = '\0', ctx.res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 16:31:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:48:03 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*init_bash(char *host)
 void	handle_user_input(t_g_data *g_data)
 {
 	update_data(g_data);
-	if (g_data->in_put[0] != -1 || g_data->in_put[1] != 0)
+	if (g_data->in_put[0] != -1 || g_data->in_put[1] != '\0')
 	{
 		launch_lexing(g_data);
 		if (g_data->exit_fail == -1)

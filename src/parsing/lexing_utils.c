@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:32:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/06 17:09:36 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:36:51 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool	is_previous_heredoc(int i, char *res)
 	else
 		return (true);
 }
+
 bool	is_end(char *str, int i)
 {
 	while (str[i] != '\0')

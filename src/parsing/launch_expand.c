@@ -43,7 +43,7 @@ void	process_redirections_and_filenames(t_token *token, t_g_data *g_data)
 
 void	handle_expanded_token(t_token *token)
 {
-	if ((token->value[0] == -1) || !token->value[0])
+	if (((token->value[0] == -1) && !token->value[1]) || token->value[0] == 0)
 	{
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
