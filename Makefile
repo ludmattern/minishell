@@ -6,7 +6,7 @@
 #    By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 16:14:01 by lmattern          #+#    #+#              #
-#    Updated: 2024/05/07 15:32:50 by fprevot          ###   ########.fr        #
+#    Updated: 2024/05/07 17:25:38 by fprevot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,6 @@ PARSE_SRCS		:=	$(PARSEDIR)/ast_utils.c \
 					$(PARSEDIR)/env_var2.c \
 					$(PARSEDIR)/expander.c \
 					$(PARSEDIR)/io_utils.c \
-					$(PARSEDIR)/printfunc.c \
 					$(PARSEDIR)/del_redir.c \
 					$(PARSEDIR)/heredeocc.c \
 					$(PARSEDIR)/get_env_var.c \
