@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 13:57:02 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:43:41 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ void	init_var_size_ctx(t_var_size_context *s)
 	s->env_length = 0;
 }
 
+char	*null_env_val(char *tkn, char *env, t_g_data *data)
+{
+	char	*env_val;
+
+	env_val = malloc(2);
+	if (!env_val)
+		handle_failure(tkn, env, data);
+	env_val[0] = -1;
+	env_val[1] = '\0';
+	return (env_val);
+}
+
 void	handle_variable_size(t_var_size_context *s, char *tkn, t_g_data *data)
 {
 	char	*env;
@@ -57,13 +69,7 @@ void	handle_variable_size(t_var_size_context *s, char *tkn, t_g_data *data)
 	env[s->env_length] = '\0';
 	env_val = ft_get_env3(env, data->mini_env, data, tkn);
 	if (!env_val)
-	{
-		env_val = malloc(2);
-		if (!env_val)
-			handle_failure(tkn, env, data);
-		env_val[0] = -1;
-		env_val[1] = '\0';
-	}
+		env_val = null_env_val(tkn, env, data);
 	if (env_val)
 		s->s.size += ft_strlen(env_val);
 	free(env);

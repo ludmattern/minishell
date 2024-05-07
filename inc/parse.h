@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/06 16:40:05 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:38:07 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ char		*ft_get_env3(char *tmp_env, t_env *mini_env, \
 t_g_data *data, char *tkn);
 bool		redirection_outside_quotes(const char *args);
 void		free_io_list(t_io_node *head);
+void		process_variable(t_var_context *ctx, char *tkn, t_g_data *data);
 bool		is_end(char *str, int i);
+void		quote_in_env_val(char *env_val);
+bool		is_previous_redir(int cursor, char *tkn);
 
 #endif
