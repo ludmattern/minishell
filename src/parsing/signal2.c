@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 16:36:19 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 17:23:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	signals_init_exec(void)
 	signal(SIGINT, proc_handle_sigint);
 	signal(SIGQUIT, proc_handle_sigquit);
 }
+
 void	proc_handle_sigint(int sig)
 {
 	printf("\n");

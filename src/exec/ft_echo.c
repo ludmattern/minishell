@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/07 17:14:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 17:22:48 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,35 @@
 Writes the arguments to the standard output followed by a newline (or not with 
 option -n).
 */
+
+void	go_through_options(char **args, int *i, bool *option)
+{
+	int	j;
+
+	while (args[*i] && !ft_strncmp(args[*i], "-n", 2))
+	{
+		j = 0;
+		while (args[*i][j] && args[*i][j] == '-')
+			j++;
+		if (args[*i][j] != 'n')
+			break ;
+		while (args[*i][j] && args[*i][j] == 'n')
+			j++;
+		if (args[*i][j])
+			break ;
+		*option = true;
+		(*i)++;
+	}
+}
+
 int	ft_echo(char **args)
 {
 	int		i;
-	int		j;
 	bool	option;
 
 	i = 1;
 	option = false;
-	while (args[i] && !ft_strncmp(args[i], "-n", 2))
-	{
-		j = 0;
-		while (args[i][j] && args[i][j] == '-')
-			j++;
-		if (args[i][j] != 'n')
-			break ;
-		while (args[i][j] && args[i][j] == 'n')
-			j++;
-		if (args[i][j])
-			break ;
-		option = true;
-		i++;
-	}
+	go_through_options(args, &i, &option);
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
