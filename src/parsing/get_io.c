@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 13:37:14 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 17:11:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@ t_io_node	*init_n_process_heredoc(t_io_type type, char *value)
 	return (io);
 }
 
+char	*cpy_without_empty(char *str)
+{
+	int		i;
+	int		c;
+	char	*res;
+
+	i = 0;
+	c = 0;
+	while (str[i])
+		if (str[i++] != -1)
+			c++;
+	res = ft_calloc(c, sizeof(char) + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	c = 0;
+	while (str[i])
+	{
+		if (str[i] != -1)
+			res[c++] = str[i];
+		i++;
+	}
+	free(str);
+	return (res);
+}
+
 t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 {
 	t_io_node	*io;
@@ -62,7 +88,10 @@ t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 	if (io->type == IO_HEREDOC
 		&& !ft_strchr(value, '\'')
 		&& !ft_strchr(value, '"'))
+	{
 		io->expanded_value = replace_input_vars(data, io->value, 0);
+		io->expanded_value[0] = cpy_without_empty(io->expanded_value[0]);
+	}
 	else if (io->type == IO_HEREDOC
 		&& (ft_strchr(value, '\'') || ft_strchr(value, '"')))
 		fill_extended_value(&io, data);

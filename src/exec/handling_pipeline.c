@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 16:50:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:32:23 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	int	status;
 
 	signal(SIGINT, proc_handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, proc_handle_sigquit);
 	status = EXIT_SUCCESS;
 	if (direction == AST_LEFT)
 		status = dup2(pipefd[1], STDOUT_FILENO);

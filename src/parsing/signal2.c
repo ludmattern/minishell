@@ -6,23 +6,28 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/22 11:19:18 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:36:19 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 #include "../inc/exec.h"
 
+void	signals_init_exec(void)
+{
+	signal(SIGINT, proc_handle_sigint);
+	signal(SIGQUIT, proc_handle_sigquit);
+}
 void	proc_handle_sigint(int sig)
 {
 	printf("\n");
 	(void)sig;
-	exit(2);
 }
 
 void	proc_handle_sigquit(int sig)
 {
 	(void)sig;
+	printf("Quit (core dumped)\n");
 }
 
 void	handle_sigint_herdoc(int sig)

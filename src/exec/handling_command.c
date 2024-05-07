@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/02 17:16:58 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:31:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	handle_command_child(t_data *data, t_node *node, bool piped)
 {
 	int	status;
 
-	signal(SIGINT, proc_handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	status = apply_command_redirections(node->io_list, piped, node->is_empty);
 	if (status == EXIT_SUCCESS)
 		execute_command(data, node);
@@ -96,14 +96,13 @@ int	handling_command(t_data *data, t_node *node, bool piped)
 			restore_original_fds(data);
 		return (exit_status);
 	}
-	signals_ignore();
 	pid = fork();
 	if (pid == 0)
 		return (handle_command_child(data, node, piped));
 	else if (pid > 0)
 	{
 		exit_status = wait_for_child(pid, data);
-		return (signals_init(), exit_status);
+		return (exit_status);
 	}
 	else
 		return (fork_creation_failure("fork"));

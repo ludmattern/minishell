@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 15:38:07 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:36:28 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		free_parsing(t_node *ast, t_token *lex);
 void		lex_mallox_error(t_token *lex);
 void		free_lexed(t_token *lexed);
 void		signals_ignore(void);
+void		signals_init_exec(void);
 void		setup_heredoc_si(void);
 void		handle_sigint_herdoc(int sig);
 bool		is_previous_heredoc(int i, char *res);

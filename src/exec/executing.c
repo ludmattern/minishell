@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/18 15:22:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:33:32 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ Executes the AST by handling each node.
 */
 int	run_execution(t_data *data)
 {
-	signals_init();
 	return (handling_node(data, data->ast, false));
 }

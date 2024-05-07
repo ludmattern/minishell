@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/07 14:48:03 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:34:57 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	handle_user_input(t_g_data *g_data)
 		else
 		{
 			launch_parsing(g_data);
+			signals_init_exec();
 			launch_execution(g_data);
+			signals_init();
 		}
 	}
 	else
