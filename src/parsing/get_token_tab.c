@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 20:50:14 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 10:32:31 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	**get_tkn_tab(char *arg, int size, int i, t_g_data *data)
 	tab = malloc(size * sizeof(char *));
 	if (!tab)
 	{
+		
 		free_lexed(data->lexed);
 		fail_exit_shell(data);
 	}

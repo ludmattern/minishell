@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/04/30 13:53:44 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 10:52:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ typedef struct s_env_context_her
 	char					*status_str;
 	char					*new;
 	size_t					*i;
+	int						error;
 	bool					dquotes;
 	bool					squotes;
 	struct s_global_data	*data;
@@ -217,6 +218,8 @@ typedef struct s_global_data
 	int				t;
 	t_node			*root;
 	int				checkpar;
+	char			*her_file;
+	t_io_node		*io;
 }					t_g_data;
 
 typedef struct s_var_context

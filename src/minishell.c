@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/07 16:34:57 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 11:00:06 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,5 @@ cat :
 
 /*Launch expand*/
 
-/*heredocc */
+/*GET TKN TAB PAS COMPRIS*/
+/*HEREDOC ENV VAR PAS COMPris*/

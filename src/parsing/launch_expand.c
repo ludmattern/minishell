@@ -41,29 +41,32 @@ void	process_redirections_and_filenames(t_token *token, t_g_data *g_data)
 	}
 }
 
-void	handle_expanded_token(t_token *token)
+void	handle_expanded_token(t_token *token, t_g_data *g_data)
 {
 	if (((token->value[0] == -1) && !token->value[1]) || token->value[0] == 0)
 	{
 		token->is_empty = true;
 		token->expanded = malloc(sizeof(char *) * 2);
 		if (!token->expanded)
-			fail_exit_shell(token->g_data);
+		{
+			free(token->value);
+			free_io_list(token->io_list);
+			fail_exit_shell(g_data);
+		}
 		token->expanded[0] = ft_strdup("EMPTY");
 		if (!token->expanded[0])
-			fail_exit_shell(token->g_data);
+		{
+			free(token->expanded);
+			free(token->value);
+			free_io_list(token->io_list);
+			fail_exit_shell(g_data);
+		}
 		token->expanded[1] = NULL;
 	}
 	else
 	{
 		token->is_empty = false;
-		token->is_export = false;
-		if (ft_strncmp(token->value, "export", 6) == 0 && \
-		(token->value[6] == ' ' || token->value[6] == '\0'))
-			token->is_export = true;
 		token->expanded = expander(token->value, token->g_data);
-		if (token->is_export == true)
-			token->is_export = false;
 	}
 }
 
@@ -81,7 +84,7 @@ void	expe(t_token *lexed, t_g_data *g_data)
 			if (g_heredoc_sigint == 2)
 				return ;
 			lexed->is_add_local = check_local(lexed->value);
-			handle_expanded_token(lexed);
+			handle_expanded_token(lexed, g_data);
 		}
 		lexed = lexed->next;
 	}

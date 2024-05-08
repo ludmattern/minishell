@@ -93,7 +93,10 @@ void	add_new_io_node(t_io_bundle *io, char **cursor, t_g_data *data)
 
 	skip_whitespace(cursor);
 	if (io->type == IO_HEREDOC)
+	{
 		filename = extract_filename_her(cursor, false, 0);
+		data->her_file = filename;
+	}
 	else
 		filename = extract_filename(cursor);
 	if (!filename)

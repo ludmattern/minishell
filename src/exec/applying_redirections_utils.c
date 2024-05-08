@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   applying_redirections_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 14:43:19 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:54:14 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredeocc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:05:51 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/03 13:22:02 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:37:33 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 			break ;
 		result = append_line_to_result(result, line, &total_size);
 		if (result == NULL)
-			return (EXIT_GENERAL_ERROR);
+			break ;
 	}
 	if (result == NULL)
 	{
