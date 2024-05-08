@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 11:41:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:33:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exiting_exit(int status, t_data **data, bool g_data, bool piped)
 		free((*data)->g_data);
 		free_data_structure(data);
 	}
-	close_standard_fds();
+	close_std_fds();
 	exit(status);
 	return (status);
 }
@@ -78,14 +78,15 @@ int	ft_exit(char **args, t_data **data, bool piped)
 	char		endptr;
 	bool		error;
 
+	endptr = 0;
 	error = false;
 	if (args[1])
 	{
 		status = ft_strtol(args[1], &endptr, &error);
-		if (endptr != '\0' || error == true)
+		if (!endptr || error == true)
 		{
 			ft_eprintf(MS"exit: %s: numeric argument required\n", args[1]);
-			exiting_exit(EXIT_SYNTAX_ERROR, NULL, false, piped);
+			exiting_exit(EXIT_SYNTAX_ERROR, data, true, piped);
 		}
 		if (args[2])
 		{

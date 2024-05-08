@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 12:46:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:10:27 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void		ft_clear_memory(t_g_data *g_data);
 handling file descriptors
 */
 void		close_pipe_fds(int pipefd[2]);
-void		close_standard_fds(void);
+void		close_std_fds(void);
 
 /*
 handling signals

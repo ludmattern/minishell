@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/07 16:32:23 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 13:32:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handling_pipeline_child(t_data *data, t_node *node, int pipefd[2],
 	close_pipe_fds(pipefd);
 	status = handling_node(data, node, true);
 	free_forked_data_structure(&data);
-	close_standard_fds();
+	close_std_fds();
 	exit(status);
 }
 
