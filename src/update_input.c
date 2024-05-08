@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:53:28 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 15:41:32 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:00:29 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	clean_exit_update_input(t_g_data *g_data)
 
 void	free_ressources(char *tmp, char *prompt, t_g_data *g_data)
 {
-	free(tmp);
-	free(prompt);
-	free(g_data->join);
-	free(g_data->path);
+	ft_free(tmp);
+	ft_free(prompt);
+	ft_free(g_data->join);
+	ft_free(g_data->path);
 	if (!g_data->in_put)
 		clean_exit_update_input(g_data);
 }
@@ -43,7 +43,7 @@ char	*display_error_code(t_g_data *g_data, char *tmp)
 	prefix = ft_calloc(10, sizeof(char));
 	ft_sprintf(prefix, "[%d]", g_data->last_exit_status);
 	prompt = ft_strjoin(prefix, tmp);
-	free(prefix);
+	ft_free(prefix);
 	return (prompt);
 }
 
@@ -59,7 +59,7 @@ char	*ft_get_cwd(void)
 		home = getenv("HOME");
 		if (!home)
 			home = "";
-		if (ft_strnstr(tmp, home, ft_strlen(home)))
+		if (home && home[0] && ft_strnstr(tmp, home, ft_strlen(home)))
 		{
 			cwd = ft_strjoin("~", tmp + ft_strlen(home));
 			free(tmp);
@@ -82,16 +82,19 @@ void	update_input(t_g_data *g_data, char *pre_input)
 	g_data->t = 0;
 	cwd = ft_get_cwd();
 	prefix = ft_strjoin(cwd, "$ ");
-	free(cwd);
+	ft_free(cwd);
 	if (pre_input && pre_input[0])
 		tmp = ft_strjoin(pre_input, prefix);
 	else
 		tmp = ft_strdup(prefix);
-	free(prefix);
+	ft_free(prefix);
 	if (g_data->last_exit_status)
 		prompt = display_error_code(g_data, tmp);
 	else
 		prompt = ft_strdup(tmp);
-	g_data->in_put = readline(prompt);
+	if (prompt)
+		g_data->in_put = readline(prompt);
+	else
+		g_data->in_put = readline("$> ");
 	free_ressources(tmp, prompt, g_data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:55:49 by lmattern          #+#    #+#             */
-/*   Updated: 2024/01/02 13:37:59 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:42:02 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *s)
 	size_t	length;
 
 	length = 0;
+	if (!s)
+		return (NULL);
 	while (s[length])
 		length++;
 	str = ft_calloc((length + 1), sizeof(char));
