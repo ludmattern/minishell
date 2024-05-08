@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_syntaxe_check.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:01:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 20:14:06 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 20:26:41 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ bool	syntax2(const char *cmd, int *status)
 {
 	if (!check_first(cmd))
 	{
-		ft_eprintf(MS"syntax error\n");
+		ft_eprintf(MS"syntax error near unexpected token pipe/operator\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_redir(cmd))
 	{
-		ft_eprintf(MS"syntax error\n");
+		ft_eprintf(MS"syntax error near unexpected token redirection\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_par(cmd, 0, 0))
 	{
-		ft_eprintf(MS"syntax error\n");
+		ft_eprintf(MS"syntax error near unexpected token parenthesis\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
@@ -53,13 +53,13 @@ bool	syntax1(const char *cmd, int *status)
 		return (true);
 	if (!check_dquotes(cmd))
 	{
-		ft_eprintf(MS"syntax error\n");
+		ft_eprintf(MS"syntax error unclosed double quote\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
 	if (!check_squotes(cmd))
 	{
-		ft_eprintf(MS"syntax error\n");
+		ft_eprintf(MS"syntax error unclosed single quote\n");
 		*status = EXIT_SYNTAX_ERROR;
 		return (true);
 	}
