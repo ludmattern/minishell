@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 18:35:42 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:50:51 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ t_io_node	*parse_io_from_command(char *cmd, t_g_data *data)
 		{
 			set_io_type(&io.type, &io.cursor);
 			add_new_io_node(&io, &io.cursor, data);
+			io.cursor--;
 			if (g_heredoc_sigint == 2)
 				return (NULL);
 		}
