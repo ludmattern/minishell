@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 17:39:02 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:04:15 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_envsize	get_mal_size2(char *tkn, t_g_data *data)
 		if (tkn[s.i] == '"' && !s.sq)
 			s.dq = !s.dq;
 		if (!s.sq && tkn[s.i] == '$' && tkn[s.i + 1] && tkn[s.i + 1] \
-		!= ' ' && tkn[s.i + 1] != '$' && tkn[s.i + 1] != '"')
+		!= ' ' && tkn[s.i + 1] != '$' && tkn[s.i + 1] != '"' && is_previous_heredoc(s.i, tkn))
 		{
 			s.i++;
 			handle_variable_size(&s, tkn, data);
