@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 18:30:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:40:06 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exiting_exit(int status, t_data **data, bool g_data, bool piped)
 		free((*data)->g_data);
 		free_data_structure(data);
 	}
-	close_standard_fds();
+	close_std_fds();
 	exit(status);
 	return (status);
 }

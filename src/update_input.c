@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:53:28 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 16:00:29 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:39:37 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	clean_exit_update_input(t_g_data *g_data)
 	write(STDOUT_FILENO, "exit\n", 5);
 	ft_clear_memory(g_data);
 	free(g_data);
-	close_standard_fds();
+	close_std_fds();
 	exit(EXIT_SUCCESS);
 }
 

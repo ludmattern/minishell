@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/06 12:45:25 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:35:30 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,17 @@ int	redirect_input(const char *filename, bool is_empty)
 	if (fd == -1)
 		return (command_redirection_failure(filename, EXIT_GENERAL_ERROR));
 	if (is_empty)
-	{
-		close(fd);
-		return (EXIT_SUCCESS);
-	}
+		return (close(fd), EXIT_SUCCESS);
 	status = dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (status < 0)
-	{
-		perror(MS"dup2 error");
-		return (close_standard_fds(), EXIT_DUP2_FAILURE);
-	}
+		return (perror(MS"dup2 error"), close_std_fds(), EXIT_DUP2_FAILURE);
 	return (EXIT_SUCCESS);
 }
+
+/*
+ARRETE ICI
+*/
 
 /*
 Redirects the output to the given file.
@@ -80,7 +78,7 @@ int	redirect_output(const char *filename)
 	if (status < 0)
 	{
 		perror(MS"dup2 error");
-		close_standard_fds();
+		close_std_fds();
 		return (EXIT_DUP2_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -102,7 +100,7 @@ int	redirect_append(const char *filename)
 	if (status < 0)
 	{
 		perror(MS"dup2 error");
-		close_standard_fds();
+		close_std_fds();
 		return (EXIT_DUP2_FAILURE);
 	}
 	return (EXIT_SUCCESS);

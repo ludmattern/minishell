@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 16:10:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:39:12 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	main_clean_exit(t_g_data *g_data)
 {
 	free_mini_env(g_data->mini_env);
 	free(g_data);
-	close_standard_fds();
+	close_std_fds();
 	exit(EXIT_GENERAL_ERROR);
 }
 
@@ -81,14 +81,14 @@ void	init_minishell(t_g_data **g_data, char **env, char **av, int ac)
 	if (ac != 1)
 	{
 		ft_putstr_fd("minishell: no arguments needed\n", STDERR_FILENO);
-		close_standard_fds();
+		close_std_fds();
 		exit(EXIT_GENERAL_ERROR);
 	}
 	signals_init();
 	*g_data = ft_calloc(1, sizeof(t_g_data));
 	if (!*g_data)
 	{
-		close_standard_fds();
+		close_std_fds();
 		exit(EXIT_GENERAL_ERROR);
 	}
 	(*g_data)->mini_env = create_mini_env(env, g_data);

@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/07 17:22:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:10:45 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	checking_forked_builtins(t_data *data, t_node *node)
 	else
 		return (0);
 	free_forked_data_structure(&data);
-	close_standard_fds();
+	close_std_fds();
 	exit(status);
 }
 
