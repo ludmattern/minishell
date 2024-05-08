@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 13:35:30 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:28:21 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ int	redirect_input(const char *filename, bool is_empty)
 		return (perror(MS"dup2 error"), close_std_fds(), EXIT_DUP2_FAILURE);
 	return (EXIT_SUCCESS);
 }
-
-/*
-ARRETE ICI
-*/
 
 /*
 Redirects the output to the given file.

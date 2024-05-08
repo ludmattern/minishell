@@ -1,0 +1,15 @@
+total 252
+drwxr-xr-x 9 lmattern 2023_lyon    188 May  8 19:15 .
+drwxr-xr-x 3 lmattern 2023_lyon    179 May  8 18:27 ..
+-rw-r--r-- 1 lmattern 2023_lyon     21 May  8 19:12 bonjour
+drwxr-xr-x 2 lmattern 2023_lyon     21 May  8 19:15 dir
+drwxr-xr-x 8 lmattern 2023_lyon   4096 May  8 19:08 .git
+drwxr-xr-x 2 lmattern 2023_lyon     75 May  8 19:08 inc
+drwxr-xr-x 4 lmattern 2023_lyon     59 May  8 19:09 libft
+-rw-r--r-- 1 lmattern 2023_lyon   7880 May  7 17:27 Makefile
+-rw-r--r-- 1 lmattern 2023_lyon    182 May  8 18:37 mask_readline_leaks.supp
+-rwxr-xr-x 1 lmattern 2023_lyon 224920 May  8 19:09 minishell
+drwxr-xr-x 2 lmattern 2023_lyon   4096 May  8 19:09 .obj
+-rw-r--r-- 1 lmattern 2023_lyon    234 Apr 29 14:26 README.md
+drwxr-xr-x 4 lmattern 2023_lyon    101 May  8 18:38 src
+drwxr-xr-x 2 lmattern 2023_lyon     27 Apr 29 14:27 .vscode
