@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 14:31:12 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:35:26 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 		free(input);
 		free_lexed(data->lexed);
 		free(data->her_file);
-		free_io_list(data->io);
 		fail_exit_shell(data);
 	}
 	ctx->res[0] = ft_strdup(input);
@@ -33,7 +32,6 @@ void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 		free(ctx->res);
 		free(input);
 		free_lexed(data->lexed);
-		free_io_list(data->io);
 		free(data->her_file);
 		fail_exit_shell(data);
 	}

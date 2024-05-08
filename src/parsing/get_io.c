@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 15:09:36 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:35:42 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char *value, t_g_data *data)
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	if (!io->expanded_value)
 		free_and_leave(value, data, io);
-	data->io = io;
 	io->here_doc = 0;
 	return (io->prev = NULL, io->next = NULL, io);
 }

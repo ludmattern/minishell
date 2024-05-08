@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 11:41:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:30:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ int	ft_exit(char **args, t_data **data, bool piped)
 	char		endptr;
 	bool		error;
 
+	endptr = 0;
 	error = false;
 	if (args[1])
 	{
 		status = ft_strtol(args[1], &endptr, &error);
-		if (endptr != '\0' || error == true)
+		if (!endptr || error == true)
 		{
 			ft_eprintf(MS"exit: %s: numeric argument required\n", args[1]);
-			exiting_exit(EXIT_SYNTAX_ERROR, NULL, false, piped);
+			exiting_exit(EXIT_SYNTAX_ERROR, data, true, piped);
 		}
 		if (args[2])
 		{
@@ -93,7 +94,7 @@ int	ft_exit(char **args, t_data **data, bool piped)
 			return (EXIT_SYNTAX_ERROR);
 		}
 		return (exiting_exit((int)(status % 256 + 256) % 256, \
-		data, false, piped));
+		data, true, piped));
 	}
 	return (exiting_exit(EXIT_SUCCESS, data, true, piped));
 }

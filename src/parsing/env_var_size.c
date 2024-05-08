@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 09:29:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:39:02 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	handle_failure(char *tkn, char *env, t_g_data *data)
 
 void	init_var_size_ctx(t_var_size_context *s)
 {
+	s->dq = false;
+	s->sq = false;
 	s->i = 0;
 	s->s.env = NULL;
 	s->s.env_val = NULL;
@@ -83,7 +85,11 @@ t_envsize	get_mal_size2(char *tkn, t_g_data *data)
 	init_var_size_ctx(&s);
 	while (tkn[s.i])
 	{
-		if (tkn[s.i] == '$' && tkn[s.i + 1] && tkn[s.i + 1] \
+		if (tkn[s.i] == '\'' && !s.dq)
+			s.sq = !s.sq;
+		if (tkn[s.i] == '"' && !s.sq)
+			s.dq = !s.dq;
+		if (!s.sq && tkn[s.i] == '$' && tkn[s.i + 1] && tkn[s.i + 1] \
 		!= ' ' && tkn[s.i + 1] != '$' && tkn[s.i + 1] != '"')
 		{
 			s.i++;

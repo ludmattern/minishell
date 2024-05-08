@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 10:52:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:38:21 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,8 @@ typedef struct s_var_size_context
 	int			i;
 	char		*env_val;
 	t_envsize	s;
+	bool		sq;
+	bool		dq;
 }	t_var_size_context;
 
 #endif
