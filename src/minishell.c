@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 11:00:06 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:59:37 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	handle_user_input(t_g_data *g_data)
 		}
 		launch_expand(g_data);
 		if (g_heredoc_sigint == 2)
-		{
-			signals_init();
-			g_heredoc_sigint = 0;
-		}
+			free_and_init(g_data);
 		else
 		{
 			launch_parsing(g_data);
@@ -125,12 +122,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_clear_memory(g_data);
 	return (0);
 }
-//MAJ le code d'erreur en cas de ctrl+C (a verifier apres dans les 
-//ss processus aussi)(a voir pour les autres signaux)
-/*heredoc :
-		si le delimiteur est entre guillemets ("EOF" ou 'EOF') ne 
-		pas expand les var d'environnement dans le resultat
-		sinon, le faire (cas actuel)*/ //faire fonction is_prev_heredoc.
+
 /*
 cat :
 		//si ctrl+c dans cat alors on sort de toute la ligne de commande 
@@ -139,5 +131,4 @@ cat :
 
 /*Launch expand*/
 
-/*GET TKN TAB PAS COMPRIS*/
 /*HEREDOC ENV VAR PAS COMPris*/

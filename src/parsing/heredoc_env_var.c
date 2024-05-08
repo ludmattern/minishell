@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 11:01:55 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:31:12 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 	{
 		free(input);
 		free_lexed(data->lexed);
-		free_io_list(data->io);
 		free(data->her_file);
+		free_io_list(data->io);
 		fail_exit_shell(data);
 	}
 	ctx->res[0] = ft_strdup(input);
@@ -40,11 +40,18 @@ void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 	ctx->i = 0;
 }
 
-void	process_status_var_h(t_env_context_her *ctx, int *i)
+void	process_status_var_h(t_env_context_her *ctx, int *i, char *input)
 {
 	ctx->status_str = ft_itoa(ctx->data->last_exit_status);
 	if (!ctx->status_str)
+	{
+		free(input);
+		free(ctx->data->her_file);
+		free(ctx->res[0]);
+		free(ctx->res);
+		free_lexed(ctx->data->lexed);
 		fail_exit_shell(ctx->data);
+	}
 	ctx->new = replace_substring(ctx->res[0], *i, ctx->status_str, ctx->data);
 	free(ctx->res[0]);
 	ctx->res[0] = ctx->new;
@@ -64,7 +71,7 @@ char	**replace_input_vars(t_g_data *data, char *input, int i)
 			ctx.squotes = !ctx.squotes;
 		else if (!ctx.squotes && ctx.res[0][i] == '$' && \
 		ctx.res[0][i + 1] == '?')
-			process_status_var_h(&ctx, &i);
+			process_status_var_h(&ctx, &i, input);
 		else if (!ctx.squotes && ctx.res[0][i] == '$' && \
 		ctx.res[0][i + 1] == '$')
 			ctx.i += 1;
