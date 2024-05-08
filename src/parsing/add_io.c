@@ -109,9 +109,6 @@ void	add_new_io_node(t_io_bundle *io, char **cursor, t_g_data *data)
 		return ;
 	free(filename);
 	if (new_io == NULL)
-	{
-		free_lexed(data->lexed);
-		fail_exit_shell(data);
-	}
+		return (free_lexed(data->lexed), fail_exit_shell(data));
 	initialize_and_add_io_node(io, new_io);
 }

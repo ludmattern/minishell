@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:56 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 16:36:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:10:08 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_g_data *data);
 char		*extract_with_quote(char **c, t_g_data *data);
 int			countq(const char *str);
 t_io_node	*create_io_from_string(t_io_type type, char *value, \
-			t_g_data *data);
+t_g_data *data);
 void		set_io_type(t_io_type *type, char **cursor);
 void		handle_failure(char *tkn, char *env, t_g_data *data);
 void		imore(int size, int *i);
@@ -121,5 +121,7 @@ void		process_variable(t_var_context *ctx, char *tkn, t_g_data *data);
 bool		is_end(char *str, int i);
 void		quote_in_env_val(char *env_val);
 bool		is_previous_redir(int cursor, char *tkn);
+void		free_and_init(t_g_data *g_data);
+void		free_and_leave(char *value, t_g_data *data, t_io_node *io);
 
 #endif

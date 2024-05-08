@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 10:52:15 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:36 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_io_node	*init_n_process_heredoc(t_io_type type, char *value)
 		return (free(io), free(tmp), NULL);
 	free(tmp);
 	if (g_heredoc_sigint == 2)
-		return (NULL);
+		return (free(io->value), free(io), NULL);
 	return (io);
 }
 
@@ -82,7 +82,8 @@ char	*cpy_without_empty(char *str)
 	return (res);
 }
 
-t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
+t_io_node	*create_io_from_string(t_io_type type, \
+char *value, t_g_data *data)
 {
 	t_io_node	*io;
 
@@ -103,13 +104,7 @@ t_io_node	*create_io_from_string(t_io_type type, char *value, t_g_data *data)
 	else
 		io->expanded_value = replace_input_vars(data, io->value, 0);
 	if (!io->expanded_value)
-	{
-		free(io->value);
-		free(value);
-		free(io);
-		free_lexed(data->lexed);
-		fail_exit_shell(data);
-	}
+		free_and_leave(value, data, io);
 	data->io = io;
 	io->here_doc = 0;
 	return (io->prev = NULL, io->next = NULL, io);

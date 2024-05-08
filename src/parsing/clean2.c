@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:07:19 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/02 11:35:34 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:43 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,22 @@ void	free_forked_data(t_data *data)
 		return ;
 	ft_clear_memory(data->g_data);
 	free_tree(data->ast);
+}
+
+void	free_and_init(t_g_data *g_data)
+{
+	signals_init();
+	free(g_data->her_file);
+	free_lexed(g_data->lexed);
+	free_data_structure(&g_data->data);
+	g_heredoc_sigint = 0;
+}
+
+void	free_and_leave(char *value, t_g_data *data, t_io_node *io)
+{
+	free(io->value);
+	free(value);
+	free(io);
+	free_lexed(data->lexed);
+	fail_exit_shell(data);
 }

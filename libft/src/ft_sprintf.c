@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:12:36 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 18:24:34 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:48:06 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_sprintf(char *buffer, const char *format, ...)
 	int		result;
 
 	nb_char = 0;
+	if (!buffer)
+		return (0);
 	va_start(args, format);
 	while (*format)
 	{
@@ -64,6 +66,5 @@ int	ft_sprintf(char *buffer, const char *format, ...)
 		}
 		format++;
 	}
-	va_end(args);
-	return (nb_char);
+	return (va_end(args), nb_char);
 }

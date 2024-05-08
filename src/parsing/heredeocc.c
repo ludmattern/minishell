@@ -6,7 +6,7 @@
 /*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:05:51 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 10:37:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:00:22 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	read_heredoc_into_string(const char *delimiter, char **out_buffer)
 		if (!result)
 			return (perror("Allocation failed"), EXIT_GENERAL_ERROR);
 	}
+	*out_buffer = result;
 	if (g_heredoc_sigint == 2)
 		return (EXIT_FAILURE);
-	*out_buffer = result;
 	return (signals_init(), EXIT_SUCCESS);
 }
