@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntaxe_par.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:29:16 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 13:55:24 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:17:27 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ bool	process_closed_par(const char *cmd, int i)
 				&& cmd[i] != '|'
 				&& cmd[i] != '&'))
 		{
-			printf("cmd[%d] = %c\n", i, cmd[i]);
 			return (false);
 		}
 	}
@@ -52,6 +51,7 @@ bool	process_parentheses(char c, int *par_count, bool *empty_par)
 	}
 	else if (c == ')')
 	{
+		
 		(*par_count)--;
 		if (*empty_par)
 			return (false);
