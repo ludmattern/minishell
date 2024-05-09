@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntaxe_par.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:29:16 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 20:16:37 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/08 20:20:18 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ bool	process_parentheses(char c, int *par_count, bool *empty_par)
 	{
 		(*par_count)--;
 		if (*empty_par)
-		{
 			return (false);
-		}
 	}
 	else if (!ft_isspace(c))
 		*empty_par = (false);
