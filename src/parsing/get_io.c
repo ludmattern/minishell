@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 19:50:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:13:08 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ char *value, t_g_data *data)
 {
 	t_io_node	*io;
 
+	data->io = NULL;
 	io = init_n_process_heredoc(type, value);
+	data->io = io;
 	if (!io)
 		return (NULL);
 	if (io->type == IO_HEREDOC

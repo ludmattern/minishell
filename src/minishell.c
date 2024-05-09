@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 18:39:12 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:29:40 by fprevot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,3 +118,11 @@ int	main(int argc, char **argv, char **envp)
 	ft_clear_memory(g_data);
 	return (0);
 }
+
+
+/*
+GET IO 90 DEMANDER A LUDO 
+>> LOL | >> LOL              SEGFAULT
+POUR LE FREE EN CAS DE PB BESOINS PLUS TARD, je capte pas pq ca sexfault ici surement un truc golmon
+SANS LES LIGNE 90 ET 92 DE GET_IO pas de pb mais leaks si malloc fail dans replace env var herrdoc
+*/
