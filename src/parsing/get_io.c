@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_io.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:16 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/13 08:24:12 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:01 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	fill_extended_value(t_io_node **io)
 {

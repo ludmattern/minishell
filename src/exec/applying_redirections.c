@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 19:28:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:13 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/exec.h"
+#include "../../inc/mandatory/parse.h"
 
 int	redirect_heredoc_pipe(const char *heredoc_input, bool piped)
 {

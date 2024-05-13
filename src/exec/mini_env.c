@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:35:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 12:35:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:54 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Creates a new environment entry.
@@ -22,7 +22,7 @@ t_env	*ft_env_new_entrie(char *name, char *value, bool is_local)
 	new_env_entrie = malloc(sizeof(t_env));
 	if (!new_env_entrie)
 		return (free(name), free(value), NULL);
-	memset(new_env_entrie, 0, sizeof(t_env));
+	ft_memset(new_env_entrie, 0, sizeof(t_env));
 	new_env_entrie->name = name;
 	new_env_entrie->value = value;
 	new_env_entrie->is_local = is_local;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:07:19 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 15:09:43 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:30 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 void	free_io_node(t_io_node *io_node)
 {

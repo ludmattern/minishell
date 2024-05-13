@@ -10,7 +10,7 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 char	*ft_get_env2(char *tmp_env, t_env *mini_env, t_g_data *data)
 {
@@ -94,7 +94,7 @@ char	*replace_env_vars(t_g_data *data, int i)
 {
 	t_env_context	ctx;
 
-	memset(&ctx, 0, sizeof(t_env_context));
+	ft_memset(&ctx, 0, sizeof(t_env_context));
 	init_env_ctx(&ctx, data, 0, 1);
 	while (ctx.res && ctx.res[++i] != '\0')
 	{

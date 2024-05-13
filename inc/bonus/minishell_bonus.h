@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   minishell_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:14:40 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 17:38:21 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:41:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MINISHELL_BONUS_H
+# define MINISHELL_BONUS_H
 
-# include "../libft/inc/libft.h"
-# include "../libft/inc/ft_printf.h"
-# include "../libft/inc/get_next_line.h"
-# include "./error_codes.h"
+# include "../../libft/inc/libft.h"
+# include "../../libft/inc/ft_printf.h"
+# include "../../libft/inc/get_next_line.h"
+# include "./error_codes_bonus.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>

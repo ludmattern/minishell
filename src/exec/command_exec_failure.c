@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 13:32:35 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Prints an error message and exit the child process.

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:11:48 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 17:52:47 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:20 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 void	ft_clear_memory(t_g_data *g_data)
 {

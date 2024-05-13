@@ -10,7 +10,7 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 t_node	*process_token_type(t_token **c, t_g_data *g_data, \
 t_node **root, t_node **current)

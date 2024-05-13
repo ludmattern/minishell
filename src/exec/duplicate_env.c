@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 16:50:51 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:26 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Copies the environment entries from source to dest.

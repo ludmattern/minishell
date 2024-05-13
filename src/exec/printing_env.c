@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/19 13:16:48 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:59 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Validates a single export argument.

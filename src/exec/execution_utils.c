@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/11 15:55:47 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/exec.h"
+#include "../../inc/mandatory/parse.h"
 
 /*
 Restores the original file descriptors.

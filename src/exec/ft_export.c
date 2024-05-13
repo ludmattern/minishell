@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:10:35 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 11:52:33 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:00 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/exec.h"
+#include "../../inc/mandatory/parse.h"
 
 /*
 Processes a single export argument, assuming it's already validated.

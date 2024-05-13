@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:09 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 13:54:49 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:11 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 void	toggle_quo(bool *in_quotes, char c, int i, const char *cmd)
 {

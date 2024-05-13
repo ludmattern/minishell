@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:20:33 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/04 12:37:29 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:49 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Finds the index of the environment variable with the specified name.

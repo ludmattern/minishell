@@ -10,8 +10,8 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	smoremore(t_envsize *s, int *i, char *env_val, int c)
 {

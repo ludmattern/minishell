@@ -10,7 +10,7 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 int	fill_value(t_token *lex, int num)
 {

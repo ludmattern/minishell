@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handling_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 15:26:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:34 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/exec.h"
+#include "../../inc/mandatory/parse.h"
 
 void	transform_env_to_array(t_env *mini_env, char ***env)
 {

@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:00:32 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 19:27:45 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:10 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/exec.h"
+#include "../../inc/mandatory/parse.h"
 
 /*
 Handles the ambiguous redirection error (if the filename is empty)

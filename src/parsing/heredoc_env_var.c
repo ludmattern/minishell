@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:37:29 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/13 08:23:29 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:09 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	init_env_ctx_her(t_env_context_her *ctx, t_g_data *data, char *input)
 {

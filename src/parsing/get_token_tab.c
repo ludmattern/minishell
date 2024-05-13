@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:33:18 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 12:11:07 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 char	*space_token(char *arg, int *i)
 {

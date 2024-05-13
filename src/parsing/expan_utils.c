@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expan_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 21:40:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/05 21:41:28 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:50 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 bool	redirection_outside_quotes(const char *args)
 {

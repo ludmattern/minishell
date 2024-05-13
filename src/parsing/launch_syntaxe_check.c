@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:01:14 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 20:26:41 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:17 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 bool	check_input(const char *cmd)
 {

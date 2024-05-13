@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:25 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/04 10:59:08 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:38:05 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/parse.h"
-#include "../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	free_lexed(t_token *lexed)
 {

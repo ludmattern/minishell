@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:37:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 19:53:53 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:39 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	handle_failure(char *tkn, char *env, t_g_data *data)
 {

@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/04/21 16:10:21 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:29 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 size_t	ft_env_size(t_env *lst)
 {

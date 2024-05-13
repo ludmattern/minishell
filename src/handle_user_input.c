@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_user_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:40:15 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/06 16:19:33 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:19:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/parse.h"
-#include "../inc/exec.h"
+#include "../inc/mandatory/parse.h"
+#include "../inc/mandatory/exec.h"
 
 void	launch_lexing(t_g_data *g_data)
 {

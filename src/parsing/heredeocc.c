@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredeocc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:05:51 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 15:00:22 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:06 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	init_heredoc(size_t *total_size)
 {

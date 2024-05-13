@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:32:58 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 09:25:27 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:09 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 t_node	*process_operator(t_token **c, t_g_data *g_data, t_node *root)
 {

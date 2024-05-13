@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:53:28 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 18:39:37 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:19:42 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/parse.h"
-#include "../inc/exec.h"
+#include "../inc/mandatory/parse.h"
+#include "../inc/mandatory/exec.h"
 
 void	clean_exit_update_input(t_g_data *g_data)
 {

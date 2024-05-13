@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 19:23:50 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/03 13:28:55 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:39 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 split the name and value of the argument.

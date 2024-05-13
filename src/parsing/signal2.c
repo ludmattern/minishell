@@ -6,12 +6,12 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:04 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 17:23:06 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:33:03 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	signals_init_exec(void)
 {
@@ -43,7 +43,7 @@ void	setup_heredoc_si(void)
 {
 	struct sigaction	sa;
 
-	memset(&sa, 0, sizeof(sa));
+	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = handle_sigint_herdoc;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);

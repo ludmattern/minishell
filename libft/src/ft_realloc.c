@@ -6,7 +6,7 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:46:57 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 12:04:52 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 08:42:53 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_realloc(void *ptr, size_t original_size, size_t new_size)
 	new_ptr = malloc(new_size);
 	if (!new_ptr)
 		return (NULL);
-	memset(new_ptr, 0, new_size);
+	ft_memset(new_ptr, 0, new_size);
 	if (ptr)
 	{
 		if (original_size < new_size)

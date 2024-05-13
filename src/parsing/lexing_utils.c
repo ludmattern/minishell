@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:32:22 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/07 13:36:51 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 void	imoremore_quote(char *arg, int *i, char c)
 {

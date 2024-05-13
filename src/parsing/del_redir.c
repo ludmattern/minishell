@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   del_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:38:57 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 09:27:48 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:29:35 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	toggle_quote_state(char c, int *inq, char *currentq)
 {

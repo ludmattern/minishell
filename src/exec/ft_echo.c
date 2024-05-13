@@ -6,11 +6,11 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:25:19 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 18:10:45 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:27:44 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Writes the arguments to the standard output followed by a newline (or not with 

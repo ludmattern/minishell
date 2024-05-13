@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:19:08 by fprevot           #+#    #+#             */
-/*   Updated: 2024/05/08 11:55:09 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:31:25 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/mandatory/parse.h"
 
 t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 {
@@ -23,7 +23,7 @@ t_node	*create_empty_node(t_token *tkn, t_g_data *g_data)
 		free_lexed(g_data->lexed);
 		fail_exit_shell(g_data);
 	}
-	memset(new, 0, sizeof(t_node));
+	ft_memset(new, 0, sizeof(t_node));
 	new->args = ft_strdup(tkn->value);
 	if (!new->args)
 	{
@@ -48,16 +48,6 @@ t_node	*create_operator_node(t_token *tkn, t_g_data *g_data)
 	else if (tkn->type == T_OR)
 		node->type = N_OR;
 	return (node);
-}
-
-size_t	ft_arrlen(char **arr)
-{
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	return (i);
 }
 
 bool	check_local(char *arg)

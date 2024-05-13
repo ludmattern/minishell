@@ -6,16 +6,16 @@
 /*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 09:26:11 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 18:10:27 by lmattern         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:22:10 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "../libft/inc/libft.h"
-# include "../libft/inc/ft_printf.h"
-# include "../libft/inc/get_next_line.h"
+# include "../../libft/inc/libft.h"
+# include "../../libft/inc/ft_printf.h"
+# include "../../libft/inc/get_next_line.h"
 # include "./error_codes.h"
 # include "./minishell.h"
 # include <fcntl.h>

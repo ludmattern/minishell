@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_environnement.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fprevot <fprevot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmattern <lmattern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:45:34 by lmattern          #+#    #+#             */
-/*   Updated: 2024/05/08 16:07:40 by fprevot          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:52 by lmattern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/exec.h"
 
 /*
 Initializes the shell level variable.

@@ -10,8 +10,8 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
-#include "../../inc/exec.h"
+#include "../../inc/mandatory/parse.h"
+#include "../../inc/mandatory/exec.h"
 
 void	init_var_ctx(t_var_context *ctx, char *tkn, t_g_data *data)
 {
